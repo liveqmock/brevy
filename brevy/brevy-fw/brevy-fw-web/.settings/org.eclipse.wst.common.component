@@ -4,9 +4,6 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
-        <dependent-module archiveName="brevy-fw-common-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/brevy-fw-common/brevy-fw-common">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="context-root" value="brevy-fw-web"/>
         <property name="java-output-path" value="/brevy-fw-web/src/main/webapp/WEB-INF/classes"/>
     </wb-module>

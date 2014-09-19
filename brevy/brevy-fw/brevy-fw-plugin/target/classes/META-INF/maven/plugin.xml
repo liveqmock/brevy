@@ -10,6 +10,29 @@
   <inheritedByDefault>true</inheritedByDefault>
   <mojos>
     <mojo>
+      <goal>remove</goal>
+      <description>文件移除GOAL#caobin#2013-7-18</description>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>true</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <implementation>com.brevy.fw.plugin.remove.mojo.RemoveMojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>goalRemove</name>
+          <type>com.brevy.fw.plugin.remove.parameter.GoalRemove</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>goal为remove的参数集</description>
+        </parameter>
+      </parameters>
+    </mojo>
+    <mojo>
       <goal>errorCodeGenerator</goal>
       <description>ErrorCode生成GOAL#caobin#2013-7-22</description>
       <requiresDirectInvocation>false</requiresDirectInvocation>
@@ -49,29 +72,6 @@
         <resources implementation="java.util.List">${project.build.resources}</resources>
         <sourceDirectory implementation="java.io.File">${project.build.sourceDirectory}</sourceDirectory>
       </configuration>
-    </mojo>
-    <mojo>
-      <goal>remove</goal>
-      <description>文件移除GOAL#caobin#2013-7-18</description>
-      <requiresDirectInvocation>false</requiresDirectInvocation>
-      <requiresProject>true</requiresProject>
-      <requiresReports>false</requiresReports>
-      <aggregator>false</aggregator>
-      <requiresOnline>false</requiresOnline>
-      <inheritedByDefault>true</inheritedByDefault>
-      <implementation>com.brevy.fw.plugin.remove.mojo.RemoveMojo</implementation>
-      <language>java</language>
-      <instantiationStrategy>per-lookup</instantiationStrategy>
-      <executionStrategy>once-per-session</executionStrategy>
-      <parameters>
-        <parameter>
-          <name>goalRemove</name>
-          <type>com.brevy.fw.plugin.remove.parameter.GoalRemove</type>
-          <required>true</required>
-          <editable>true</editable>
-          <description>goal为remove的参数集</description>
-        </parameter>
-      </parameters>
     </mojo>
   </mojos>
   <dependencies>
