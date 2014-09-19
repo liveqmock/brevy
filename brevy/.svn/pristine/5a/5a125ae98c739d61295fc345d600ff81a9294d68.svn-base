@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brevy.fw.common.core.security.shiro.dao.ShiroQueryDao" >
+  
+	<!-- 查询用户信息(应用和用户的STATUS不用判断，留给系统以区分判断) -->
+	<resultMap id="UserAppResultMap" type="com.brevy.fw.common.core.security.shiro.model.ApUserApp" >
+		<id column="ID" property="id" jdbcType="DECIMAL" />
+		<result column="APP_ID" property="appId" jdbcType="DECIMAL" />  
+		<result column="USERGROUP_ID" property="usergroupId" jdbcType="DECIMAL" />
+		<result column="APP_NAME" property="appName" jdbcType="VARCHAR" />
+		<result column="USERNAME" property="username" jdbcType="VARCHAR" />
+		<result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+		<result column="APP_STATUS" property="appStatus" jdbcType="CHAR" />
+		<result column="STATUS" property="status" jdbcType="CHAR" />
+  	</resultMap>
+
+	<select id="findUserAppDetail" resultMap="UserAppResultMap">
+		SELECT 
+			AU.ID, AA.ID AS APP_ID, USERGROUP_ID, AA.NAME AS APP_NAME, USERNAME, PASSWORD, AA.STATUS AS APP_STATUS, STATUS 
+		FROM 
+			AP_USER AU   
+		INNER JOIN 
+			AP_REF_USER_APP ARUA ON AU.ID = ARUA.USER_ID 
+		INNER JOIN 
+			AP_APPLICATION AA ON AA.ID = ARUA.APP_ID 
+		WHERE 
+			AU.USERNAME=#{username,jdbcType=VARCHAR} AND AA.ID=#{appid,jdbcType=DECIMAL}
+	</select>
+  
+  
+	<!-- 查询角色信息(合并用户和用户组) --> 
+	<resultMap id="roleResultMap" type="com.brevy.fw.common.core.security.shiro.model.ApRole" >
+	  <id column="ID" property="id" jdbcType="DECIMAL" />
+	  <result column="APP_ID" property="appId" jdbcType="DECIMAL" />  
+	  <result column="NAME" property="name" jdbcType="VARCHAR" />
+	  <result column="CODE" property="code" jdbcType="VARCHAR" />
+	</resultMap>
+	  
+	<select id="findRoleDetail" resultMap="roleResultMap" parameterType="long">
+	  	SELECT 
+	        AR.ID, AR.APP_ID, AR.NAME , AR.CODE 
+		FROM 
+	        AP_ROLE AR 
+		INNER JOIN 
+	        AP_REF_USER_ROLE ARUR ON AR.ID = ARUR.ROLE_ID 
+		INNER JOIN 
+	        AP_USER AU ON AU.ID=ARUR.USER_ID 
+		WHERE 
+	        AU.ID=#{userid,jdbcType=DECIMAL} AND AR.STATUS = '1' AND AU.STATUS = '1' 
+		UNION 
+		SELECT 
+	        AR.ID, AR.APP_ID, AR.NAME , AR.CODE 
+		FROM 
+	        AP_ROLE AR 
+		INNER JOIN 
+	        AP_REF_USERGROUP_ROLE ARUGR ON AR.ID = ARUGR.ROLE_ID 
+		INNER JOIN 
+	        AP_USERGROUP AUG ON AUG.ID=ARUGR.USERGROUP_ID 
+		WHERE 
+	        AUG.STATUS = '1' AND AUG.ID = (SELECT USERGROUP_ID FROM AP_USER AU WHERE AU.ID=#{userid,jdbcType=DECIMAL} AND AU.STATUS = '1')
+  	</select>
+  
+  
+	<!-- 查询角色操作权限 -->
+	<resultMap id="operPermResultMap" type="com.brevy.fw.common.core.security.shiro.model.ApOperPerm" >
+	  <id column="ID" property="id" jdbcType="DECIMAL" />
+	  <result column="APP_ID" property="appId" jdbcType="DECIMAL" />  
+	  <result column="AUTHORIZED_OPER" property="authorizedOper" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="findOperPermDetail" resultMap="operPermResultMap" parameterType="java.util.List">
+		SELECT 
+			AOP.ID, AOP.APP_ID, AOP.AUTHORIZED_OPER 
+		FROM 
+			AP_OPER_PERM AOP 
+			INNER JOIN 
+			AP_REF_ROLE_OPER_PERM ARROP 
+			ON AOP.ID = ARROP.OPER_PERM_ID
+			INNER JOIN 
+			AP_ROLE AR 
+			ON AR.ID = ARROP.ROLE_ID 
+		WHERE 
+			AOP.STATUS = '1' AND AR.STATUS = '1' AND AR.ID IN 
+			<foreach item="apRole" index="index" collection="apRoles" open="(" separator="," close=")">
+				#{apRole.id, jdbcType=DECIMAL}
+			</foreach>	
+		ORDER BY 
+			AOP."ORDER"	
+	</select>
+	
+	
+	<!-- 查询URL访问权限 -->
+	<resultMap id="accessPermResultMap" type="com.brevy.fw.common.core.security.shiro.model.ApAccessPerm" >
+	  <result column="URL_PATTERN" property="urlPattern" jdbcType="VARCHAR" />  
+	  <result column="PATTERN_EXPR" property="patternExpr" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="findAccessPermDetail" resultMap="accessPermResultMap">
+		SELECT 
+			URL_PATTERN, PATTERN_EXPR 
+		FROM 
+			AP_ACCESS_PERM
+		WHERE 
+			APP_ID = #{appid,jdbcType=DECIMAL} AND STATUS = '1'
+		ORDER BY 
+			"ORDER"
+	</select>
+</mapper>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"  xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+		http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<!-- ************************************************************************************************* -->
+	<!-- *                                        ACTIVITI工作流配置                                                                                            	 * -->
+	<!-- ************************************************************************************************* -->	
+	
+	<!-- 流程引擎 -->
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration"/>
+	</bean>
+	
+	<!-- 流程引擎配置 -->
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+   	 	<property name="dataSource" ref="proxyDataSource"/>
+   	 	<property name="transactionManager" ref="txManager"/>
+   	 	<property name="databaseSchemaUpdate" value="true"/>
+   	 	<!-- 流程资源自动部署 -->
+   	 	<property name="deploymentResources" value="classpath:/wf-diagrams/**/*.bpmn"/>
+   	 	<!-- 定义流程中引用到的bean -->
+   	 	<property name="beans" ref="beanMappings"/>
+	</bean>
+	
+	<!-- ACTIVITI 服务 -->
+	<bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"/>
+	<bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService"/>
+	<bean id="taskService" factory-bean="processEngine" factory-method="getTaskService"/>
+	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>
+	<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService"/>
+	
+	
+	<!-- 定义流程中的bean -->
+	<bean id="beanMappings" class="org.springframework.beans.factory.config.MapFactoryBean">
+		<property name="sourceMap">
+			<map>
+				<entry key="printer" value-ref="printer"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="printer" class="com.brevy.spring.wf.biz.hello.wfaction.Printer"/>
+	
+	<!-- ************************************************************************************************* -->
+	<!-- *                                        数据源配置                                                                                            			 * -->
+	<!-- ************************************************************************************************* -->	
+	<!-- 代理datasource，使其能够显式获取preparedStatement的参数值 -->
+	<bean id="proxyDataSource" class="org.jdbcdslog.ConnectionPoolDataSourceProxy">
+		<property name="targetDSDirect" ref="dataSource"/>
+	</bean>
+
+	
+	
+	<!-- ************************************************************************************************* -->
+	<!-- *                                       JDBC Template 配置                                                                                      		 * -->
+	<!-- ************************************************************************************************* -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="proxyDataSource"/>
+	</bean>
+	
+	
+	<!-- ************************************************************************************************* -->
+	<!-- *                                        事务配置                                                                                               			 * -->
+	<!-- ************************************************************************************************* -->
+
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="proxyDataSource" />
+	</bean>
+	
+	<bean id="txTemplate" class="org.springframework.transaction.support.TransactionTemplate" >
+		<property name="transactionManager">
+			<ref bean="txManager"/>
+		</property>
+		<property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
+		<property name="isolationLevelName" value="ISOLATION_DEFAULT"/>
+		<property name="readOnly" value="false"/>
+		<property name="timeout" value="120"/>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="txManager"/>
+
+	
+	<!-- 工作流事务通知 -->
+	<!-- <tx:advice id="wfTransactionAdvice" transaction-manager="txManager">
+		<tx:attributes>
+		    <tx:method name="wfTx*" propagation="REQUIRED" />
+		    <tx:method name="*" propagation="SUPPORTS" /> 
+		</tx:attributes>
+	</tx:advice>
+ 
+
+	<aop:config>
+		<aop:pointcut id="wfPointCutMethod" expression="execution(* com.brevy.spring.wf.biz.*.wfservice..*.*(..))" />
+
+		<aop:advisor advice-ref="wfTransactionAdvice" pointcut-ref="wfPointCutMethod" />
+	</aop:config> -->
+</beans>

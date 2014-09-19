@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- ************************************************************************************************* -->
+	<!-- * 环境配置切换(在web.xml中的spring.profiles.default上启用) * -->
+	<!-- ************************************************************************************************* -->
+	<!-- 开发环境 -->
+	<beans profile="dev">
+		<context:property-placeholder
+			ignore-unresolvable="true" location="classpath:/env/cfg-dev.properties" />
+		<!-- 数据源配置-DBCP数据库连接池 -->
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close">
+			<property name="driverClassName" value="${jdbc.driverClassName}" />
+			<property name="url" value="${jdbc.url}" />
+			<property name="username" value="${jdbc.username}" />
+			<property name="password" value="${jdbc.password}" />
+			<property name="initialSize" value="${jdbc.initialSize}" />
+			<property name="maxActive" value="${jdbc.maxActive}" />
+			<property name="maxIdle" value="${jdbc.maxIdle}" />
+			<property name="minIdle" value="${jdbc.minIdle}" />
+			<property name="maxWait" value="${jdbc.maxWait}" />
+			<property name="defaultAutoCommit" value="false" />
+		</bean>
+	</beans>
+
+	<!-- SIT环境 -->
+	<beans profile="sit">
+		<context:property-placeholder
+			ignore-unresolvable="true" location="classpath:/env/cfg-sit.properties" />
+		<!-- 数据源配置,使用应用服务器的数据库连接池 -->
+		<jee:jndi-lookup id="dataSource" jndi-name="${jndi.name}"/>
+	</beans>
+
+
+	<!-- PRD环境 -->
+	<beans profile="prd">
+		<context:property-placeholder
+			ignore-unresolvable="true" location="classpath:/env/cfg-prd.properties" />
+		<!-- 数据源配置,使用应用服务器的数据库连接池 -->
+		<jee:jndi-lookup id="dataSource" jndi-name="${jndi.name}"/>
+	</beans>
+</beans>

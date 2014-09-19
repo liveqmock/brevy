@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>ext.module.charts.ChartB</moduleName>
+    <moduleText>图表B</moduleText>
+    <moduleIcon>icon-fugue-document-flash-movie</moduleIcon>
+    <files>
+        <css/>
+        <js>
+        	<file>init.js</file>
+        </js>
+    </files>
+</module>

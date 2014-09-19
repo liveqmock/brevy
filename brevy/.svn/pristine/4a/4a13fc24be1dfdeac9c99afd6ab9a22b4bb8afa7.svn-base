@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:cxf="http://cxf.apache.org/core"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:soap="http://cxf.apache.org/bindings/soap" 
+	xmlns:wsa="http://cxf.apache.org/ws/addressing" 
+	xmlns:http-conf="http://cxf.apache.org/transports/http/configuration" 
+	xsi:schemaLocation="
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd 
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd  
+		http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd 
+		http://cxf.apache.org/ws/addressing http://cxf.apache.org/schemas/ws-addr-conf.xsd 
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+	<description>WebService服务发布</description>
+	
+	<cxf:bus>
+		<cxf:features>
+			<!-- add addr -->
+			<wsa:addressing/>
+			<!-- add log -->
+			<cxf:logging/>
+		</cxf:features>
+		<!-- <cxf:inInterceptors>
+			<ref bean="accessInInterceptor"/>
+		</cxf:inInterceptors>
+		<cxf:outInterceptors>
+			<ref bean="accessOutInterceptor"/>
+		</cxf:outInterceptors> -->
+	</cxf:bus>
+	
+	
+	<bean id="accessInInterceptor" class="com.brevy.spring.cxf.ws.services.fc.calculator.interceptor.AccessInInterceptor"/>
+	
+	<!-- ##### 端点定义 ##### -->
+	<!-- Calculator Endpoint-->
+	<jaxws:endpoint name="fcCalculatorEndpoint" address="/FC/CalculatorService">
+		<jaxws:implementor ref="calculatorService"/>
+		<!-- enable validation -->
+		<jaxws:properties>
+	       <entry key="schema-validation-enabled" value="true" />
+	    </jaxws:properties>
+	    <!-- validating base on schema -->
+	    <jaxws:schemaLocations>
+	    	<jaxws:schemaLocation>classpath:wsdl/FormulaCalculation/Calculator/Calculator.xsd</jaxws:schemaLocation>
+	    </jaxws:schemaLocations>
+	</jaxws:endpoint>
+	
+	<!-- Formula Endpoint -->
+	<jaxws:endpoint name="fcFormulaEndpoint" address="/FC/FormulaService">
+		<jaxws:implementor ref="formulaService"/>
+		<!-- enable validation -->
+		<jaxws:properties>
+	       <entry key="schema-validation-enabled" value="true" />
+	    </jaxws:properties>	
+	    <!-- validating base on schema -->
+	    <jaxws:schemaLocations>
+	    	<jaxws:schemaLocation>classpath:wsdl/FormulaCalculation/Formula/Formula.xsd</jaxws:schemaLocation>
+	    </jaxws:schemaLocations>
+	</jaxws:endpoint>
+	
+	<!-- Converter Endpoint -->
+	<jaxws:endpoint name="fcConverterEndpoint" address="/FC/ConverterService">
+		<jaxws:implementor ref="converterService"/>
+		<!-- enable validation -->
+		<jaxws:properties>
+			 <entry key="schema-validation-enabled" value="true" />
+		</jaxws:properties>
+		<!-- validate base on schema -->
+		 <jaxws:schemaLocations>
+	    	<jaxws:schemaLocation>classpath:wsdl/FormulaCalculation/Converter/Converter.xsd</jaxws:schemaLocation>
+	    </jaxws:schemaLocations>
+	</jaxws:endpoint>
+	
+	<!-- Calculator Endpoint * JMS Transport -->
+	<jaxws:endpoint name="fcJmsCalculatorEndpoint" address="jms://">
+		<jaxws:implementor ref="calculatorService"/>
+		<!-- enable validation -->
+		<jaxws:properties>
+	       <entry key="schema-validation-enabled" value="true" />
+	    </jaxws:properties>
+	    <!-- validating base on schema -->
+	    <jaxws:schemaLocations>
+	    	<jaxws:schemaLocation>classpath:wsdl/FormulaCalculation/Calculator/Calculator.xsd</jaxws:schemaLocation>
+	    </jaxws:schemaLocations>
+	    <jaxws:features>
+	    	<ref bean="jmsConfigFeature"/>	
+	    </jaxws:features>
+	</jaxws:endpoint>
+	
+	<bean id="jmsConfigFeature" class="org.apache.cxf.transport.jms.JMSConfigFeature">
+	    <property name="jmsConfig" ref="jmsConfig"/>
+	</bean>
+	
+	<bean id="jmsConfig" class="org.apache.cxf.transport.jms.JMSConfiguration">
+		<property name="connectionFactory" ref="jmsConnectionFactory"/>
+		<property name="targetDestination" value="brevy.cxf.fc.calculator.queue"/>
+	</bean>
+
+	<bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${jms.brokerUrl}" />
+		<property name="useAsyncSend" value="true" />
+		<property name="copyMessageOnSend" value="false"/>
+		<property name="optimizeAcknowledge" value="true"/>
+	</bean>
+</beans>

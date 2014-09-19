@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>app.components.GeneralGrid</moduleName>
+    <moduleText>常规网格</moduleText>
+    <moduleIcon>icon-application_view_list</moduleIcon>   
+    <files>
+        <css/>
+        <js>
+        	<file>init.js</file>
+        </js>
+    </files>
+</module>

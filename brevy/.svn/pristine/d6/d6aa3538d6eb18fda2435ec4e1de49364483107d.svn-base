@@ -1,0 +1,15 @@
+package com.brevy.batch.core.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+
+import com.brevy.batch.core.model.ApSeq;
+
+public interface QueryDao {
+	
+	public List<ApSeq> queryAll();
+	
+	public List<ApSeq> queryPaged(RowBounds rowBounds);
+	
+}

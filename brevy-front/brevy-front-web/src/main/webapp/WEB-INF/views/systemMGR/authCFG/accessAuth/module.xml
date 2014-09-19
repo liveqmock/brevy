@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.systemMGR.authCFG.accessAuth.AccessAuthUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>../../../login/store/LoginStore.js</file>
+        	<file>store/AccessAuthStore.js</file>
+        	<file>ui/AccessAuthUI.js</file>
+        	<file>ui/crud/AccessAuthRead.js</file>
+        </js>
+    </files>
+</module>

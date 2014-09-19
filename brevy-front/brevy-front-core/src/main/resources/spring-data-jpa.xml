@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"  xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd 
+		http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<description>Spring-Data-JPA</description>
+
+	<!-- ************************************************************************************************* -->
+	<!-- *                                   Spring data JPA 配置                                                                                               	 * -->
+	<!-- ************************************************************************************************* -->
+	<!-- Spring Data Jpa -->
+ 	<jpa:repositories base-package="com.brevy.core.shiro.dao"  entity-manager-factory-ref="entityManagerFactory"/>
+
+	<!-- Jpa Entity Manager -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="proxyDataSource" />
+		<property name="persistenceUnitName" value="defaultPU" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- 供应商为ORACLE -->
+				<property name="database" value="ORACLE"/>
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<!-- 允许在同一实体中使用两个同类型的嵌入对象而无须额外的声明 -->
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<!--   
+					it is used to control whether we should consult the JDBC metadata to determine
+ 					certain Settings default values; it is useful to *not* do this when the database
+ 					may not be available (mainly in tools usage).
+				-->
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+				<prop key="hibernate.jdbc.fetch_size">50</prop>
+				<prop key="hibernate.jdbc.batch_size">30</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	
+
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!-- 指定到Dao类 -->    
+<mapper namespace="com.brevy.batch.core.jobs.sample.dao.SampleDao">
+	<resultMap id="TestAResultMap" type="com.brevy.batch.core.jobs.sample.model.TestA">
+		<id column="ID" property="id"/>
+		<result column="FIELD1" property="f1"/>
+		<result column="FIELD2" property="f2"/>
+	</resultMap>
+	
+	<!-- 分页查询记录 -->
+	<select id="queryPaged" resultMap="TestAResultMap">
+		<![CDATA[
+			SELECT * FROM TestA
+		]]>
+	</select>
+	
+	<!-- 向TestA插入记录 -->
+	<insert id="initTestA" parameterType="com.brevy.batch.core.jobs.sample.model.TestA">
+		<![CDATA[
+			INSERT INTO TESTA (ID, FIELD1, FIELD2) 
+			VALUES (#{id}, #{f1}, #{f2})
+		]]>
+	</insert>
+	
+	<select id="countTestA" resultType="int">
+		<![CDATA[
+			SELECT COUNT(1) FROM TESTA
+		]]>
+	</select>
+</mapper>

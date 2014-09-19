@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.login.LoginUI</moduleName>  
+    <moduleIcon>icon-computer_key</moduleIcon>
+    <files>
+        <css/>
+        <js>
+        	<file>ui/LoginUI.js</file>
+        	<file>store/LoginStore.js</file>
+        </js>
+    </files>
+</module>

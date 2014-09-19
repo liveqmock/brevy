@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.entry.EntryUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>ui/EntryUI.js</file>
+        	<file>store/EntryStore.js</file>
+        </js>
+    </files>
+</module>

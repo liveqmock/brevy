@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>Brevy.module.core.Login</moduleName>
+    <moduleIcon>icon-computer_key</moduleIcon>
+    <moduleText>用户登录 | BREVY</moduleText>
+    <files>
+        <js>
+        	<file>login.js</file>
+        </js>
+    </files>
+</module>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- ************************************************************************************************* -->
+	<!-- * 环境配置切换(在web.xml中的spring.profiles.default上启用) * -->
+	<!-- ************************************************************************************************* -->
+	<!-- 开发环境 -->
+	<beans profile="dev">
+		<context:property-placeholder
+			ignore-unresolvable="true" location="classpath:/env/configurations-dev.properties" />
+	</beans>
+
+	<!-- SIT环境 -->
+	<beans profile="sit">
+		<context:property-placeholder
+			ignore-unresolvable="true" location="classpath:/env/configurations-sit.properties" />
+	</beans>
+
+
+	<!-- PRD环境 -->
+	<beans profile="prd">
+		<context:property-placeholder
+			ignore-unresolvable="true" location="classpath:/env/configurations-prd.properties" />
+	</beans>
+</beans>

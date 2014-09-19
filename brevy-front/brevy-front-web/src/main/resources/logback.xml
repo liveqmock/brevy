@@ -1,0 +1,63 @@
+<configuration>
+	<property name="log.base" value="/var/logs/brevy/brevy-front" />
+	<property name="pattern"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{80} :%msg%n" />
+
+	<appender name="biz"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.base}/brevy-front-biz.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.base}/%d{yyyy-MM-dd}/brevy-front-biz-%i.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>20</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>20MB</MaxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern> ${pattern}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="root"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.base}/brevy-front-root.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.base}/%d{yyyy-MM-dd}/brevy-front-root-%i.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>20</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<MaxFileSize>20MB</MaxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${pattern}</pattern>
+		</encoder>
+	</appender>
+	
+	
+	<logger name="com.brevy" level="debug" additivity="false">
+		<appender-ref ref="biz" />
+	</logger>
+	
+	<logger name="org.apache.ibatis.logging.slf4j" level="debug" additivity="false">
+		<appender-ref ref="biz"/>
+	</logger>
+
+	<logger name="org.springframework.jdbc.datasource" level="debug" additivity="false">
+		<appender-ref ref="biz"/>
+	</logger>
+	
+	<logger name="org.mybatis.spring.transaction" level="debug" additivity="false">
+		<appender-ref ref="biz"/>
+	</logger>
+	
+	<logger name="org.jdbcdslog" level="info" additivity="false">
+		<appender-ref ref="biz"/>
+	</logger>
+
+	<!-- root级别控制 -->
+	<root level="INFO">
+		<appender-ref ref="root" />
+	</root>
+</configuration>  

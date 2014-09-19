@@ -1,0 +1,26 @@
+数据接口规范
+	
+	请求报文：
+	以REQ_MESSAGE为key值将JSON字符串传递到后台
+	
+	序号		字段ID			中文含义		类型(长度)			备 注
+	1		REQ_HEAD		请求报文头	Map					字段2-3为REQ_HEAD中的内容
+	2		TRAN_PROCESS	流程码		字符串				交易ID(暂时不用),通过请求URL获取交易ID
+	3		SESSION_TIMEOUT	会话超时		boolean				会话超时
+	4		REQ_BODY		请求报文体	Map					该Map的实际内容为各交易的输入项
+	例如：
+	{"REQ_HEAD":{"SESSION_TIMEOUT":false},"REQ_BODY":{"beginDate":"2013-07-04","endDateType":1,"leaveType":0,"itemList":["28","29"],"attachmentList":["521","528"],"endDate":"2010-07-30","leaveId":"21","leaveReason":"reason","beginDateType":0}}
+	
+
+	响应报文：
+	后台将交易中设置的数据转换为JSON字符串返回到前台
+	序号		字段ID			中文含义			类型(长度)		备 注
+	1		RSP_HEAD		返回报文头		Map				字段2-5为RSP_HEAD中的内容
+	2		TRAN_SUCCESS	交易是否成功		字符串			1:成功   0:失败
+	3		ERROR_CODE		错误代码			字符串			交易成功无此字段
+	4		ERROR_MESSAGE	错误描述			字符串			交易成功无此字段
+	5		ERROR_FIELDS	错误字段			字符串			交易成功无此字段，标识页面错误，格式参考ExtJs的Api-Ext.form.Basic.markInvalid
+	6		RSP_BODY		返回报文体		Map				该Map的实际内容为各交易的输出项
+	例如：
+	{"RSP_HEAD":{"TRAN_SUCCESS":"1"},"RSP_BODY":{"beginDate":"2013-07-04","leaveType":0,"endDateType":1,"itemList":["28","29"],"endDate":"2010-07-30","attachmentList":["521","528"],"leaveReason":"reason","leaveId":"21","beginDateType":0}}
+	

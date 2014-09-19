@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Formula"
+	targetNamespace="http://cxf.spring.brevy.com/services/FC/Formula"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:tns="http://cxf.spring.brevy.com/services/FC/Formula"
+	xmlns:f="http://cxf.spring.brevy.com/services/FC/Formula/schema">
+	
+	<!-- types -->
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://cxf.spring.brevy.com/services/FC/Formula">
+			<xsd:import namespace="http://cxf.spring.brevy.com/services/FC/Formula/schema" schemaLocation="Formula.xsd" />
+		</xsd:schema>
+	</wsdl:types>
+	
+	<!-- message -->
+	<wsdl:message name="FormulaRequestMessage">
+		<wsdl:part name="FormulaRequestPart" element="f:createFormula" />
+	</wsdl:message>
+	<wsdl:message name="FormulaResponseMessage">
+		<wsdl:part name="FormulaResponsePart" element="f:createFormulaResponse" />
+	</wsdl:message>
+
+	
+	<!-- portType -->
+	<wsdl:portType name="FormulaPortType">
+		<wsdl:operation name="createFormula">
+			<wsdl:input message="tns:FormulaRequestMessage" />
+			<wsdl:output message="tns:FormulaResponseMessage" />
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<!-- binding -->
+	<wsdl:binding name="FormulaSoapBinding" type="tns:FormulaPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="createFormula">
+			<soap:operation soapAction="http://cxf.spring.brevy.com/services/FC/Formula/createFormula" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<!-- service -->
+	<wsdl:service name="FormulaService">
+		<wsdl:port name="FormulaPort" binding="tns:FormulaSoapBinding">
+			<soap:address location="http://www.brevy.com/services/FC/FormulaService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

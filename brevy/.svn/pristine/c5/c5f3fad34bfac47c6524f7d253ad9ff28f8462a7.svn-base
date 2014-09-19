@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <description>验证码默认配置模板</description>
+    
+    <!-- 验证码服务 -->
+    <bean id="captchaService"
+        class="com.octo.captcha.service.multitype.GenericManageableCaptchaService">
+        <constructor-arg index="0" ref="customImageCaptchaEngine"/>
+        <constructor-arg index="1"><!-- delay -->
+        	<value>300</value>
+        </constructor-arg>
+        <constructor-arg index="2"><!-- store size -->
+        	<value>200000</value>
+        </constructor-arg>
+    </bean>
+    
+    
+    <!-- 自定义图片验证码引擎 -->
+    <bean id="customImageCaptchaEngine" class="com.brevy.fw.common.support.captcha.CustomImageCaptchaEngine">
+    	<property name="backgroundGenerator" ref="${captcha.engine.backgroundGenerator}"/>
+    	<property name="wordGenerator" ref="${captcha.engine.wordGenerator}"/>
+    	<property name="textPaster" ref="${captcha.engine.textPaster}"/>
+    	<property name="fontGenerator" ref="${captcha.engine.fontGenerator}"/>
+    </bean>
+
+
+    <!-- 字符生成器 -->
+    <bean id="randomWordGenerator" class="com.octo.captcha.component.word.wordgenerator.RandomWordGenerator">
+    	<constructor-arg>
+    		<value>${captcha.engine.wordGenerator.range}</value>
+    	</constructor-arg>
+    </bean>  
+    
+    <!-- 字符颜色及个数生成器 -->
+    <bean id="randomTextPaster" class="com.octo.captcha.component.image.textpaster.RandomTextPaster">
+    	<constructor-arg index="0"><!-- min Accepted Word Length -->
+    		<value>${captcha.engine.randomTextPaster.minWords}</value>
+    	</constructor-arg>
+    	<constructor-arg index="1"><!-- max Accepted Word Length -->
+    		<value>${captcha.engine.randomTextPaster.maxWords}</value>
+    	</constructor-arg>
+    	<constructor-arg index="2" ref="${captcha.engine.randomTextPaster.rangeColorGenerator}"/>
+    	<constructor-arg index="3">
+    		<value>true</value>
+    	</constructor-arg>
+    </bean>
+    
+    <!-- 字符颜色范围生成器 -->
+    <bean id="randomRangeColorGenerator" class="com.octo.captcha.component.image.color.RandomRangeColorGenerator">
+    	<constructor-arg index="0">
+    		<array>
+    			<value>${captcha.engine.randomTextPaster.randomRangeColorGenerator.redRangeBegin}</value>
+    			<value>${captcha.engine.randomTextPaster.randomRangeColorGenerator.redRangeEnd}</value>
+    		</array>
+    	</constructor-arg>
+    	<constructor-arg index="1">
+    		<array>
+    			<value>${captcha.engine.randomTextPaster.randomRangeColorGenerator.greenRangeBegin}</value>
+    			<value>${captcha.engine.randomTextPaster.randomRangeColorGenerator.greenRangeEnd}</value>
+    		</array>
+    	</constructor-arg>
+    	<constructor-arg index="2">
+    		<array>
+    			<value>${captcha.engine.randomTextPaster.randomRangeColorGenerator.blueRangeBegin}</value>
+    			<value>${captcha.engine.randomTextPaster.randomRangeColorGenerator.blueRangeEnd}</value>
+    		</array>
+    	</constructor-arg>
+    </bean>
+    
+    <!-- 文字大小及字体生成器 -->
+    <bean id="randomFontGenerator" class="com.octo.captcha.component.image.fontgenerator.RandomFontGenerator">
+    	<constructor-arg index="0"><!-- min font size -->
+    		<value>${captcha.engine.fontGenerator.minSize}</value>
+    	</constructor-arg>
+    	<constructor-arg index="1"><!-- max font size -->
+    		<value>${captcha.engine.fontGenerator.maxSize}</value>
+    	</constructor-arg>
+    	<constructor-arg index="2"><!-- fonts list -->
+    		<array>
+    			<bean class="java.awt.Font">
+    				<constructor-arg index="0"><value>${captcha.engine.fontGenerator.candidateFontName1}</value></constructor-arg>
+    				<constructor-arg index="1"><value>0</value></constructor-arg>
+    				<constructor-arg index="2"><value>${captcha.engine.fontGenerator.candidateFontSize1}</value></constructor-arg>
+    			</bean>
+    			<bean class="java.awt.Font">
+    				<constructor-arg index="0"><value>${captcha.engine.fontGenerator.candidateFontName2}</value></constructor-arg>
+    				<constructor-arg index="1"><value>0</value></constructor-arg>
+    				<constructor-arg index="2"><value>${captcha.engine.fontGenerator.candidateFontSize2}</value></constructor-arg>
+    			</bean>
+    			<bean class="java.awt.Font">
+    				<constructor-arg index="0"><value>${captcha.engine.fontGenerator.candidateFontName3}</value></constructor-arg>
+    				<constructor-arg index="1"><value>0</value></constructor-arg>
+    				<constructor-arg index="2"><value>${captcha.engine.fontGenerator.candidateFontSize3}</value></constructor-arg>
+    			</bean>
+    		</array>
+    	</constructor-arg>
+    </bean>
+    
+    
+    
+    <!-- 背景生成器  begin-->
+    <!-- 单色 -->
+    <bean id="uniColorBackgroundGenerator" class="com.octo.captcha.component.image.backgroundgenerator.UniColorBackgroundGenerator">
+    	<constructor-arg index="0" ref="backgroundWidth"/><!-- width -->
+    	<constructor-arg index="1" ref="backgroundHeight"/><!-- height -->
+    	<constructor-arg index="2"><!-- first color -->
+    		<bean class="java.awt.Color">
+    			<constructor-arg index="0" type="int" value="${captcha.engine.uniColorBackgroundGenerator.red}"/>
+    			<constructor-arg index="1" type="int" value="${captcha.engine.uniColorBackgroundGenerator.green}"/>
+    			<constructor-arg index="2" type="int" value="${captcha.engine.uniColorBackgroundGenerator.blue}"/>
+    		</bean>
+    	</constructor-arg>
+    </bean>
+    
+    <!-- 双色渐变 -->
+    <bean id="gradientBackgroundGenerator" class="com.brevy.fw.common.support.captcha.backgroundGenerator.CustomGradientBackGroundGenerator">
+    	<constructor-arg index="0" ref="backgroundWidth"/><!-- width -->
+    	<constructor-arg index="1" ref="backgroundHeight"/><!-- height -->
+    	<constructor-arg index="2"><!-- first color -->
+    		<bean class="java.awt.Color">
+    			<constructor-arg index="0" type="int" value="${captcha.engine.gradientBackgroundGenerator.red1}"/>
+    			<constructor-arg index="1" type="int" value="${captcha.engine.gradientBackgroundGenerator.green1}"/>
+    			<constructor-arg index="2" type="int" value="${captcha.engine.gradientBackgroundGenerator.blue1}"/>
+    		</bean>
+    	</constructor-arg>
+    	<constructor-arg index="3"><!-- second color -->
+    		<bean class="java.awt.Color">
+    			<constructor-arg index="0" type="int" value="${captcha.engine.gradientBackgroundGenerator.red2}"/>
+    			<constructor-arg index="1" type="int" value="${captcha.engine.gradientBackgroundGenerator.green2}"/>
+    			<constructor-arg index="2" type="int" value="${captcha.engine.gradientBackgroundGenerator.blue2}"/>
+    		</bean>
+    	</constructor-arg>
+    </bean>
+    
+    <!-- 彩色 -->
+    <bean id="funkyBackgroundGenerator" class="com.octo.captcha.component.image.backgroundgenerator.FunkyBackgroundGenerator">
+    	<constructor-arg index="0" ref="backgroundWidth"/><!-- width -->
+    	<constructor-arg index="1" ref="backgroundHeight"/><!-- height -->
+    </bean>
+    <!-- 背景生成器  end-->
+    
+    <!-- 背景尺寸 begin -->
+    <!-- 宽度 -->
+    <bean id="backgroundWidth" class="java.lang.Integer">
+    	<constructor-arg value="${captcha.engine.backgroundGenerator.width}"/>
+    </bean>
+    <!-- 高度 -->
+    <bean id="backgroundHeight" class="java.lang.Integer">
+    	<constructor-arg value="${captcha.engine.backgroundGenerator.height}"/>
+    </bean>
+     <!-- 背景尺寸 end -->
+</beans>

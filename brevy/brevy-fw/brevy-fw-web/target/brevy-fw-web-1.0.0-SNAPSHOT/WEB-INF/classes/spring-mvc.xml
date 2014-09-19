@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<description>SpringMVC公共配置</description>
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.brevy.fw" resource-pattern="**/web/**/*Controller.class"/>
+	
+	<import resource="classpath:/spring-profiles.xml"/>	
+	
+	<!-- 创建序列化/反序列化JSON的ObjectMapper(已修改对象的配置参数) -->
+	<bean id="objectMapper" class="com.brevy.fw.common.util.JsonUtils" factory-method="getObjectMapper"/>
+
+	<!-- 返回视图解析器 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="contentNegotiationManager">
+			<bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		    	<property name="mediaTypes">
+		    		<props>
+		    			<prop key="html">text/html</prop>
+		    			<prop key="json">application/json</prop>
+		    			<prop key="img">image/*</prop>
+		    		</props>
+		    	</property> 
+		    	<property name="ignoreAcceptHeader" value="true"/>
+			</bean>
+		</property>
+		<property name="viewResolvers">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="prefix" value="/WEB-INF/pages/" />
+					<property name="suffix" value=".jsp" />
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<!-- json view -->
+				<bean class="com.brevy.fw.common.support.web.view.CustomMappingJacksonJsonView">
+					<property name="objectMapper" ref="objectMapper"/>
+					<property name="messageSource" ref="messageSource"/>
+				</bean>
+				<!-- image view -->
+				<bean class="com.brevy.fw.common.support.web.view.ImageView" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 属性编辑器 -->
+	<bean id="customBindingInitializer" class="com.brevy.fw.common.support.web.controller.binder.CustomBindingInitializer">
+		<!-- 候选日期模式 -->
+        <property name="candidateDatePatterns">
+        	<list>
+        		<value>yyyy-MM-dd</value>
+        		<value>yyyy-MM-dd HH:mm:ss</value>
+        		<value>yyyyMMdd</value>
+        		<value>yyyy/MM/dd</value>
+        		<value>yyyy.MM.dd</value>
+        	</list>
+        </property>
+	</bean>
+	
+	<!-- 注解映射处理适配器 -->
+	<bean name="handlerAdapter" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<!-- 把自定义属性编辑器注册到框架 -->	
+		<property name="webBindingInitializer" ref="customBindingInitializer"/>
+		<!-- 消息转换器定义 -->
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonHttpMessageConverter"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 请求映射配置 -->
+	<bean name="handlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+	    <property name="useTrailingSlashMatch" value="true"/>
+	</bean>
+	
+	<!-- Http Message请求转换器 -->
+	<bean name="jsonHttpMessageConverter" class="com.brevy.fw.common.support.web.http.converter.CustomMappingJacksonHttpMessageConverter">
+		<property name="objectMapper" ref="objectMapper"/>
+	</bean>
+
+	<!-- 异常解析器 -->
+	<!-- <bean id="exceptionResolver"
+		class="com.ips.core.psfp.common.web.resolver.CustomMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="com.ips.core.psfp.common.exceptions.BizException">errors/bizExError</prop>
+				<prop key="com.ips.core.psfp.common.exceptions.SysException">errors/sysExError</prop>
+				<prop key="com.ips.core.psfp.common.exceptions.WsMessageException">errors/wsMessageExError</prop>
+			</props>
+		</property>
+		<property name="defaultErrorView" value="errors/defaultExError" />
+	</bean> -->
+
+</beans>

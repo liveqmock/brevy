@@ -1,0 +1,16 @@
+package com.brevy.batch.core.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.brevy.batch.core.model.ApSeq;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+
+public interface QueryDao {
+	
+	public List<ApSeq> queryAll();
+	
+	public List<ApSeq> queryPaged(@Param("seqValue") long seqValue, PageBounds pageBounds);
+	
+}

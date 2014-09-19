@@ -1,0 +1,36 @@
+package com.brevy.batch.core.jobs.sample.reader;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.brevy.batch.core.joblaunchdetails.support.reader.CustomPagingItemReader;
+import com.brevy.batch.core.jobs.sample.dao.SampleDao;
+import com.brevy.batch.core.jobs.sample.model.TestA;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+
+/**
+ * @Description 分页reader
+ * @author caobin
+ * @date 2013-9-23
+ * @version 1.0
+ */
+public class SamplePagingReader extends CustomPagingItemReader<List<TestA>> {
+
+	@Override
+	protected List<TestA> execute() {
+		PageBounds pageBounds = new PageBounds(this.getPage(), this.getPageSize());
+		PageList<TestA> lstTestA = sampleDao.queryPaged(pageBounds);
+		log.info(">>>> Sample paging reader: count = {}", new Object[]{lstTestA.getPaginator().getTotalCount()});
+		return lstTestA;
+	}
+
+
+	@Autowired
+	private SampleDao sampleDao;
+	
+	private transient Logger log = LoggerFactory.getLogger(this.getClass());
+}

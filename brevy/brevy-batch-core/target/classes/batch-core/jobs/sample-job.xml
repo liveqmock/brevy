@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 样例作业 -->
+	<batch:job id="sampleJob">
+		<batch:step id="sampleJob.s1" next="sampleJob.s2">
+			<batch:tasklet ref="sampleTasklet"/>
+		</batch:step>
+		<batch:step id="sampleJob.s2">
+			<batch:tasklet>
+				<!-- 每处理5个ITEM做一次事务提交 -->
+				<batch:chunk reader="samplePagingReader" writer="sampleWriter" commit-interval="5"/>
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+	
+	<!-- sample tasklet -->
+	<bean id="sampleTasklet" class="com.brevy.batch.core.jobs.sample.tasklet.SampleTasklet" scope="step" />
+	
+	<!-- sample paging reader -->
+	<bean id="samplePagingReader" class="com.brevy.batch.core.jobs.sample.reader.SamplePagingReader" scope="step">
+		<property name="pageSize" value="10"/>
+	</bean>
+	<!-- sample writer -->
+	<bean id="sampleWriter" class="com.brevy.batch.core.jobs.sample.writer.SampleWriter" scope="step"/>
+
+	<!-- <batch:job id="sampleJob">
+		<batch:step id="sampleJob.s1" next="sampleJob.s2">
+			<batch:tasklet>
+				<batch:chunk reader="sampleReader" processor="sampleProcesser"
+					writer="sampleWriter" commit-interval="3" />
+			</batch:tasklet>
+		</batch:step>
+		<batch:step id="sampleJob.s2" next="sampleJob.s3">
+			<batch:tasklet>
+				<batch:chunk reader="sampleReader2" processor="sampleProcesser"
+					writer="sampleWriter" commit-interval="1" />
+			</batch:tasklet>
+		</batch:step>
+		<batch:step id="sampleJob.s3">
+			<batch:tasklet ref="sampleTasklet" />
+		</batch:step>
+		<batch:listeners>
+			<batch:listener ref="sampleListener" />
+		</batch:listeners>
+	</batch:job>
+
+
+	<bean id="sampleReader" class="com.bocom.bits.batch.sample.SampleReader" >
+		<property name="dateService" ref="dateService"/>
+	</bean>
+	<bean id="sampleReader2" class="com.bocom.bits.batch.sample.SampleReader2" />
+	<bean id="sampleProcesser" class="com.bocom.bits.batch.sample.SampleProcesser" />
+	<bean id="sampleWriter" class="com.bocom.bits.batch.sample.SampleWriter" />
+	<bean id="sampleListener" class="com.bocom.batch.framework.listener.JobTerminationListener" />
+	<bean id="sampleTasklet" class="com.bocom.bits.batch.sample.SampleTasklet"
+		scope="step" />
+
+	简易批量JOB加载器（同步+策略设置）	
+	<bean id="sampleJobLauncher" class="com.brevy.batch.core.joblaunchdetails.SimpleJobLaunchDetails">
+		<property name="jobLauncher" ref="syncJobLauncher"/>
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="jobDetails">
+			<list>
+				<value>sampleJob:false</value>任务ID:是否关键任务
+			</list>
+		</property>
+	</bean> -->
+	
+	
+	
+	<!-- 样例JobLaunchDetails -->
+	<bean id="sampleJobLauncher" class="com.brevy.batch.core.joblaunchdetails.SimpleJobLaunchDetails">
+		<property name="jobLauncher" ref="syncJobLauncher"/>
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="jobDetails">
+			<list>
+				<value>sampleJob:true</value><!-- 任务ID:是否关键任务 -->
+			</list>
+		</property>
+	</bean>
+</beans>

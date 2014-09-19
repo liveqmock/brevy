@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<description>Spring Common默认配置</description>
+	
+	<!-- 创建序列化/反序列化JSON的ObjectMapper(已修改优化对象的配置参数) -->
+	<bean id="objectMapper" class="com.brevy.fw.common.util.JsonUtils" factory-method="getObjectMapper"/>
+	
+	<!-- Http Message请求转换器 -->
+	<bean name="jsonHttpMessageConverter" class="com.brevy.fw.common.support.web.http.converter.CustomMappingJacksonHttpMessageConverter">
+		<property name="objectMapper" ref="objectMapper"/>
+	</bean>
+</beans>

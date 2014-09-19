@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>brevy-front</artifactId>
+		<groupId>com.brevy.front</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.brevy.front</groupId>
+	<artifactId>brevy-front-web</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>Brevy Front Web :: WAR</name>
+	<description>Brevy前端-页面（基于Isomorphic SmartClient）</description>
+
+	<dependencies>
+		<!-- Biz - isc -->
+		<dependency>
+			<groupId>com.brevy.front</groupId>
+			<artifactId>brevy-front-biz-isc</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- servlet & jsp -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- <outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory> -->
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			
+			<plugin>  
+		        <groupId>org.mortbay.jetty</groupId>  
+		        <artifactId>jetty-maven-plugin</artifactId>  
+		        <version>8.1.9.v20130131</version>  
+		        <configuration>  
+		           <scanIntervalSeconds>0</scanIntervalSeconds><!-- 禁用 -->
+		           <webAppConfig>  
+		            	<contextPath>/brevy-front-web</contextPath>
+		                <defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>  
+		           </webAppConfig>  
+		        </configuration>  
+    		</plugin>  
+			
+			<!-- <plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin> -->
+
+			<!-- <plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin> -->
+
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin> -->
+
+			<!-- <plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+			</plugin> -->
+			
+			
+			
+			<!-- <plugin>
+				<groupId>com.brevy.maven.plugins</groupId>
+				<artifactId>maven-brevy-plugin</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					goal为remove的操作配置
+					<goalRemove>
+						<resources>
+							<resource>
+								<baseDirectory>${basedir}/src/main/webapp/WEB-INF/lib/</baseDirectory>
+								<filePatterns>
+									<filePattern>*.jar</filePattern>
+								</filePatterns>
+							</resource>
+						</resources>
+					</goalRemove>
+				</configuration>
+			</plugin> -->
+		</plugins>
+	</build>
+	
+	<!-- lib下的Jar更新操作：mvn brevy:remove dependency:copy-dependencies -->
+</project>

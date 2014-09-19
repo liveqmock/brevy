@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://cxf.spring.brevy.com/services/FC/Calculator/schema" 
+	targetNamespace="http://cxf.spring.brevy.com/services/FC/Calculator/schema"
+	elementFormDefault="qualified">
+	
+	<!--########## 计算器  ##########-->
+	
+	<!-- 加法运算 -->
+	<xs:element name="add" type="tns:addRequest_CType"/>
+	<xs:element name="addResponse" type="tns:addResponse_CType"/>
+	
+	<!-- 减法运算 -->
+	<xs:element name="minus" type="tns:minusRequest_CType"/>
+	<xs:element name="minusResponse" type="tns:minusResponse_CType"/>
+	
+	<!-- 乘法运算 -->
+	<xs:element name="multiply" type="tns:multiplyRequest_CType"/>
+	<xs:element name="multiplyResponse" type="tns:multiplyResponse_CType"/>
+	
+	<!-- 除法运算 -->
+	<xs:element name="divide" type="tns:divideRequest_CType"/>
+	<xs:element name="divideResponse" type="tns:divideResponse_CType"/>
+	
+	<!-- 加法运算请求 -->
+	<xs:complexType name="addRequest_CType">
+		<xs:sequence>
+			<xs:element name="param1" type="tns:param1_SType"/>
+			<xs:element name="param2" type="tns:param2_SType"/>
+			<xs:element name="settings" type="tns:settings_CType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 加法运算响应 -->
+	<xs:complexType name="addResponse_CType">
+		<xs:sequence>
+			<xs:element name="result" type="tns:result_SType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 减法运算请求 -->
+	<xs:complexType name="minusRequest_CType">
+		<xs:sequence>
+			<xs:element name="param1" type="tns:param1_SType"/>
+			<xs:element name="param2" type="tns:param2_SType"/>
+			<xs:element name="settings" type="tns:settings_CType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 减法运算响应 -->
+	<xs:complexType name="minusResponse_CType">
+		<xs:sequence>
+			<xs:element name="result" type="tns:result_SType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 乘法运算请求 -->
+	<xs:complexType name="multiplyRequest_CType">
+		<xs:sequence>
+			<xs:element name="param1" type="tns:param1_SType"/>
+			<xs:element name="param2" type="tns:param2_SType"/>
+			<xs:element name="settings" type="tns:settings_CType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 乘法运算响应 -->
+	<xs:complexType name="multiplyResponse_CType">
+		<xs:sequence>
+			<xs:element name="result" type="tns:result_SType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 除法运算请求 -->
+	<xs:complexType name="divideRequest_CType">
+		<xs:sequence>
+			<xs:element name="param1" type="tns:param1_SType"/>
+			<xs:element name="param2" type="tns:param2_SType"/>
+			<xs:element name="settings" type="tns:settings_CType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 除法运算响应 -->
+	<xs:complexType name="divideResponse_CType">
+		<xs:sequence>
+			<xs:element name="result" type="tns:result_SType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 运算变量1 -->
+	<xs:simpleType name="param1_SType">
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	
+	<!-- 运算变量2 -->
+	<xs:simpleType name="param2_SType">
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	
+	<!-- 运算设置 -->
+	<xs:complexType name="settings_CType">
+		<xs:sequence>
+			<xs:element name="scale" type="tns:scale_SType"/>
+			<xs:element name="roundingMode" type="tns:roundingMode_SType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 标度 -->
+	<xs:simpleType name="scale_SType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- 舍入模式 -->
+	<xs:simpleType name="roundingMode_SType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- 运算结果 -->
+	<xs:simpleType name="result_SType">
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+</xs:schema>

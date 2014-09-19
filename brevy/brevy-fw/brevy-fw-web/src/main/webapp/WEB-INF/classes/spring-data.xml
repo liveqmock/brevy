@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"  xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd 
+		http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<description>数据持久化默认配置模板</description>
+	
+	<!-- ************************************************************************************************* -->
+	<!-- *                                        数据源配置                                                                                            			 * -->
+	<!-- ************************************************************************************************* -->	
+	<!-- 代理datasource，使其能够显式获取preparedStatement的参数值 -->
+	<bean id="dataSourceProxy" class="org.jdbcdslog.ConnectionPoolDataSourceProxy">
+		<property name="targetDSDirect" ref="${data.dataSource}"/>
+	</bean>
+
+	<!-- ************************************************************************************************* -->
+	<!-- *                                   Spring data JPA 配置                                                                                               	 * -->
+	<!-- ************************************************************************************************* -->
+	<!-- Jpa Entity Manager -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSourceProxy" />
+		<property name="persistenceUnitName" value="defaultPU" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="database" value="${data.jpa.vendor.database}"/>
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Spring Data Jpa -->
+ 	<jpa:repositories base-package="com.brevy.fw.common,com.brevy.fw.xx"  entity-manager-factory-ref="entityManagerFactory"/>
+	
+
+	<!-- ************************************************************************************************* -->
+	<!-- *                                        MyBatis 配置                                                                                      			 * -->
+	<!-- ************************************************************************************************* -->
+	<!-- MyBatis配置，为Hibernate互补 -->
+	<bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceProxy" />
+		<!-- 主配置文件位置 -->
+		<property name="configLocation" value="${data.mybatis.configLocation}"/>
+		<!-- 显式指定Mapper文件位置 -->
+		<property name="mapperLocations">
+			<array>
+				<value>classpath*:/common/mybatis/mappers/*Mapper.xml</value>
+				<value>classpath*:/mybatis/mappers/*Mapper.xml</value>
+			</array>
+		</property>
+	</bean>
+	
+	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口或继承MyBatisRepository接口的接口，二者选其一-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 不同包之间用逗号分隔 -->
+		<property name="basePackage" value="com.brevy.fw.common,com.brevy.fw.xx" />
+		<!-- 扫描指定annotation -->
+		<property name="annotationClass" value="com.brevy.fw.common.support.data.mybatis.annotation.MyBatisRepository"/>
+		<!-- 扫描指定接口 -->
+		<property name="markerInterface" value="com.brevy.fw.common.support.data.mybatis.MyBatisRepository"/>
+		<!-- 指定sqlSessionFactory -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+	</bean>
+	
+	
+	<!-- ************************************************************************************************* -->
+	<!-- *                                       JDBC Template 配置                                                                                      		 * -->
+	<!-- ************************************************************************************************* -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceProxy"/>
+	</bean>
+	
+	<!-- ************************************************************************************************* -->
+	<!-- *                                        事务配置                                                                                                			 * -->
+	<!-- ************************************************************************************************* -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceProxy" />
+	</bean>
+	
+	<!-- 编程式事务模板 -->
+	<bean id="txTemplate" class="org.springframework.transaction.support.TransactionTemplate" >
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
+		<property name="isolationLevelName" value="ISOLATION_DEFAULT"/>
+		<property name="readOnly" value="false"/>
+		<!-- <property name="timeout" value="60"/> -->
+	</bean>
+	
+	<!-- AOP transaction -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+		    <tx:method name="txn*" propagation="REQUIRED"/>
+		    <tx:method name="create*" propagation="REQUIRED"/>
+		    <tx:method name="save*" propagation="REQUIRED"/>
+		    <tx:method name="insert*" propagation="REQUIRED"/> 
+		    <tx:method name="update*" propagation="REQUIRED"/> 
+		    <tx:method name="delete*" propagation="REQUIRED"/>
+		    <tx:method name="*" propagation="SUPPORTS" /> 
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- common pointcut -->
+		<aop:pointcut id="ponintCutCommonMethod" expression="execution(* com.brevy.fw.common..service..*.*(..))" />
+		<!-- biz pointcut -->
+		<aop:pointcut id="ponintCutBizMethod" expression="execution(* com.brevy.fw.xx..service..*.*(..))" />
+		<!-- common advisor -->
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="ponintCutCommonMethod" />
+		<!-- biz advisor -->
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="ponintCutBizMethod" />
+	</aop:config>
+</beans>

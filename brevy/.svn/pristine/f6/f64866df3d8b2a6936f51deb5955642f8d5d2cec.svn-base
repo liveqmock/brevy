@@ -1,0 +1,44 @@
+package com.brevy.batch.core.model;
+
+import java.io.Serializable;
+
+
+public class ApSeq implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	
+	private String seqName;
+
+	
+	private long seqValue;
+
+    public ApSeq() {
+    }
+
+	public String getSeqName() {
+		return this.seqName;
+	}
+
+	public void setSeqName(String seqName) {
+		this.seqName = seqName;
+	}
+
+	public long getSeqValue() {
+		return this.seqValue;
+	}
+
+	public void setSeqValue(long seqValue) {
+		this.seqValue = seqValue;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ApSeq [seqName=" + seqName + ", seqValue=" + seqValue + "]";
+	}
+	
+	
+
+}

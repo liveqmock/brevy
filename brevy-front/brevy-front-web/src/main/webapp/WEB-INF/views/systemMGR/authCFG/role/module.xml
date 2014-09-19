@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.systemMGR.authCFG.role.RoleUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>../../../login/store/LoginStore.js</file>
+        	<file>store/RoleStore.js</file>
+        	<file>store/RoleRefStore.js</file>
+        	<file>ui/RoleUI.js</file>
+        	<file>ui/crud/RoleRead.js</file>
+        	<file>ui/refMenu/RefMenu.js</file>
+        	<file>ui/refAccessAuth/RefAccessAuth.js</file>
+        	<file>ui/refOperAuth/RefOperAuth.js</file>
+        </js>
+    </files>
+</module>

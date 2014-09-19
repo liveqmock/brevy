@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config/>
+	<context:component-scan base-package="com.brevy.fw">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<import resource="classpath:/spring-profiles.xml"/>	
+	<import resource="classpath:/spring-aspect.xml" />
+	<import resource="classpath:/spring-captcha.xml"/>
+
+	<!-- spring 应用上下文工具初始化  -->
+	<bean class="com.brevy.fw.common.util.ApplicationContextUtils"/>
+
+	<!-- 初始化责任链执行器 -->
+	<!-- <bean id="chainExecutor" class="com.ips.chain.ext.spring.DefaultChainExecutor">
+		<property name="chainIdPrefix" value="TRAN_" />
+	</bean> -->
+
+	<!-- ************************************************************************************************* -->
+	<!-- ************************************* 资源加载/访问 ******************************************* -->
+	<!-- ************************************************************************************************* -->
+
+	<!-- 加载资源文件 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="useCodeAsDefaultMessage" value="true" />
+		<property name="basenames">
+			<array>
+				<value>classpath:/messages/Errors</value>
+			</array>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<!-- 资源访问器 -->
+	<bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
+		<constructor-arg>
+			<ref bean="messageSource" />
+		</constructor-arg>
+	</bean>
+	
+</beans>

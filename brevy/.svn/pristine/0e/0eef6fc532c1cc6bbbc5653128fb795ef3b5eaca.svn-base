@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd  
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<description>环境切换默认配置</description>
+
+	<!-- ************************************************************************************************* -->
+	<!-- *                                              环境配置切换                                                                                                    * -->
+	<!-- ************************************************************************************************* -->
+	<!-- 内嵌环境 -->
+	<beans profile="embed">
+		<context:property-placeholder ignore-unresolvable="true" location="classpath:/batch-core/env/batch-oracle.properties" />
+		<!-- 数据源配置-DBCP数据库连接池 -->
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close">
+			<property name="driverClassName" value="${batch.jdbc.driverClassName}" />
+			<property name="url" value="${batch.jdbc.url}" />
+			<property name="username" value="${batch.jdbc.username}" />
+			<property name="password" value="${batch.jdbc.password}" />
+			<property name="initialSize" value="${batch.jdbc.initialSize}" />
+			<property name="maxActive" value="${batch.jdbc.maxActive}" />
+			<property name="maxIdle" value="${batch.jdbc.maxIdle}" />
+			<property name="minIdle" value="${batch.jdbc.minIdle}" />
+			<property name="maxWait" value="${batch.jdbc.maxWait}" />
+			<property name="removeAbandoned" value="${batch.jdbc.removeAbandoned}" />
+			<property name="removeAbandonedTimeout" value="${batch.jdbc.removeAbandonedTimeout}" />
+			<property name="logAbandoned" value="${batch.jdbc.logAbandoned}" />
+			<property name="validationQuery" value="${batch.jdbc.validationQuery}" />
+			<property name="testOnBorrow" value="${batch.jdbc.testOnBorrow}" />		
+			<property name="defaultAutoCommit" value="false" />
+		</bean>
+	</beans>
+	
+	<!-- 开发环境 -->
+	<beans profile="dev">
+		<context:property-placeholder ignore-unresolvable="true" location="classpath:/env/env-dev.properties" />
+		<!-- 数据源配置-DBCP数据库连接池 -->
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close">
+			<property name="driverClassName" value="${batch.jdbc.driverClassName}" />
+			<property name="url" value="${batch.jdbc.url}" />
+			<property name="username" value="${batch.jdbc.username}" />
+			<property name="password" value="${batch.jdbc.password}" />
+			<property name="initialSize" value="${batch.jdbc.initialSize}" />
+			<property name="maxActive" value="${batch.jdbc.maxActive}" />
+			<property name="maxIdle" value="${batch.jdbc.maxIdle}" />
+			<property name="minIdle" value="${batch.jdbc.minIdle}" />
+			<property name="maxWait" value="${batch.jdbc.maxWait}" />
+			<property name="removeAbandoned" value="${batch.jdbc.removeAbandoned}" />
+			<property name="removeAbandonedTimeout" value="${batch.jdbc.removeAbandonedTimeout}" />
+			<property name="logAbandoned" value="${batch.jdbc.logAbandoned}" />
+			<property name="validationQuery" value="${batch.jdbc.validationQuery}" />
+			<property name="testOnBorrow" value="${batch.jdbc.testOnBorrow}" />		
+			<property name="defaultAutoCommit" value="false" />
+		</bean>
+	</beans>
+
+	<!-- SIT环境 -->
+	<beans profile="sit">
+		<context:property-placeholder ignore-unresolvable="true" location="classpath:/env/env-sit.properties" />		
+		<!-- <jee:jndi-lookup id="dataSource" jndi-name="${jndi.name}" /> -->
+		<!-- 数据源配置-DBCP数据库连接池 -->
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close">
+			<property name="driverClassName" value="${batch.jdbc.driverClassName}" />
+			<property name="url" value="${batch.jdbc.url}" />
+			<property name="username" value="${batch.jdbc.username}" />
+			<property name="password" value="${batch.jdbc.password}" />
+			<property name="initialSize" value="${batch.jdbc.initialSize}" />
+			<property name="maxActive" value="${batch.jdbc.maxActive}" />
+			<property name="maxIdle" value="${batch.jdbc.maxIdle}" />
+			<property name="minIdle" value="${batch.jdbc.minIdle}" />
+			<property name="maxWait" value="${batch.jdbc.maxWait}" />
+			<property name="removeAbandoned" value="${batch.jdbc.removeAbandoned}" />
+			<property name="removeAbandonedTimeout" value="${batch.jdbc.removeAbandonedTimeout}" />
+			<property name="logAbandoned" value="${batch.jdbc.logAbandoned}" />
+			<property name="validationQuery" value="${batch.jdbc.validationQuery}" />
+			<property name="testOnBorrow" value="${batch.jdbc.testOnBorrow}" />		
+			<property name="defaultAutoCommit" value="false" />
+		</bean>
+	</beans>
+	
+	<!-- UAT环境 -->
+	<beans profile="uat">
+		<context:property-placeholder ignore-unresolvable="true" location="classpath:/env/env-uat.properties" />
+		<!-- <jee:jndi-lookup id="dataSource" jndi-name="${jndi.name}" /> -->
+		<!-- 数据源配置-DBCP数据库连接池 -->
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close">
+			<property name="driverClassName" value="${batch.jdbc.driverClassName}" />
+			<property name="url" value="${batch.jdbc.url}" />
+			<property name="username" value="${batch.jdbc.username}" />
+			<property name="password" value="${batch.jdbc.password}" />
+			<property name="initialSize" value="${batch.jdbc.initialSize}" />
+			<property name="maxActive" value="${batch.jdbc.maxActive}" />
+			<property name="maxIdle" value="${batch.jdbc.maxIdle}" />
+			<property name="minIdle" value="${batch.jdbc.minIdle}" />
+			<property name="maxWait" value="${batch.jdbc.maxWait}" />
+			<property name="removeAbandoned" value="${batch.jdbc.removeAbandoned}" />
+			<property name="removeAbandonedTimeout" value="${batch.jdbc.removeAbandonedTimeout}" />
+			<property name="logAbandoned" value="${batch.jdbc.logAbandoned}" />
+			<property name="validationQuery" value="${batch.jdbc.validationQuery}" />
+			<property name="testOnBorrow" value="${batch.jdbc.testOnBorrow}" />		
+			<property name="defaultAutoCommit" value="false" />
+		</bean>
+	</beans>
+
+
+	<!-- PRD环境 -->
+	<beans profile="prd">
+		<context:property-placeholder ignore-unresolvable="true" location="classpath:/env/env-prd.properties" />
+		<!-- <jee:jndi-lookup id="dataSource" jndi-name="${jndi.name}" /> -->
+		<!-- 数据源配置-DBCP数据库连接池 -->
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close">
+			<property name="driverClassName" value="${batch.jdbc.driverClassName}" />
+			<property name="url" value="${batch.jdbc.url}" />
+			<property name="username" value="${batch.jdbc.username}" />
+			<property name="password" value="${batch.jdbc.password}" />
+			<property name="initialSize" value="${batch.jdbc.initialSize}" />
+			<property name="maxActive" value="${batch.jdbc.maxActive}" />
+			<property name="maxIdle" value="${batch.jdbc.maxIdle}" />
+			<property name="minIdle" value="${batch.jdbc.minIdle}" />
+			<property name="maxWait" value="${batch.jdbc.maxWait}" />
+			<property name="removeAbandoned" value="${batch.jdbc.removeAbandoned}" />
+			<property name="removeAbandonedTimeout" value="${batch.jdbc.removeAbandonedTimeout}" />
+			<property name="logAbandoned" value="${batch.jdbc.logAbandoned}" />
+			<property name="validationQuery" value="${batch.jdbc.validationQuery}" />
+			<property name="testOnBorrow" value="${batch.jdbc.testOnBorrow}" />		
+			<property name="defaultAutoCommit" value="false" />
+		</bean>
+	</beans>
+</beans>

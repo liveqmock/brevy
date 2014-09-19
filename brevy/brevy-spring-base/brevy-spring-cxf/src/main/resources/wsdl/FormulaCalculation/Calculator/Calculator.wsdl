@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Calculator"
+	targetNamespace="http://cxf.spring.brevy.com/services/FC/Calculator"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:tns="http://cxf.spring.brevy.com/services/FC/Calculator"
+	xmlns:cal="http://cxf.spring.brevy.com/services/FC/Calculator/schema">
+	
+	<!-- types -->
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://cxf.spring.brevy.com/services/FC/Calculator">
+			<xsd:import namespace="http://cxf.spring.brevy.com/services/FC/Calculator/schema" schemaLocation="Calculator.xsd" />
+		</xsd:schema>
+	</wsdl:types>
+	
+	<!-- message -->
+	<wsdl:message name="addRequestMessage">
+		<wsdl:part name="addRequestPart" element="cal:add" />
+	</wsdl:message>
+	<wsdl:message name="addResponseMessage">
+		<wsdl:part name="addResponsePart" element="cal:addResponse" />
+	</wsdl:message>
+	
+	<wsdl:message name="minusRequestMessage">
+		<wsdl:part name="minusRequestPart" element="cal:minus"/>
+	</wsdl:message>
+	<wsdl:message name="minusResponseMessage">
+		<wsdl:part name="minusResponsePart" element="cal:minusResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="multiplyRequestMessage">
+		<wsdl:part name="multplyRequestPart" element="cal:multiply"/>
+	</wsdl:message>
+	<wsdl:message name="multiplyResponseMessage">
+		<wsdl:part name="multplyResponsePart" element="cal:multiplyResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="divideRequestMessage">
+		<wsdl:part name="divideRequestPart" element="cal:divide"/>
+	</wsdl:message>
+	<wsdl:message name="divideResponseMessage">
+		<wsdl:part name="divideResponsePart" element="cal:divideResponse"/>
+	</wsdl:message>
+	
+	<!-- portType -->
+	<wsdl:portType name="CalculatorPortType">
+		<!-- 加法运算 -->
+		<wsdl:operation name="add">
+			<wsdl:input message="tns:addRequestMessage" />
+			<wsdl:output message="tns:addResponseMessage" />
+		</wsdl:operation>
+		<!-- 减法运算 -->
+		<wsdl:operation name="minus">
+			<wsdl:input message="tns:minusRequestMessage"/>
+			<wsdl:output message="tns:minusResponseMessage"/>
+		</wsdl:operation>
+		<!-- 乘法运算 -->
+		<wsdl:operation name="multiply">
+			<wsdl:input message="tns:multiplyRequestMessage"/>
+			<wsdl:output message="tns:multiplyResponseMessage"/>
+		</wsdl:operation>
+		<!-- 除法运算 -->
+		<wsdl:operation name="divide">
+			<wsdl:input message="tns:divideRequestMessage"/>
+			<wsdl:output message="tns:divideResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<!-- binding -->
+	<wsdl:binding name="CalculatorSoapBinding" type="tns:CalculatorPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="add">
+			<soap:operation soapAction="http://cxf.spring.brevy.com/services/FC/Calculator/add" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="minus">
+			<soap:operation soapAction="http://cxf.spring.brevy.com/services/FC/Calculator/minus" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="multiply">
+			<soap:operation soapAction="http://cxf.spring.brevy.com/services/FC/Calculator/multiply" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="divide">
+			<soap:operation soapAction="http://cxf.spring.brevy.com/services/FC/Calculator/divide" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<!-- service -->
+	<wsdl:service name="CalculatorService">
+		<wsdl:port name="CalculatorPort" binding="tns:CalculatorSoapBinding">
+			<soap:address location="http://www.brevy.com/services/FC/CalculatorService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,25 @@
+package com.brevy.batch.core.test;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.brevy.batch.core.dao.QueryDao;
+import com.brevy.batch.core.test.support.AbstractSpringContextTestSupport;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+
+public class QueryDaoTestcase extends AbstractSpringContextTestSupport {
+
+	@Test
+	public void queryAll(){
+		log.info(">>>> {}", new Object[]{queryDao.queryAll()});
+	}
+	
+	@Test
+	public void queryPaged(){
+		PageBounds pageBounds = new PageBounds(2,4);
+		log.info(">>>> {}", new Object[]{queryDao.queryPaged(2, pageBounds)});
+	}
+	
+	@Autowired
+	private QueryDao queryDao;
+}

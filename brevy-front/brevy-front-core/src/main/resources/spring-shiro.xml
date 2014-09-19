@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd ">
+
+	<description>Shiro Configuration</description>
+
+	<!-- Shiro's main business-tier object for web-enabled applications -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="customJdbcRealm" />
+		<property name="sessionManager" ref="sessionManager"/>
+		<property name="cacheManager" ref="shiroCacheManager"/>
+	</bean>
+	
+	<!-- shiro wrapped cacheManager -->
+	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager" ref="cacheManager"/>
+	</bean>
+	
+	<!-- session manager -->
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="sessionDAO"/>
+        <!-- 全局会话超时 -->
+        <property name="globalSessionTimeout" value="${shiro.globalSessionTimeout}"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+        <property name="sessionIdCookieEnabled" value="true"/>
+        <property name="sessionIdCookie" ref="entsession"/>
+    </bean>
+		
+	<!-- sessionDAO -->
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+        <property name="activeSessionsCacheName" value="shiro.activeSessionCache"/>
+    </bean>
+    
+    <!-- 
+    	sessionValidationScheduler - 定时清理僵尸session，
+    	Shiro会启用一个后台守护线程定时执行清理操作用户直接关闭浏览器造成的孤立会话 
+    -->
+	<bean id="sessionValidationScheduler"
+	      class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+	    <property name="interval" value="${shiro.sessionValidationScheduler.interval}"/>
+	</bean>
+	
+	<!--
+		指定本系统SESSIONID, 默认为: JSESSIONID
+		问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT 等默认JSESSIONID,
+		当跳出SHIRO SERVLET时,如ERROR-PAGE容器会为JSESSIONID重新分配值导致登录会话丢失!
+	-->
+	<bean id="entsession" class="org.apache.shiro.web.servlet.SimpleCookie">
+	    <constructor-arg name="name" value="sid"/>
+	</bean>
+	
+	<!-- 基于自定义JDBC的Realm -->
+	<bean id="customJdbcRealm" class="com.brevy.core.shiro.support.realm.CustomJdbcRealm">
+		<!-- 鉴权缓存 -->
+		<property name="authorizationCacheName" value="shiro.authorizationCache"/>
+		<property name="credentialsMatcher">
+			<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+				<!-- 摘要做迭代，增加安全性 -->
+				<property name="hashIterations" value="${shiro.credential.hashIterations}"/>
+				<property name="hashAlgorithmName" value="MD5"/>
+			</bean>
+		</property>
+		<!-- 是否开启验证码校验(true/false) -->
+		<property name="enableCaptcha" value="${shiro.captcha.enableCaptcha}"/>
+	</bean>
+	
+
+	<!-- Shiro Filter -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="${shiro.web.loginUrl}" />
+		<property name="unauthorizedUrl" value="${shiro.web.unauthorizedUrl}"/>
+		<property name="filterChainDefinitionMap">
+			<bean class="com.brevy.core.shiro.support.section.JdbcChainDefinitionSection">
+				<property name="appId" value="${shiro.appId}"/>
+			</bean>
+		</property>
+		<property name="filters">
+			<map>
+				<entry key="auth" value-ref="customFormAuthenticationFilter"/>
+				<entry key="roles" value-ref="customRolesAuthorizationFilter"/>
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- 自定义身份验证过滤器 -->
+	<bean id="customFormAuthenticationFilter" class="com.brevy.core.shiro.support.filter.CustomFormAuthenticationFilter"/>
+	
+	<!-- 自定义鉴权过滤器 -->
+	<bean id="customRolesAuthorizationFilter" class="com.brevy.core.shiro.support.filter.CustomRolesAuthorizationFilter">
+		<property name="defaultUrl" value="${shiro.web.defaultUrl}"/>
+	</bean>
+	
+	<!-- 保证实现了Shiro内部lifecycle方法的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	
+	<!-- AOP式方法级权限检查  -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    	<property name="securityManager" ref="securityManager"/>
+	</bean>
+	
+</beans>

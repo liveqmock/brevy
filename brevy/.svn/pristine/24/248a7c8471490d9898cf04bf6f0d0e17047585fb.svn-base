@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<description>Spring Batch核心默认配置</description>
+	
+	<context:annotation-config/>
+	
+	<context:component-scan base-package="com.brevy.batch" use-default-filters="false">
+		<!-- 扫描符合@Component @Service @Repository的类 -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+	</context:component-scan>
+	
+	<!-- *************************************************************************** -->
+	<!-- *           后期绑定作用域, 声明此作用域的bean将在step开始时初始化                             * -->
+	<!-- *             e.g.: <bean id="xx" scope="step" class="x.x.X"/>            * -->                                              
+	<!-- *************************************************************************** -->	
+	<bean class="org.springframework.batch.core.scope.StepScope"/>
+	
+	
+	<!-- *********************************************************** -->
+	<!-- *                   同步JOB启动器                                                                     * -->
+	<!-- *********************************************************** -->	
+	<bean id="syncJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+		<property name="taskExecutor" ref="syncTaskExecutor" />
+	</bean>
+	
+	
+	<!-- *********************************************************** -->
+	<!-- *                   异步JOB启动器                                                                     * -->
+	<!-- *********************************************************** -->	
+	<bean id="asyncJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+		<property name="taskExecutor" ref="asyncTaskExecutor" />
+	</bean>
+	
+
+	<!-- ************************************************************ -->
+	<!-- *                        JOB整合操作                                                     	* -->
+	<!-- ************************************************************ -->	
+	<bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator"
+		p:jobLauncher-ref="syncJobLauncher" p:jobExplorer-ref="jobExplorer"
+		p:jobRepository-ref="jobRepository" p:jobRegistry-ref="jobRegistry" />
+	
+
+
+	<!-- ************************************************************ -->
+	<!-- *                    JOB自动注册器                        					* -->
+	<!-- ************************************************************ -->	
+	<bean id="automaticJobRegistrar" class="org.springframework.batch.core.configuration.support.AutomaticJobRegistrar">
+		<property name="applicationContextFactories">
+			<bean class="org.springframework.batch.core.configuration.support.ClasspathXmlApplicationContextsFactoryBean">
+				<property name="resources" value="classpath*:/**/jobs/*Job.xml" />
+			</bean>
+		</property>
+		<property name="jobLoader">
+			<bean class="org.springframework.batch.core.configuration.support.DefaultJobLoader">
+				<property name="jobRegistry" ref="jobRegistry" />
+			</bean>
+		</property>
+	</bean>
+
+
+	<!-- ************************************************************ -->
+	<!-- *                     JOB服务                        					    * -->
+	<!-- ************************************************************ -->	
+	<bean id="jobService" class="org.springframework.batch.admin.service.SimpleJobServiceFactoryBean">
+		<property name="jobRepository" ref="jobRepository" />
+		<property name="jobLauncher" ref="syncJobLauncher" />
+		<property name="jobLocator" ref="jobRegistry" />
+		<property name="dataSource" ref="dataSourceProxy" />
+	</bean>
+	
+		
+	
+	<!-- 同步任务执行器 -->
+	<bean id="syncTaskExecutor" class="org.springframework.core.task.SyncTaskExecutor"/>
+	
+	<!-- 异步任务执行器 -->
+	<bean id="asyncTaskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
+	
+	<!-- 同步任务执行器(限制执行次数，继承后设置throttleLimit) -->
+	<bean id="throttledSyncTaskExecutor" class="org.springframework.batch.admin.util.ThrottledTaskExecutor" abstract="true">
+		<property name="taskExecutor" ref="syncTaskExecutor"/>
+	</bean>
+	
+	<!-- 异步任务执行器(限制执行次数，继承后设置throttleLimit) -->
+	<bean id="throttledAsyncTaskExecutor" class="org.springframework.batch.admin.util.ThrottledTaskExecutor" abstract="true">
+		<property name="taskExecutor" ref="asyncTaskExecutor"/>
+	</bean>
+	
+	<!-- JOB注册（在上下文中记录JOB动向） -->
+	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+	
+	<!-- 元数据的CRUD操作  -->
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean"
+		p:dataSource-ref="dataSourceProxy" p:transactionManager-ref="transactionManager" 
+		p:isolationLevelForCreate="${batch.create.isolationlevel}" p:lobHandler-ref="lobHandler"/>
+		
+	<!-- 元数据的只读操作  -->	
+	<bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean"
+		p:dataSource-ref="dataSourceProxy" />
+	
+	<!-- PropertyEditor定义 -->
+	<bean id="customEditorConfigurer" 
+		class="org.springframework.beans.factory.config.CustomEditorConfigurer" >
+		<property name="customEditors" >
+			<map>
+				<entry key="com.brevy.batch.core.joblaunchdetails.support.JobLaunchDetail">
+					<bean class="com.brevy.batch.core.joblaunchdetails.support.JobLaunchDetailPropertyEditor" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

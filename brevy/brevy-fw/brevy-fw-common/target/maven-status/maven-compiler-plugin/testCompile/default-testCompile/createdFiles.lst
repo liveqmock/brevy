@@ -1,0 +1,7 @@
+com\brevy\fw\common\pattern\chain\ChainPatternTestcase.class
+com\brevy\fw\common\test\support\AbstractSpringContextTestSupport.class
+com\brevy\fw\common\util\JsonUtilsTestcase.class
+com\brevy\fw\common\pattern\chain\action\Step1Action.class
+com\brevy\fw\common\pattern\chain\action\Step2Action.class
+com\brevy\fw\common\pattern\chain\action\Step3Action.class
+com\brevy\fw\common\pattern\chain\listener\DefaultChainExceptionListener.class
