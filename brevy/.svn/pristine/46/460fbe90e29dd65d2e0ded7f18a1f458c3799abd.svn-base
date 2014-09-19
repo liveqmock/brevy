@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module>
-    <moduleName>Brevy.module.core.Index</moduleName>
-    <files>
-        <js>
-        	<file>index.js</file>
-        </js>
-    </files>
-</module>

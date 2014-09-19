@@ -1,7 +1,0 @@
-###############Web Service URI###############
-ws.fc.calculator.addr=http://localhost:8080/brevy-spring-cxf/services/FC/CalculatorService
-ws.fc.converter.addr=http://localhost:8080/brevy-spring-cxf/services/FC/ConverterService
-ws.fc.formula.addr=http://localhost:8080/brevy-spring-cxf/services/FC/FormulaService
-
-###############JMS###############
-jms.brokerUrl=tcp\://192.168.12.216\:61616
