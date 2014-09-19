@@ -1,0 +1,387 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.brevy.commons</groupId>
+	<artifactId>brevy-commons</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>通用工具</name>
+
+
+	<properties>
+		<!-- maven version -->
+		<maven.version>3.0.5</maven.version>
+
+		<!-- APACHE COMMONS -->
+		<apache.commons.beanutils.version>1.8.3</apache.commons.beanutils.version>
+		<apache.commons.decode.version>1.7</apache.commons.decode.version>
+		<apache.commons.configuration.version>1.8</apache.commons.configuration.version>
+		<apache.commons.collections.version>3.2.1</apache.commons.collections.version>
+		<apache.commons.fileupload.version>1.2.2</apache.commons.fileupload.version>
+		<apache.commons.httpclient.version>3.1</apache.commons.httpclient.version>
+		<apache.commons.io.version>2.4</apache.commons.io.version>
+		<apache.commons.lang.version>2.6</apache.commons.lang.version>
+		<apache.commons.lang3.version>3.1</apache.commons.lang3.version>
+		<apache.commons.net.version>3.1</apache.commons.net.version>
+		<apache.commons.pool.version>1.6</apache.commons.pool.version>
+		<apache.commons.validator.version>1.4.0</apache.commons.validator.version>
+		<apache.commons.vfs.version>2.0</apache.commons.vfs.version>
+		<apache.commons.compress.version>1.7</apache.commons.compress.version>
+		<apache.commons.csv.version>20110211</apache.commons.csv.version>
+		<!-- jackrabbit -->
+		<apache.jackrabbit.version>2.8.0</apache.jackrabbit.version>
+		<!-- data protocol -->
+		<jackson.version>2.2.3</jackson.version>
+		<!-- log -->
+		<slf4j.version>1.7.2</slf4j.version>
+		<logback.version>1.0.6</logback.version>
+		<!-- others -->
+		<bouncycastle.version>1.46</bouncycastle.version>
+		<jodatime.version>2.2</jodatime.version>
+		<velocity.version>1.7</velocity.version>
+		<cglib.version>2.2.2</cglib.version>
+		<jstl.version>1.2</jstl.version>
+		<mvel.version>2.1.5.Final</mvel.version>
+		<!-- <javacsv.version>2.0</javacsv.version> -->
+		<testng.version>6.8.1</testng.version>
+		<jsch.version>0.1.41</jsch.version>
+		<!-- Plugins -->
+		<compiler.plugin.version>3.1</compiler.plugin.version>
+		<resource.plugin.version>2.6</resource.plugin.version>
+		<source.plugin.version>2.2.1</source.plugin.version>
+		<war.plugin.version>2.3</war.plugin.version>
+		<clean.plugin.version>2.5</clean.plugin.version>
+		<antrun.plugin.version>1.7</antrun.plugin.version>
+		<release.plugin.verion>2.4.1</release.plugin.verion>
+		<surefire.plugin.version>2.14.1</surefire.plugin.version>
+		<lifecycle.mapping.version>1.0.0</lifecycle.mapping.version>
+		<brevy.plugin.version>1.0.0</brevy.plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.6</jdk.version>
+		<!-- 仓库 -->
+		<repo.public.url>http://192.168.12.216:2081/nexus/content/groups/public/</repo.public.url>
+		<repo.public.plugin.url>http://192.168.12.216:2081/nexus/content/groups/public/</repo.public.plugin.url>
+		<repo.distribution.release.id>releases</repo.distribution.release.id>
+		<repo.distribution.release.url>http://192.168.12.216:2081/nexus/content/repositories/releases/</repo.distribution.release.url>
+		<repo.distribution.snapshot.id>snapshots</repo.distribution.snapshot.id>
+		<repo.distribution.snapshot.url>http://192.168.12.216:2081/nexus/content/repositories/snapshots/</repo.distribution.snapshot.url>
+		<!-- SCM -->
+		<scm.trunk>scm:svn:https://gzold.googlecode.com/svn/trunk/brevy-commons/</scm.trunk>
+		<scm.tags>https://gzold.googlecode.com/svn/tags/</scm.tags>
+		<scm.branches>https://gzold.googlecode.com/svn/branches/</scm.branches>
+	</properties>
+
+	<dependencies>
+		<!-- ###############maven plugin dependencies begin############### -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>${maven.version}</version>
+		</dependency>
+		<!-- ###############apache commons dependencies begin############### -->
+		<!-- commons-beanutils -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${apache.commons.beanutils.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- commons-codec -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${apache.commons.decode.version}</version>
+		</dependency>
+
+		<!-- commons-configuration -->
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>${apache.commons.configuration.version}</version>
+		</dependency>
+
+		<!-- commons-collections -->
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>${apache.commons.collections.version}</version>
+		</dependency>
+
+		<!-- commons-httpclient -->
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>${apache.commons.httpclient.version}</version>
+		</dependency>
+
+		<!-- commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${apache.commons.io.version}</version>
+		</dependency>
+
+		<!-- commons-lang -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${apache.commons.lang.version}</version>
+		</dependency>
+
+		<!-- commons-lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${apache.commons.lang3.version}</version>
+		</dependency>
+
+		<!-- commons-net -->
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>${apache.commons.net.version}</version>
+		</dependency>
+
+		<!-- commons-validator -->
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>${apache.commons.validator.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-csv</artifactId>
+		  <version>${apache.commons.csv.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-vfs2</artifactId>
+			<version>${apache.commons.vfs.version}</version>
+		</dependency>
+
+		<!-- SFTP dependency for commons-vfs2 -->
+		<dependency>
+			<groupId>com.jcraft.jsch</groupId>
+			<artifactId>com.springsource.com.jcraft.jsch</artifactId>
+			<version>${jsch.version}</version>
+		</dependency>
+		
+		<!-- zip (support charset setting) -->
+		<dependency>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-compress</artifactId>
+		  <version>${apache.commons.compress.version}</version>
+		</dependency>
+		
+		
+		<dependency>
+		  <groupId>org.apache.jackrabbit</groupId>
+		  <artifactId>jackrabbit-webdav</artifactId>
+		  <version>${apache.jackrabbit.version}</version>
+		</dependency>
+		<!-- ###############apache commons dependencies end############### -->
+
+
+		<!-- ############### data protocol begin ############### -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<!-- ############### data protocol end ############### -->
+
+		<!-- ###############logging dependencies begin############### -->
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- logback -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<!-- ###############logging dependencies end############### -->
+
+		<!-- bouncycastle -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk16</artifactId>
+			<version>${bouncycastle.version}</version>
+		</dependency>
+
+		<!-- joda-time -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${jodatime.version}</version>
+		</dependency>
+
+		<!-- velocity -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>${velocity.version}</version>
+		</dependency>
+
+		<!-- mvel2 -->
+		<dependency>
+			<groupId>org.mvel</groupId>
+			<artifactId>mvel2</artifactId>
+			<version>${mvel.version}</version>
+		</dependency>
+	
+		<!-- <dependency>
+			<groupId>net.sourceforge.javacsv</groupId>
+			<artifactId>javacsv</artifactId>
+			<version>${javacsv.version}</version>
+		</dependency> -->
+		
+		<!-- TestNG -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${testng.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- 基础插件配置 -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler.plugin.version}</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${resource.plugin.version}</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${source.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-source</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${release.plugin.verion}</version>
+				<configuration>
+					<tagBase>${scm.tags}</tagBase>
+					<branchBase>${scm.branches}</branchBase>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- 仓库 -->
+	<repositories>
+		<repository>
+			<id>public</id>
+			<name>Public Repositories</name>
+			<url>${repo.public.url}</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<!-- 插件仓库 -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>public</id>
+			<name>Public Repositories</name>
+			<url>${repo.public.plugin.url}</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<distributionManagement>
+		<!-- 正式版本发布仓库 -->
+		<repository>
+			<id>${repo.distribution.release.id}</id>
+			<url>${repo.distribution.release.url}</url>
+		</repository>
+		<!-- 快照版本发布仓库 -->
+		<snapshotRepository>
+			<id>${repo.distribution.snapshot.id}</id>
+			<url>${repo.distribution.snapshot.url}</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<!-- SCM # 需要SVN的命令行工具支持 -->
+	<scm>
+		<connection>${scm.trunk}</connection>
+		<developerConnection>${scm.trunk}</developerConnection>
+	</scm>
+</project>

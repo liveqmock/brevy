@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="  
+     http://www.springframework.org/schema/beans   
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://activemq.apache.org/schema/core     
+     http://activemq.apache.org/schema/core/activemq-core-5.7.0.xsd">
+
+	
+
+	<!-- 配置Apache activeMQConnectionFactory -->
+	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${jms.brokerUrl}" />
+		<property name="useAsyncSend" value="true" />
+		<property name="copyMessageOnSend" value="false" />
+		<property name="optimizeAcknowledge" value="true" />
+	</bean>
+	
+	<!-- 连接池化 -->
+	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">  
+	    <property name="connectionFactory" ref="targetConnectionFactory"/>  
+	    <property name="maxConnections" value="${jms.connection.maxConnections}"/>  
+	</bean>  
+	
+	<!-- 配置Spring CachingConnectionFactory, Session池化 -->
+	<bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+		<property name="targetConnectionFactory" ref="pooledConnectionFactory" />
+		<property name="sessionCacheSize" value="${jms.connection.sessionCacheSize}" />
+	</bean>
+
+	<!-- Spring JMS Queue Template -->
+	<bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<ref bean="cachingConnectionFactory" />
+		</property>
+		<property name="deliveryMode" value="${jms.delivery.queue.mode}"/>
+		<property name="pubSubDomain" value="false" />
+	</bean>
+	
+	<!-- Spring JMS Topic Template -->
+	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<ref bean="cachingConnectionFactory" />
+		</property>
+		<property name="deliveryMode" value="${jms.delivery.topic.mode}"/>
+		<property name="pubSubDomain" value="true" />
+	</bean>
+	
+	<!-- *************消息转换器*************** -->
+	<!-- 序列化对象转换器 -->
+	<bean id="objectMessageConverter" class="com.brevy.archetype.support.jms.converter.ObjectMessageConverter"/>
+	<!-- 文本转换器 -->
+	<bean id="textMessageConverter" class="com.brevy.archetype.support.jms.converter.TextMessageConverter"/>
+
+</beans>

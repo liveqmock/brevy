@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>brevy-cata-i</artifactId>
+		<groupId>com.brevy.archetype</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.brevy.archetype</groupId>
+	<artifactId>brevy-cata-i-module</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>${artifactId} - [JAR]</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.brevy.archetype</groupId>
+			<artifactId>brevy-cata-i-config</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- servlet & jsp -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+		
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<finalName>${artifactId}</finalName>
+	</build>
+</project>

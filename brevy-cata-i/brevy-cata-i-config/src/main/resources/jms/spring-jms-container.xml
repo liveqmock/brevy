@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<description>收报配置</description>
+	
+	
+	<!-- 消息监听适配器基类 -->  
+	<bean id="parentListenerAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter" abstract="true">  
+	    <property name="delegate">  
+	        <bean class="com.brevy.archetype.support.jms.listener.MessageConsumerListener"/>  
+	    </property>  
+	    <property name="defaultListenerMethod" value="receiveMessage"/>  
+	</bean>    
+	
+	
+	<!-- 消息监听器基类 -->
+	<bean id="parentContainer1" class="org.springframework.jms.listener.DefaultMessageListenerContainer" abstract="true">
+		<property name="connectionFactory" ref="cachingConnectionFactory" />
+		<!-- 初始x个Consumer, 可动态扩展到y -->
+		<property name="concurrentConsumers" value="${jms.container.concurrentConsumers}" />
+		<property name="maxConcurrentConsumers" value="${jms.container.maxConcurrentConsumers}" />
+		<!-- 设置消息确认模式为Auto -->
+		<property name="sessionAcknowledgeModeName" value="AUTO_ACKNOWLEDGE" />
+		<!-- 自动启动监听容器 -->
+		<property name="autoStartup" value="${jms.container.autoStartup}"/>
+	</bean>
+	
+	<!-- 消息适配器 -->
+	<bean id="objectListenerAdapter" parent="parentListenerAdapter">
+		<property name="messageConverter" ref="objectMessageConverter"/> 
+	</bean>
+	
+	<bean id="textListenerAdapter" parent="parentListenerAdapter">
+		<property name="messageConverter" ref="textMessageConverter"/> 
+	</bean>
+	
+	
+	<!-- MQ队列消息监听器 -->
+	<bean id="testContainer" parent="parentContainer1">
+		<property name="destination" ref="testQueue"/>
+		<property name="messageListener" ref="textListenerAdapter" />
+	</bean>
+	
+	
+</beans>

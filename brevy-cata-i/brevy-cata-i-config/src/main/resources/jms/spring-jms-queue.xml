@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="  
+     http://www.springframework.org/schema/beans   
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://activemq.apache.org/schema/core     
+     http://activemq.apache.org/schema/core/activemq-core-5.7.0.xsd">
+	
+
+
+	<!--  测试队列  -->
+	<bean id="testQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="${jms.queue.testQueue}" />
+	</bean>
+	
+	<!-- 测试队列生产者 -->
+	<bean id="testQueueProducer" parent="jmsQueueTemplate">	
+		<property name="defaultDestination" ref="testQueue"/>
+		<property name="messageConverter" ref="objectMessageConverter"/>
+	</bean>
+     
+</beans>
