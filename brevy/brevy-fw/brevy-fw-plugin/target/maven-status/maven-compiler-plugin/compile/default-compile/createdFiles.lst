@@ -1,5 +1,0 @@
-com\brevy\fw\plugin\remove\mojo\RemoveMojo.class
-com\brevy\fw\plugin\remove\parameter\GoalRemove.class
-com\brevy\fw\plugin\generator\parameter\GoalErrorCodeGenerator.class
-com\brevy\fw\plugin\generator\mojo\generator\ErrorCodeGeneratorMojo.class
-com\brevy\fw\plugin\remove\parameter\Resource.class
