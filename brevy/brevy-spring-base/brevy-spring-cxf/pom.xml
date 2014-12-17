@@ -256,6 +256,13 @@
 										<extraarg>com.brevy.spring.cxf.ws.services.fc.converter</extraarg>
 									</extraargs>
 								</wsdlOption>
+								<!-- <wsdlOption>
+									<wsdl>${basedir}/src/main/resources/wsdl/creditws.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>org.tempuri</extraarg>
+									</extraargs>
+								</wsdlOption> -->
 							</wsdlOptions>
 						</configuration>
 						<goals>
