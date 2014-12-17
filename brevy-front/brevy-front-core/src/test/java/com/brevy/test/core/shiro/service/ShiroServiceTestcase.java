@@ -29,6 +29,11 @@ public class ShiroServiceTestcase extends AbstractSpringContextTestSupport{
 		ApMenu rtnApMenu = shiroService.saveApMenu(apMenu);
 		log.info(">>>> {} Saved", new Object[]{rtnApMenu});
 	}
+	
+	@Test(invocationCount=5000, threadPoolSize=100)
+	public void testConcurrent(){
+		System.out.println(">>>>>> TEST THREAD: " + Thread.currentThread().getId());
+	}
 
 
 	@Autowired
