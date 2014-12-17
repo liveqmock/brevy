@@ -1,2 +1,6 @@
 /target
 /test-output
+/.classpath
+/.project.bak
+/hs_err_pid5928.log
+/.gitignore
