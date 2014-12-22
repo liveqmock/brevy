@@ -1,16 +1,16 @@
 /**
- * @module 用户组读操作维护
+ * @module 应用读操作维护
  * @author caobin
  */
-Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupRead", {
+Ext.define("App.systemMGR.authCFG.app.crud.AppRead", {
 	extend : "App.Module",
 	
 	init : function(){
 		return Ext.create("Ext.grid.Panel", {
-			id: "UserGroupReadMainGridID",
+			id: "AppReadMainGridID",
 		    title: this.moduleText,
 			iconCls: this.moduleIcon,
-			store: userGroupDS,
+			store: appDS,
 			tbar: this.createToolbar(),
 			viewConfig: {
 		        stripeRows: true,
@@ -20,7 +20,7 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupRead", {
 		    selModel: this.createSelectionModel(),
 		    dockedItems: [{
 		        xtype: "pagingtoolbar",
-		        store: userGroupDS,
+		        store: appDS,
 		        dock: "bottom",
 		        displayInfo: true,
 		        plugins : [Ext.create("Ext.ux.PagingToolbarResizer", {options : this.pageSizeOptions, width: 70})]
@@ -32,50 +32,27 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupRead", {
 	createToolbar : function(){
 		var me = this;
 		return [
-			{
-				id: "tb.tbar",
-			  	fieldLabel: this.currentAppname,
-			  	labelWidth: Ext.isChrome ? 80 : 70,
-				name: "appid",
-				xtype: "combo",
-				triggerAction: "all",
-				forceSelection: true,
-				editable: false,
-				queryMode: "local",
-				store: this.getTbarStore(),
-				displayField: "name",
-				valueField: "id",
-				listeners: {
-					change: {
-						fn: function(o, newVal, oldVal){
-							userGroupDS.getProxy().setExtraParam("appId", newVal)
-							userGroupDS.load();						
-						},
-						scope: this		
-					}
-				}
-			},
 			" ", "-",
-			{text: Msg.App.add, iconCls: Ext.ux.Icons.group_add, handler: function(btn){
-				Pub.ResLoader.jsPack(me.getExtRes("systemMGR/authCFG/userGroup/ui/crud/UserGroupCreate.js"), function(){
-					me.createInstance("App.systemMGR.authCFG.userGroup.crud.UserGroupCreate", Msg.App.add, btn.iconCls).show(btn);
+			{text: Msg.App.add, iconCls: Ext.ux.Icons.world_add, handler: function(btn){
+				Pub.ResLoader.jsPack(me.getExtRes("systemMGR/authCFG/app/ui/crud/AppCreate.js"), function(){
+					me.createInstance("App.systemMGR.authCFG.app.crud.AppCreate", Msg.App.add, btn.iconCls).show(btn);
 				});
 			}},
 			"-",
-			{text: Msg.App.edit, iconCls: Ext.ux.Icons.group_edit, handler:function(btn){
-				me.handleSelectedRecord("UserGroupReadMainGridID", function(p){
-					Pub.ResLoader.jsPack(me.getExtRes("systemMGR/authCFG/userGroup/ui/crud/UserGroupUpdate.js"), function(){
-						me.createInstance("App.systemMGR.authCFG.userGroup.crud.UserGroupUpdate", Msg.App.edit, btn.iconCls, p.sm[0]).show(btn);
+			{text: Msg.App.edit, iconCls: Ext.ux.Icons.world_edit, handler:function(btn){
+				me.handleSelectedRecord("AppReadMainGridID", function(p){
+					Pub.ResLoader.jsPack(me.getExtRes("systemMGR/authCFG/app/ui/crud/AppUpdate.js"), function(){
+						me.createInstance("App.systemMGR.authCFG.app.crud.AppUpdate", Msg.App.edit, btn.iconCls, p.sm[0]).show(btn);
 					});
 				});
 			}},
 			"-",
-			{text: Msg.App.del, iconCls: Ext.ux.Icons.group_delete, handler:function(btn){
-				me.handleSelectedRecord("UserGroupReadMainGridID", function(p){
-					Pub.ResLoader.jsPack(me.getExtRes("systemMGR/authCFG/userGroup/ui/crud/UserGroupDelete.js"), function(){
+			{text: Msg.App.del, iconCls: Ext.ux.Icons.world_delete, handler:function(btn){
+				me.handleSelectedRecord("AppReadMainGridID", function(p){
+					Pub.ResLoader.jsPack(me.getExtRes("systemMGR/authCFG/app/ui/crud/AppDelete.js"), function(){
 						Pub.MsgBox.showMsgBox(Pub.MsgBox.CONFIRM, Msg.Prompt.confirmDelRec, null, function(r){
 							if(r == "yes"){
-								me.createInstance("App.systemMGR.authCFG.userGroup.crud.UserGroupDelete", Msg.App.del, btn.iconCls, p.sm);
+								me.createInstance("App.systemMGR.authCFG.app.crud.AppDelete", Msg.App.del, btn.iconCls, p.sm);
 							}	
 						});		
 					});
@@ -87,7 +64,7 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupRead", {
 				labelWidth: Ext.isChrome ? 70 : 60,
 				xtype: "searchfield",
 				width: 260,
-				store: userGroupDS
+				store: accessAuthDS
 			}
 		];
 	},
@@ -111,7 +88,7 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupRead", {
 	    	{text: this.status, dataIndex: "status", flex: 1,  renderer: function(value) {
 	            return value == 0 ? me.invalid : me.valid;
 	        }},
-	        {text: this.desc, dataIndex: "desc", flex: 8, renderer: function(value, metadata) {  
+	    	{text: this.desc, dataIndex: "desc", flex: 8, renderer: function(value, metadata) {  
                 metadata.tdAttr = 'data-qtip="' + value +'"';  
                 return value;  
             }}

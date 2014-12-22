@@ -36,23 +36,23 @@
 	</appender>
 	
 	
-	<logger name="com.brevy" level="debug" additivity="false">
+	<logger name="com.brevy" level="info" additivity="false">
 		<appender-ref ref="biz" />
 	</logger>
 	
-	<logger name="org.apache.ibatis.logging.slf4j" level="debug" additivity="false">
+	<logger name="org.apache.ibatis.logging.slf4j" level="off" additivity="false">
 		<appender-ref ref="biz"/>
 	</logger>
 
-	<logger name="org.springframework.jdbc.datasource" level="debug" additivity="false">
+	<logger name="org.springframework.jdbc.datasource" level="off" additivity="false">
 		<appender-ref ref="biz"/>
 	</logger>
 	
-	<logger name="org.mybatis.spring.transaction" level="debug" additivity="false">
+	<logger name="org.mybatis.spring.transaction" level="off" additivity="false">
 		<appender-ref ref="biz"/>
 	</logger>
 	
-	<logger name="org.jdbcdslog" level="info" additivity="false">
+	<logger name="org.jdbcdslog" level="off" additivity="false">
 		<appender-ref ref="biz"/>
 	</logger>
 

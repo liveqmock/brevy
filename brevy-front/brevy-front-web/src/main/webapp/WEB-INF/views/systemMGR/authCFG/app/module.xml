@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.systemMGR.authCFG.role.RoleUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>store/AppStore.js</file>
+        	<file>ui/AppUI.js</file>
+        	<file>ui/crud/AppRead.js</file>
+        </js>
+    </files>
+</module>
