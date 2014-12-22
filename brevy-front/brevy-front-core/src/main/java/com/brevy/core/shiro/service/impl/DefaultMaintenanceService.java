@@ -20,15 +20,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.brevy.core.shiro.dao.ApAccessPermDao;
+import com.brevy.core.shiro.dao.ApGroupDao;
 import com.brevy.core.shiro.dao.ApMenuDao;
 import com.brevy.core.shiro.dao.ApOperPermDao;
+import com.brevy.core.shiro.dao.ApRefGroupRoleDao;
 import com.brevy.core.shiro.dao.ApRefRoleAccessPermDao;
 import com.brevy.core.shiro.dao.ApRefRoleMenuDao;
 import com.brevy.core.shiro.dao.ApRefRoleOperPermDao;
 import com.brevy.core.shiro.dao.ApRoleDao;
 import com.brevy.core.shiro.model.ApAccessPerm;
+import com.brevy.core.shiro.model.ApGroup;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
+import com.brevy.core.shiro.model.ApRefGroupRole;
+import com.brevy.core.shiro.model.ApRefGroupRolePK;
 import com.brevy.core.shiro.model.ApRefRoleAccessPerm;
 import com.brevy.core.shiro.model.ApRefRoleAccessPermPK;
 import com.brevy.core.shiro.model.ApRefRoleMenu;
@@ -64,12 +69,18 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 	@Autowired
 	private ApRefRoleOperPermDao apRefRoleOperPermDao;
+	
+	@Autowired
+	private ApRefGroupRoleDao apRefGroupRoleDao;
 
 	@Autowired
 	private ApOperPermDao apOperPermDao;
 
 	@Autowired
 	private ApRoleDao apRoleDao;
+	
+	@Autowired
+	private ApGroupDao apGroupDao;
 	
 	@Autowired
 	private AbstractShiroFilter abstractShiroFilter;
@@ -445,4 +456,87 @@ public class DefaultMaintenanceService implements MaintenanceService {
 			delRoleRefOperAuth(roleId, Long.parseLong(operPermId));
 		}
 	}
+	
+	@Transactional
+	@Override
+	public void saveOrUpdateApGroup(ApGroup apGroup) {
+		apGroupDao.save(apGroup);
+	}
+
+	@Override
+	public boolean checkApGroupCode(String code) {
+		return apGroupDao.findByCode(code) == null;
+	}
+	
+
+	@Override
+	public void deleteApGroup(Collection<Long> ids, long appId) {
+		apGroupDao.deleteGroupByIds(ids);
+		apRefGroupRoleDao.deleteRelsByRoleIds(ids);		
+	}
+	
+
+	@Override
+	public Page<ApGroup> findApGroups(long appId, Pageable pageable) {
+		return apGroupDao.findByAppId(appId, pageable);
+	}
+	
+
+	@Override
+	public Page<ApGroup> searchApGroupsByKeyword(String keyword, long appId,
+			Pageable pageable) {
+		return apGroupDao.searchByKeyword("%".concat(keyword).concat("%"), appId, pageable);
+	}
+
+	
+	@Override
+	public Page<ApRole> findUserGroupRefRole(long userGroupId, String keyword,
+			Pageable pageable) {
+		return apRefGroupRoleDao.findGroupRefRole(userGroupId, "%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Override
+	public Page<ApRole> findCandidateRole(long appId, long userGroupId,
+			String keyword, Pageable pageable) {
+		return apRefGroupRoleDao.findCadidateGroupRefRole(appId, userGroupId, "%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Transactional
+	@Override
+	public void saveUserGroupRefRole(long userGroupId, long roleId) {
+		ApRefGroupRole argr = new ApRefGroupRole();
+		ApRefGroupRolePK pk = new ApRefGroupRolePK();
+		pk.setGroupId(userGroupId);
+		pk.setRoleId(roleId);
+		argr.setId(pk);
+		apRefGroupRoleDao.save(argr);
+	}
+
+	@Transactional
+	@Override
+	public void delUserGroupRefRole(long userGroupId, long roleId) {
+		ApRefGroupRolePK pk = new ApRefGroupRolePK();
+		pk.setGroupId(userGroupId);
+		pk.setRoleId(roleId);
+		apRefGroupRoleDao.delete(pk);
+	}
+
+	@Transactional
+	@Override
+	public void saveUserGroupRefRoles(long userGroupId, String roleIds) {
+		String[] arrayRoleId = roleIds.split("\\,");
+		for(String roleId : arrayRoleId){
+			saveUserGroupRefRole(userGroupId, Long.parseLong(roleId));
+		}
+	}
+
+	@Transactional
+	@Override
+	public void delUserGroupRefRoles(long userGroupId, String roleIds) {
+		String[] arrayRoleId = roleIds.split("\\,");
+		for(String roleId : arrayRoleId){
+			delUserGroupRefRole(userGroupId, Long.parseLong(roleId));
+		}
+	}
+
 }

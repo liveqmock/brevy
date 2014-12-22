@@ -236,6 +236,7 @@ Ext.define("Msg", {
 			keywordSearch: "关键字查询"
 		},
 		
+		
 		"App.systemMGR.authCFG.role.crud.RoleCreate" : {
 			name: "角色名称",
 			code: "角色代码",
@@ -305,6 +306,45 @@ Ext.define("Msg", {
 			confirmCancelAllRefs: "确认撤销当页所有操作权限关联？",
 			confirmAddAllRefs: "确认添加当页所有操作权限关联？"
 			
+		},
+		
+		"App.systemMGR.authCFG.userGroup.crud.UserGroupRead" : {
+			name: "用户组名称",
+			code: "用户组代码",
+			status: "状态",
+			valid: "有效",
+			invalid: "无效",
+			keywordSearch: "关键字查询"
+		},
+		
+		"App.systemMGR.authCFG.userGroup.crud.UserGroupCreate" : {
+			name: "用户组名称",
+			code: "用户组代码",
+			status: "状态",
+			desc: "描述",
+			userGroupBasicInfo: "用户组基础信息",
+			createUserGroupTitle: "添加用户组"
+		},
+		
+		"App.systemMGR.authCFG.userGroup.crud.UserGroupUpdate" : {
+			name: "用户组名称",
+			code: "用户组代码",
+			status: "状态",
+			userGroupBasicInfo: "用户组基础信息",
+			editUserGroupTitle: "编辑用户组"	
+		},
+		
+		"App.systemMGR.authCFG.userGroup.refRole.RefRole" : {
+			refRoleTitle: "用户组关联角色配置",
+			refRoleWestName: "用户组已关联角色",
+			refRoleWestText: "操作",
+			refRoleWestTooltip: "撤销角色关联",
+			refRoleEastIconText: "图标",
+			refRoleEastIconTooltip: "添加角色关联",
+			refRoleEastNameText: "可选角色名称",
+			refRoleEastLeafText: "角色类型",
+			refRoleEastActionText: "操作",
+			refRoleEastActionTooltip: "添加角色关联"
 		}
 		
 	}

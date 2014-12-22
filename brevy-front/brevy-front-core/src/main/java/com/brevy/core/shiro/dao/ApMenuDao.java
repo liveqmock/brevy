@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import com.brevy.core.shiro.model.ApMenu;
 
 /**
- * @Description 菜单数据DAO
+ * @Description 菜单DAO
  * @author caobin
  * @date 2013-12-9
  * @version 1.0

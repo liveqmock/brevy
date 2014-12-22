@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 import com.brevy.core.shiro.model.ApRole;
 
 /**
- * @Description 角色数据DAO
+ * @Description 角色DAO
  * @author caobin
  * @date 2013-12-10
  * @version 1.0

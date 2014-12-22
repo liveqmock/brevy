@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.brevy.core.shiro.model.ApUser;
 
 /**
- * @Description 用户数据DAO
+ * @Description 用户DAO
  * @author caobin
  * @date 2013-12-23
  * @version 1.0

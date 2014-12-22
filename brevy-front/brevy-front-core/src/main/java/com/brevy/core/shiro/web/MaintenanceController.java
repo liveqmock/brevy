@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.brevy.core.shiro.model.ApAccessPerm;
+import com.brevy.core.shiro.model.ApGroup;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
 import com.brevy.core.shiro.model.ApRole;
@@ -41,6 +42,17 @@ import com.brevy.core.support.web.BaseController;
 @Controller
 @RequestMapping("/maintenance")
 public class MaintenanceController extends BaseController {
+	
+	@Autowired
+	private MaintenanceService maintenanceService;
+	
+	private final static String UNIQUE_GROUP_CODE = "用户组代码必须唯一";
+
+	private final static String UNIQUE_ACCESS_PERM_CODE = "访问权限代码必须唯一";
+	
+	private final static String UNIQUE_OPER_PERM_CODE = "操作权限代码必须唯一";
+	
+	private final static String UNIQUE_ROLE_CODE = "角色代码必须唯一";
 	
 	/*############################################  公共    ############################################*/
 	
@@ -466,7 +478,7 @@ public class MaintenanceController extends BaseController {
 	 * @return
 	 * @author caobin
 	 */
-	@RequestMapping("/role/getRefRoleOperAuth")
+	@RequestMapping("/role/getRefRole")
 	@ResponseBody
 	public Page<ApOperPerm> getRefRoleOperAuth(@RequestBody Map<String, String> p){
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
@@ -554,15 +566,183 @@ public class MaintenanceController extends BaseController {
 		return this.successView();
 	}
 	
+	/*############################################  用户组关联角色    ############################################*/
 	
-	
-	
-	@Autowired
-	private MaintenanceService maintenanceService;
+	/**
+	 * @Description 保存（更新）用户组
+	 * @param apGroup
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/userGroup/saveOrUpdate")
+	@ResponseBody
+	public ModelAndView saveOrUpdateUserGroup(@RequestBody ApGroup apGroup){
+		log.debug(">>>> apGroup from request is : {}", new Object[]{apGroup});
+		if(apGroup.getId() == 0 && !maintenanceService.checkApAccessPermCode(apGroup.getCode())){//新增且重复code
+			Map<String, String> errorFields = new HashMap<String, String>();
+			errorFields.put("code", UNIQUE_GROUP_CODE);
+			return this.failureView(this.createMav(), new CoreException(UNIQUE_GROUP_CODE), errorFields);
+		}
+		maintenanceService.saveOrUpdateApGroup(apGroup);
+		return this.successView();
+	}
 
-	private final static String UNIQUE_ACCESS_PERM_CODE = "访问权限代码必须唯一";
+	/**
+	 * @description 删除用户组
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/userGroup/delete")
+	@ResponseBody
+	public ModelAndView deleteUserGroups(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		String params = getString(p, "ids");	
+		if(StringUtils.isNotBlank(params)){
+			String[] arrParams = params.split("\\,");
+			Long[] longs = new Long[arrParams.length];
+			for(int i = 0; i< arrParams.length; i++){
+				longs[i] = Long.parseLong(arrParams[i]);
+			}
+			maintenanceService.deleteApGroup(Arrays.asList(longs), getLongValue(p, "appId"));
+		}
+		return this.successView();	
+	}
 	
-	private final static String UNIQUE_OPER_PERM_CODE = "操作权限代码必须唯一";
+	/**
+	 * 获取用户组
+	 * @param p
+	 * @return
+	 */
+	@RequestMapping("/userGroup/getUserGroupList")
+	@ResponseBody
+	public Page<ApGroup> getUserGroups(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		//获取查询参数
+		String keyword = getString(p, "query");
+		Page<ApGroup> pageList = 
+				StringUtils.isBlank(keyword) ? 
+						maintenanceService.findApGroups(getLongValue(p, "appId"), pageable) : 
+							maintenanceService.searchApGroupsByKeyword(keyword, getLongValue(p, "appId"), pageable)	;
+		Iterator<ApGroup> apGroupIter = pageList.iterator();
+		while(apGroupIter.hasNext()){
+			//移除关联数据
+			apGroupIter.next().setRoles(null);
+		}
+		return pageList;
+	}
 	
-	private final static String UNIQUE_ROLE_CODE = "角色代码必须唯一";
+	
+	/**
+	 * @Description 获取用户组关联的角色
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/userGroup/getRefUserGroupRole")
+	@ResponseBody
+	public Page<ApRole> getRefUserGroupRole(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE), Direction.ASC, "sort");
+		Page<ApRole> pageList = maintenanceService.findUserGroupRefRole(getLongValue(p, "userGroupId"), keyword, pageable);	
+		Iterator<ApRole> apRoleIter = pageList.iterator();
+		while(apRoleIter.hasNext()){
+			ApRole ar = apRoleIter.next();
+			//移除关联数据
+			ar.setMenus(null);
+			ar.setOperPerms(null);
+			ar.setAccessPerms(null);
+		}
+		return pageList;
+	}
+	
+	
+	/**
+	 * @Description 获取关联用户组可选的角色
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/userGroup/getCandidateRole")
+	@ResponseBody
+	public Page<ApRole> getCandidateRole(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE), Direction.ASC, "sort");
+		Page<ApRole> pageList =  maintenanceService.findCandidateRole(getLongValue(p, "appId"), getLongValue(p, "userGroupId"), keyword, pageable);	
+		Iterator<ApRole> apRoleIter = pageList.iterator();
+		while(apRoleIter.hasNext()){
+			ApRole ar = apRoleIter.next();
+			//移除关联数据
+			ar.setMenus(null);
+			ar.setOperPerms(null);
+			ar.setAccessPerms(null);
+		}
+		return pageList;
+	}
+	
+	
+	/**
+	 * @Description 添加用户组和角色的关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/userGroup/addRoleRefUserGroup")
+	@ResponseBody
+	public ModelAndView addRoleRefUserGroup(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.saveUserGroupRefRole(getLongValue(p, "userGroupId"), getLongValue(p, "roleId"));
+		return this.successView();
+	}
+	
+	/**
+	 * @Description 删除用户组和角色的关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/userGroup/delRoleRefUserGroup")
+	@ResponseBody
+	public ModelAndView delRoleRefUserGroup(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.delUserGroupRefRole(getLongValue(p, "userGroupId"), getLongValue(p, "roleId"));
+		return this.successView();
+	}
+	
+	
+	/**
+	 * @Description 批量添加用户组和角色关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/userGroup/addRolesRefUserGroup")
+	@ResponseBody
+	public ModelAndView addRolesRefUserGroup(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.saveUserGroupRefRoles(getLongValue(p, "userGroupId"), getString(p, "roleIds"));
+		return this.successView();
+	}
+	
+	/**
+	 * @Description 批量删除用户组和角色关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/userGroup/delRolesRefUserGroup")
+	@ResponseBody
+	public ModelAndView delRolesRefUserGroup(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.delUserGroupRefRoles(getLongValue(p, "userGroupId"), getString(p, "roleIds"));
+		return this.successView();
+	}
+	
+	
+	
 }

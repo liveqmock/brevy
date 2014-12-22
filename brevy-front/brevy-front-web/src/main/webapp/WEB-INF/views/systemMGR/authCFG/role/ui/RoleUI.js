@@ -50,7 +50,7 @@ Ext.define("App.systemMGR.authCFG.role.RoleUI", {
 			},
 			
 			activate: function(c){
-				var r = Ext.getCmp("RoleReadMainGridID").getSelectionModel().getSelection()[0];
+				var r = Ext.getCmp(gridID).getSelectionModel().getSelection()[0];
 				var newRoleText = Ext.String.format(this.currentRole, r.get("name"), r.get("code"));
 				Ext.getCmp("RefMenuNorthPanelID").update(newRoleText);
 				if(isReActivate && roleText != newRoleText){
@@ -84,7 +84,7 @@ Ext.define("App.systemMGR.authCFG.role.RoleUI", {
 			},
 			
 			activate: function(c){
-				var r = Ext.getCmp("RoleReadMainGridID").getSelectionModel().getSelection()[0];
+				var r = Ext.getCmp(gridID).getSelectionModel().getSelection()[0];
 				var newRoleText = Ext.String.format(this.currentRole, r.get("name"), r.get("code"));
 				Ext.getCmp("RefAccessAuthNorthPanelID").update(newRoleText);
 				if(roleText != newRoleText){
@@ -123,7 +123,7 @@ Ext.define("App.systemMGR.authCFG.role.RoleUI", {
 			},
 			
 			activate: function(c){
-				var r = Ext.getCmp("RoleReadMainGridID").getSelectionModel().getSelection()[0];
+				var r = Ext.getCmp(gridID).getSelectionModel().getSelection()[0];
 				var newRoleText = Ext.String.format(this.currentRole, r.get("name"), r.get("code"));
 				Ext.getCmp("RefOperAuthNorthPanelID").update(newRoleText);
 				if(roleText != newRoleText){

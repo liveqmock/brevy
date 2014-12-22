@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.brevy.core.shiro.model.ApApplication;
 
 /**
- * @Description 应用数据DAO
+ * @Description 应用归属DAO
  * @author caobin
  * @date 2013-12-12
  * @version 1.0

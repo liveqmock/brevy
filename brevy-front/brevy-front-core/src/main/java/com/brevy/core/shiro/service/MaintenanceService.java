@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.brevy.core.shiro.model.ApAccessPerm;
+import com.brevy.core.shiro.model.ApGroup;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
 import com.brevy.core.shiro.model.ApRole;
@@ -356,5 +357,108 @@ public interface MaintenanceService {
 	 * @author caobin
 	 */
 	void delRoleRefOperAuths(long roleId, String operPermIds);
+	
+	
+	/************************ 用户组  *********************************/
+	
+	/**
+	 * @Description 保存（更新）用户组
+	 * @param apGroup
+	 * @author caobin
+	 */
+	void saveOrUpdateApGroup(ApGroup apGroup);
+	
+	
+	/**
+	 * @Description 检查用户组代码是否重复
+	 * @param code 用户组代码
+	 * @return boolean true-不重复|false-重复
+	 * @author caobin
+	 */
+	boolean checkApGroupCode(String code);
+	
+	
+	/**
+	 * @Description （批量）删除用户组
+	 * @param ids
+	 * @param appId
+	 * @author caobin
+	 */
+	void deleteApGroup(Collection<Long> ids, long appId);
+	
+	/**
+	 * @Description 分页查询用户组
+	 * @param appId
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApGroup> findApGroups(long appId, Pageable pageable);
+	
+	/**
+	 * @Description 分页模糊查询用户组
+	 * @param keyword 关键字
+	 * @param appId
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApGroup> searchApGroupsByKeyword(String keyword, long appId, Pageable pageable);
+	
+	/**
+	 * @Description 分页查询用户组拥有的角色
+	 * @param userGroupId 用户组编号
+	 * @param keyword 检索关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApRole> findUserGroupRefRole(long userGroupId, String keyword, Pageable pageable);
+	
+	
+	/**
+	 * @Description 分页查询用户组可选的角色
+	 * @param appId 应用编号
+	 * @param userGroupId 用户组编号
+	 * @param keyword 检索关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApRole> findCandidateRole(long appId, long userGroupId, String keyword, Pageable pageable);
+	
+	
+	/**
+	 * @Description 保存用户组和角色的关系
+	 * @param userGroupId 用户组编号
+	 * @param roleId 角色编号
+	 * @author caobin
+	 */
+	void saveUserGroupRefRole(long userGroupId, long roleId);
+	
+	/**
+	 * @Description 删除用户组和角色的关系
+	 * @param userGroupId 用户组编号
+	 * @param roleId 角色编号
+	 * @author caobin
+	 */
+	void delUserGroupRefRole(long userGroupId, long roleId);
+	
+	
+	/**
+	 * @Description 批量保存用户组和角色的关系
+	 * @param userGroupId 用户组编号
+	 * @param roleIds 角色编号
+	 * @author caobin
+	 */
+	void saveUserGroupRefRoles(long userGroupId, String roleIds);
+	
+	/**
+	 * @Description 批量删除用户组和角色的关系
+	 * @param userGroupId 用户组编号
+	 * @param roleIds 角色编号
+	 * @author caobin
+	 */
+	void delUserGroupRefRoles(long userGroupId, String roleIds);
 }
 

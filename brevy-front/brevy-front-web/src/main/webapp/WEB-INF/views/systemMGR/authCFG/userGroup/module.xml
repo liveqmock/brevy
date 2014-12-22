@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.systemMGR.authCFG.userGroup.UserGroupUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>../../../login/store/LoginStore.js</file>
+        	<file>store/UserGroupStore.js</file>
+        	<file>store/UserGroupRefStore.js</file>
+        	<file>ui/UserGroupUI.js</file>
+        	<file>ui/crud/UserGroupRead.js</file>
+        	<file>ui/refRole/RefRole.js</file>
+        </js>
+    </files>
+</module>
