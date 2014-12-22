@@ -14,7 +14,7 @@ Ext.define("appModel", {
 
 var appDS = Ext.create("Ext.data.Store", {
 	model: appModel,
-	autoLoad: false,	
+	autoLoad: true,	
 	proxy: {
         type: "jsonpaging",
         url: "../maintenance/app/getAppList.json",

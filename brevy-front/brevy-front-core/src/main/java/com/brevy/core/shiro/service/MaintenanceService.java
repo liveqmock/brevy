@@ -7,11 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.brevy.core.shiro.model.ApAccessPerm;
-import com.brevy.core.shiro.model.ApGroup;
+import com.brevy.core.shiro.model.ApApplication;
 import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
-import com.brevy.core.shiro.model.ApRole;
 import com.brevy.core.shiro.model.ApRoleSingle;
 
 /**
@@ -462,5 +461,49 @@ public interface MaintenanceService {
 	 * @author caobin
 	 */
 	void delUserGroupRefRoles(long userGroupId, String roleIds);
+	
+	/************************ 应用系统 *********************************/
+	
+	/**
+	 * @Description 分页查询应用系统
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApApplication> findApApplications(Pageable pageable);
+	
+	
+	/**
+	 * @Description 分页模糊查询应用系统
+	 * @param keyword 关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApApplication> searchApApplicationsByKeyword(String keyword, Pageable pageable);
+	
+	/**
+	 * @Description 保存（更新）应用系统
+	 * @param apApplication
+	 * @author caobin
+	 */
+	void saveOrUpdateApApplication(ApApplication apApplication);
+	
+	/**
+	 * @Description 检查应用系统代码是否重复
+	 * @param code 访问权限代码
+	 * @return boolean true-不重复|false-重复
+	 * @author caobin
+	 */
+	boolean checkApApplicationCode(String code);
+	
+	
+	/**
+	 * @Description （批量）删除应用系统
+	 * @param ids
+	 * @param appId
+	 * @author caobin
+	 */
+	void deleteApApplication(Collection<Long> ids);
 }
 

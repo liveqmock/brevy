@@ -358,6 +358,35 @@ Ext.define("Msg", {
 			confirmAddAllRefs: "确认添加当页所有角色关联？",
 			userGroupName: "用户组名称",
 			userGroupCode: "用户组代码"
+		},
+		
+		"App.systemMGR.authCFG.app.crud.AppRead" : {
+			name: "应用系统名称",
+			code: "应用系统代码",
+			status: "状态",
+			desc: "描述",
+			valid: "有效",
+			invalid: "无效",
+			keywordSearch: "关键字查询"
+		},
+		
+		"App.systemMGR.authCFG.app.crud.AppCreate" : {
+			name: "应用系统名称",
+			code: "应用系统代码",
+			status: "状态",
+			desc: "描述",
+			appBasicInfo: "应用系统基础信息",
+			createAppTitle: "添加应用系统"	
+		},
+		
+		
+		"App.systemMGR.authCFG.app.crud.AppUpdate" : {
+			name: "应用系统名称",
+			code: "应用系统代码",
+			status: "状态",
+			desc: "描述",
+			appBasicInfo: "应用系统基础信息",
+			editAppTitle: "编辑应用系统"	
 		}
 		
 	}

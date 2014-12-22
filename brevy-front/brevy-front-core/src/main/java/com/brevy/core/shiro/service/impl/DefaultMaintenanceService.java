@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.brevy.core.shiro.dao.ApAccessPermDao;
+import com.brevy.core.shiro.dao.ApApplicationDao;
 import com.brevy.core.shiro.dao.ApGroupDao;
 import com.brevy.core.shiro.dao.ApGroupSingleDao;
 import com.brevy.core.shiro.dao.ApMenuDao;
@@ -28,9 +29,11 @@ import com.brevy.core.shiro.dao.ApRefGroupRoleDao;
 import com.brevy.core.shiro.dao.ApRefRoleAccessPermDao;
 import com.brevy.core.shiro.dao.ApRefRoleMenuDao;
 import com.brevy.core.shiro.dao.ApRefRoleOperPermDao;
+import com.brevy.core.shiro.dao.ApRefUserApplicationDao;
 import com.brevy.core.shiro.dao.ApRoleDao;
 import com.brevy.core.shiro.dao.ApRoleSingleDao;
 import com.brevy.core.shiro.model.ApAccessPerm;
+import com.brevy.core.shiro.model.ApApplication;
 import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
@@ -90,6 +93,12 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 	@Autowired
 	private ApGroupSingleDao apGroupSingleDao;
+	
+	@Autowired
+	private ApApplicationDao apApplicationDao;
+	
+	@Autowired
+	private ApRefUserApplicationDao apRefUserApplicationDao;
 	
 	@Autowired
 	private AbstractShiroFilter abstractShiroFilter;
@@ -547,6 +556,35 @@ public class DefaultMaintenanceService implements MaintenanceService {
 		for(String roleId : arrayRoleId){
 			delUserGroupRefRole(userGroupId, Long.parseLong(roleId));
 		}
+	}
+
+	@Override
+	public Page<ApApplication> findApApplications(Pageable pageable) {
+		return apApplicationDao.findAll(pageable);
+	}
+
+	@Override
+	public Page<ApApplication> searchApApplicationsByKeyword(String keyword,
+			Pageable pageable) {
+		return apApplicationDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Transactional
+	@Override
+	public void saveOrUpdateApApplication(ApApplication apApplication) {
+		apApplicationDao.save(apApplication);
+	}
+
+	@Override
+	public boolean checkApApplicationCode(String code) {
+		return apApplicationDao.findByCode(code) == null;
+	}
+
+	@Transactional
+	@Override
+	public void deleteApApplication(Collection<Long> ids) {
+		apApplicationDao.deleteApplicationByIds(ids);
+		apRefUserApplicationDao.deleteRelsByApplicationIds(ids);	
 	}
 
 }

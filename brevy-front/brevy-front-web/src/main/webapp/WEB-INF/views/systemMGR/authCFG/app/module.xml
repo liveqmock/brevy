@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-    <moduleName>App.systemMGR.authCFG.role.RoleUI</moduleName>  
+    <moduleName>App.systemMGR.authCFG.app.AppUI</moduleName>  
     <files>
         <css/>
         <js>

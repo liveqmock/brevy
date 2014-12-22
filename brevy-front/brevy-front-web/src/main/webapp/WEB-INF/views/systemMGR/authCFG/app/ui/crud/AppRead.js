@@ -32,14 +32,14 @@ Ext.define("App.systemMGR.authCFG.app.crud.AppRead", {
 	createToolbar : function(){
 		var me = this;
 		return [
-			" ", "-",
-			{text: Msg.App.add, iconCls: Ext.ux.Icons.world_add, handler: function(btn){
+			" ",
+			{text: Msg.App.add, iconCls: Ext.ux.Icons.application_add, handler: function(btn){
 				Pub.ResLoader.jsPack(me.getExtRes("systemMGR/authCFG/app/ui/crud/AppCreate.js"), function(){
 					me.createInstance("App.systemMGR.authCFG.app.crud.AppCreate", Msg.App.add, btn.iconCls).show(btn);
 				});
 			}},
 			"-",
-			{text: Msg.App.edit, iconCls: Ext.ux.Icons.world_edit, handler:function(btn){
+			{text: Msg.App.edit, iconCls: Ext.ux.Icons.application_edit, handler:function(btn){
 				me.handleSelectedRecord("AppReadMainGridID", function(p){
 					Pub.ResLoader.jsPack(me.getExtRes("systemMGR/authCFG/app/ui/crud/AppUpdate.js"), function(){
 						me.createInstance("App.systemMGR.authCFG.app.crud.AppUpdate", Msg.App.edit, btn.iconCls, p.sm[0]).show(btn);
@@ -47,7 +47,7 @@ Ext.define("App.systemMGR.authCFG.app.crud.AppRead", {
 				});
 			}},
 			"-",
-			{text: Msg.App.del, iconCls: Ext.ux.Icons.world_delete, handler:function(btn){
+			{text: Msg.App.del, iconCls: Ext.ux.Icons.application_delete, handler:function(btn){
 				me.handleSelectedRecord("AppReadMainGridID", function(p){
 					Pub.ResLoader.jsPack(me.getExtRes("systemMGR/authCFG/app/ui/crud/AppDelete.js"), function(){
 						Pub.MsgBox.showMsgBox(Pub.MsgBox.CONFIRM, Msg.Prompt.confirmDelRec, null, function(r){
@@ -64,7 +64,7 @@ Ext.define("App.systemMGR.authCFG.app.crud.AppRead", {
 				labelWidth: Ext.isChrome ? 70 : 60,
 				xtype: "searchfield",
 				width: 260,
-				store: accessAuthDS
+				store: appDS
 			}
 		];
 	},

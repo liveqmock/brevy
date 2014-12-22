@@ -24,11 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.brevy.core.shiro.model.ApAccessPerm;
-import com.brevy.core.shiro.model.ApGroup;
+import com.brevy.core.shiro.model.ApApplication;
 import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
-import com.brevy.core.shiro.model.ApRole;
 import com.brevy.core.shiro.model.ApRoleSingle;
 import com.brevy.core.shiro.service.MaintenanceService;
 import com.brevy.core.shiro.util.ShiroUtils;
@@ -55,6 +54,8 @@ public class MaintenanceController extends BaseController {
 	private final static String UNIQUE_OPER_PERM_CODE = "操作权限代码必须唯一";
 	
 	private final static String UNIQUE_ROLE_CODE = "角色代码必须唯一";
+	
+	private final static String UNIQUE_APPLICATION = "应用系统代码必须唯一";
 	
 	/*############################################  公共    ############################################*/
 	
@@ -255,7 +256,7 @@ public class MaintenanceController extends BaseController {
 	 */
 	@RequestMapping("/role/saveOrUpdate")
 	@ResponseBody
-	public ModelAndView saveOrUpdateOperPerm(@RequestBody ApRoleSingle apRole){
+	public ModelAndView saveOrUpdateRole(@RequestBody ApRoleSingle apRole){
 		log.debug(">>>> apRole from request is : {}", new Object[]{apRole});
 		if(apRole.getId() == 0 && !maintenanceService.checkApRoleCode(apRole.getCode())){//新增且重复code
 			Map<String, String> errorFields = new HashMap<String, String>();
@@ -745,6 +746,57 @@ public class MaintenanceController extends BaseController {
 		return this.successView();
 	}
 	
+	/*############################################  应用维护    ############################################*/
 	
+	/**
+	 * @Description 保存（更新）访问权限
+	 * @param apAccessPerm
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/app/saveOrUpdate")
+	@ResponseBody
+	public ModelAndView saveOrUpdateApplication(@RequestBody ApApplication apApplication){
+		log.debug(">>>> apApplication from request is : {}", new Object[]{apApplication});
+		if(apApplication.getId() == 0 && !maintenanceService.checkApApplicationCode(apApplication.getCode())){//新增且重复code
+			Map<String, String> errorFields = new HashMap<String, String>();
+			errorFields.put("code", UNIQUE_APPLICATION);
+			return this.failureView(this.createMav(), new CoreException(UNIQUE_APPLICATION), errorFields);
+		}
+		maintenanceService.saveOrUpdateApApplication(apApplication);
+		return this.successView();
+	}
+	
+	
+	
+	@RequestMapping("/app/getAppList")
+	@ResponseBody
+	public Page<ApApplication> getApplications(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		//获取查询参数
+		String keyword = getString(p, "query");
+		Page<ApApplication> pageList = 
+				StringUtils.isBlank(keyword) ? 
+						maintenanceService.findApApplications(pageable) : 
+							maintenanceService.searchApApplicationsByKeyword(keyword, pageable)	;
+		return pageList;
+	}
+	
+	@RequestMapping("/app/delete")
+	@ResponseBody
+	public ModelAndView deleteApplications(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		String params = getString(p, "ids");	
+		if(StringUtils.isNotBlank(params)){
+			String[] arrParams = params.split("\\,");
+			Long[] longs = new Long[arrParams.length];
+			for(int i = 0; i< arrParams.length; i++){
+				longs[i] = Long.parseLong(arrParams[i]);
+			}
+			maintenanceService.deleteApApplication(Arrays.asList(longs));
+		}
+		return this.successView();	
+	}
 	
 }
