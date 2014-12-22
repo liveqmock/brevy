@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import com.brevy.core.shiro.model.ApRefGroupRole;
 import com.brevy.core.shiro.model.ApRefGroupRolePK;
 import com.brevy.core.shiro.model.ApRole;
+import com.brevy.core.shiro.model.ApRoleSingle;
 
 /**
  * @description 用户组角色关系
@@ -47,8 +48,8 @@ public interface ApRefGroupRoleDao extends CrudRepository<ApRefGroupRole, ApRefG
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select ar from ApRole ar where ar.id in (select argr.id.roleId from ApRefGroupRole argr where argr.id.groupId=:groupId) and (ar.name like :kw or ar.code like :kw or ar.desc like :kw)")
-	Page<ApRole> findGroupRefRole(@Param("groupId")long groupId, @Param("kw")String keyword, Pageable pageable);
+	@Query("select ar from ApRoleSingle ar where ar.id in (select argr.id.roleId from ApRefGroupRole argr where argr.id.groupId=:groupId) and (ar.name like :kw or ar.code like :kw or ar.desc like :kw)")
+	Page<ApRoleSingle> findGroupRefRole(@Param("groupId")long groupId, @Param("kw")String keyword, Pageable pageable);
 	
 	
 	/**
@@ -60,7 +61,7 @@ public interface ApRefGroupRoleDao extends CrudRepository<ApRefGroupRole, ApRefG
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select ar from ApRole ar where ar.appId =:appId and ar.id not in (select argr.id.roleId from ApRefGroupRole argr where argr.id.groupId=:groupId) and (ar.name like :kw or ar.code like :kw or ar.desc like :kw)")
-	Page<ApRole> findCadidateGroupRefRole(@Param("appId")long appId, @Param("groupId")long groupId, @Param("kw")String keyword, Pageable pageable);
+	@Query("select ar from ApRoleSingle ar where ar.appId =:appId and ar.id not in (select argr.id.roleId from ApRefGroupRole argr where argr.id.groupId=:groupId) and (ar.name like :kw or ar.code like :kw or ar.desc like :kw)")
+	Page<ApRoleSingle> findCadidateGroupRefRole(@Param("appId")long appId, @Param("groupId")long groupId, @Param("kw")String keyword, Pageable pageable);
 
 }

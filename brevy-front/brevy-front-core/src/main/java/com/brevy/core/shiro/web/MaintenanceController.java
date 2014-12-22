@@ -270,23 +270,23 @@ public class MaintenanceController extends BaseController {
 	
 	@RequestMapping("/role/getRoleList")
 	@ResponseBody
-	public Page<ApRole> getRoles(@RequestBody Map<String, String> p){
+	public Page<ApRoleSingle> getRoles(@RequestBody Map<String, String> p){
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
 		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE), Direction.ASC, "id");
 		//获取查询参数
 		String keyword = getString(p, "query");
-		Page<ApRole> pageList = 
+		Page<ApRoleSingle> pageList = 
 				StringUtils.isBlank(keyword) ? 
 						maintenanceService.findApRoles(getLongValue(p, "appId"), pageable) : 
 							maintenanceService.searchApRolesByKeyword(keyword, getLongValue(p, "appId"), pageable);
-		Iterator<ApRole> apRoleIter = pageList.iterator();
+		/*Iterator<ApRole> apRoleIter = pageList.iterator();
 		while(apRoleIter.hasNext()){
 			ApRole ari = apRoleIter.next();
 			//移除关联数据
 			ari.setAccessPerms(null);
 			ari.setMenus(null);
 			ari.setOperPerms(null);
-		}
+		}*/
 		return pageList;
 	}
 	
@@ -618,20 +618,20 @@ public class MaintenanceController extends BaseController {
 	 */
 	@RequestMapping("/userGroup/getUserGroupList")
 	@ResponseBody
-	public Page<ApGroup> getUserGroups(@RequestBody Map<String, String> p){
+	public Page<ApGroupSingle> getUserGroups(@RequestBody Map<String, String> p){
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
 		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
 		//获取查询参数
 		String keyword = getString(p, "query");
-		Page<ApGroup> pageList = 
+		Page<ApGroupSingle> pageList = 
 				StringUtils.isBlank(keyword) ? 
 						maintenanceService.findApGroups(getLongValue(p, "appId"), pageable) : 
 							maintenanceService.searchApGroupsByKeyword(keyword, getLongValue(p, "appId"), pageable)	;
-		Iterator<ApGroup> apGroupIter = pageList.iterator();
+		/*Iterator<ApGroup> apGroupIter = pageList.iterator();
 		while(apGroupIter.hasNext()){
 			//移除关联数据
 			apGroupIter.next().setRoles(null);
-		}
+		}*/
 		return pageList;
 	}
 	
@@ -644,20 +644,20 @@ public class MaintenanceController extends BaseController {
 	 */
 	@RequestMapping("/userGroup/getRefUserGroupRole")
 	@ResponseBody
-	public Page<ApRole> getRefUserGroupRole(@RequestBody Map<String, String> p){
+	public Page<ApRoleSingle> getRefUserGroupRole(@RequestBody Map<String, String> p){
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
 		//获取查询参数
 		String keyword = getString(p, "query", "");
 		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
-		Page<ApRole> pageList = maintenanceService.findUserGroupRefRole(getLongValue(p, "userGroupId"), keyword, pageable);	
-		Iterator<ApRole> apRoleIter = pageList.iterator();
+		Page<ApRoleSingle> pageList = maintenanceService.findUserGroupRefRole(getLongValue(p, "userGroupId"), keyword, pageable);	
+		/*Iterator<ApRole> apRoleIter = pageList.iterator();
 		while(apRoleIter.hasNext()){
 			ApRole ar = apRoleIter.next();
 			//移除关联数据
 			ar.setMenus(null);
 			ar.setOperPerms(null);
 			ar.setAccessPerms(null);
-		}
+		}*/
 		return pageList;
 	}
 	
@@ -670,20 +670,20 @@ public class MaintenanceController extends BaseController {
 	 */
 	@RequestMapping("/userGroup/getCandidateRole")
 	@ResponseBody
-	public Page<ApRole> getCandidateRole(@RequestBody Map<String, String> p){
+	public Page<ApRoleSingle> getCandidateRole(@RequestBody Map<String, String> p){
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
 		//获取查询参数
 		String keyword = getString(p, "query", "");
 		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
-		Page<ApRole> pageList =  maintenanceService.findCandidateRole(getLongValue(p, "appId"), getLongValue(p, "userGroupId"), keyword, pageable);	
-		Iterator<ApRole> apRoleIter = pageList.iterator();
+		Page<ApRoleSingle> pageList =  maintenanceService.findCandidateRole(getLongValue(p, "appId"), getLongValue(p, "userGroupId"), keyword, pageable);	
+		/*Iterator<ApRole> apRoleIter = pageList.iterator();
 		while(apRoleIter.hasNext()){
 			ApRole ar = apRoleIter.next();
 			//移除关联数据
 			ar.setMenus(null);
 			ar.setOperPerms(null);
 			ar.setAccessPerms(null);
-		}
+		}*/
 		return pageList;
 	}
 	

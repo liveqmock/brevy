@@ -31,7 +31,6 @@ import com.brevy.core.shiro.dao.ApRefRoleOperPermDao;
 import com.brevy.core.shiro.dao.ApRoleDao;
 import com.brevy.core.shiro.dao.ApRoleSingleDao;
 import com.brevy.core.shiro.model.ApAccessPerm;
-import com.brevy.core.shiro.model.ApGroup;
 import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
@@ -104,6 +103,7 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	@Override
 	public Collection<?> findChildren(final long appId, final long parentId, long roleId){
 		ApRole apRole = apRoleDao.findOne(roleId);
+		if(apRole == null)return null;
 		Collection<?> c = CollectionUtils.select(apRole.getMenus(), new Predicate() {			
 			@Override
 			public boolean evaluate(Object object) {
@@ -286,14 +286,14 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 	
 	@Override
-	public Page<ApRole> findApRoles(long appId, Pageable pageable) {
-		return apRoleDao.findByAppId(appId, pageable);
+	public Page<ApRoleSingle> findApRoles(long appId, Pageable pageable) {
+		return apRoleSingleDao.findByAppId(appId, pageable);
 	}
 
 	@Override
-	public Page<ApRole> searchApRolesByKeyword(String keyword, long appId,
+	public Page<ApRoleSingle> searchApRolesByKeyword(String keyword, long appId,
 			Pageable pageable) {
-		return apRoleDao.searchByKeyword("%".concat(keyword).concat("%"), appId, pageable);
+		return apRoleSingleDao.searchByKeyword("%".concat(keyword).concat("%"), appId, pageable);
 	}
 
 	@Transactional
@@ -475,7 +475,7 @@ public class DefaultMaintenanceService implements MaintenanceService {
 
 	@Override
 	public boolean checkApGroupCode(String code) {
-		return apGroupDao.findByCode(code) == null;
+		return apGroupSingleDao.findByCode(code) == null;
 	}
 	
 	@Transactional
@@ -487,26 +487,26 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 
 	@Override
-	public Page<ApGroup> findApGroups(long appId, Pageable pageable) {
-		return apGroupDao.findByAppId(appId, pageable);
+	public Page<ApGroupSingle> findApGroups(long appId, Pageable pageable) {
+		return apGroupSingleDao.findByAppId(appId, pageable);
 	}
 	
 
 	@Override
-	public Page<ApGroup> searchApGroupsByKeyword(String keyword, long appId,
+	public Page<ApGroupSingle> searchApGroupsByKeyword(String keyword, long appId,
 			Pageable pageable) {
-		return apGroupDao.searchByKeyword("%".concat(keyword).concat("%"), appId, pageable);
+		return apGroupSingleDao.searchByKeyword("%".concat(keyword).concat("%"), appId, pageable);
 	}
 
 	
 	@Override
-	public Page<ApRole> findUserGroupRefRole(long userGroupId, String keyword,
+	public Page<ApRoleSingle> findUserGroupRefRole(long userGroupId, String keyword,
 			Pageable pageable) {
 		return apRefGroupRoleDao.findGroupRefRole(userGroupId, "%".concat(keyword).concat("%"), pageable);
 	}
 
 	@Override
-	public Page<ApRole> findCandidateRole(long appId, long userGroupId,
+	public Page<ApRoleSingle> findCandidateRole(long appId, long userGroupId,
 			String keyword, Pageable pageable) {
 		return apRefGroupRoleDao.findCadidateGroupRefRole(appId, userGroupId, "%".concat(keyword).concat("%"), pageable);
 	}

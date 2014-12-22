@@ -177,7 +177,7 @@ public interface MaintenanceService {
 	 * @return
 	 * @author caobin
 	 */
-	Page<ApRole> findApRoles(long appId, Pageable pageable);
+	Page<ApRoleSingle> findApRoles(long appId, Pageable pageable);
 	
 	
 	/**
@@ -188,7 +188,7 @@ public interface MaintenanceService {
 	 * @return
 	 * @author caobin
 	 */
-	Page<ApRole> searchApRolesByKeyword(String keyword, long appId, Pageable pageable);
+	Page<ApRoleSingle> searchApRolesByKeyword(String keyword, long appId, Pageable pageable);
 	
 	/**
 	 * @Description 保存（更新）角色
@@ -395,7 +395,7 @@ public interface MaintenanceService {
 	 * @return
 	 * @author caobin
 	 */
-	Page<ApGroup> findApGroups(long appId, Pageable pageable);
+	Page<ApGroupSingle> findApGroups(long appId, Pageable pageable);
 	
 	/**
 	 * @Description 分页模糊查询用户组
@@ -405,7 +405,7 @@ public interface MaintenanceService {
 	 * @return
 	 * @author caobin
 	 */
-	Page<ApGroup> searchApGroupsByKeyword(String keyword, long appId, Pageable pageable);
+	Page<ApGroupSingle> searchApGroupsByKeyword(String keyword, long appId, Pageable pageable);
 	
 	/**
 	 * @Description 分页查询用户组拥有的角色
@@ -415,7 +415,7 @@ public interface MaintenanceService {
 	 * @return
 	 * @author caobin
 	 */
-	Page<ApRole> findUserGroupRefRole(long userGroupId, String keyword, Pageable pageable);
+	Page<ApRoleSingle> findUserGroupRefRole(long userGroupId, String keyword, Pageable pageable);
 	
 	
 	/**
@@ -427,7 +427,7 @@ public interface MaintenanceService {
 	 * @return
 	 * @author caobin
 	 */
-	Page<ApRole> findCandidateRole(long appId, long userGroupId, String keyword, Pageable pageable);
+	Page<ApRoleSingle> findCandidateRole(long appId, long userGroupId, String keyword, Pageable pageable);
 	
 	
 	/**
