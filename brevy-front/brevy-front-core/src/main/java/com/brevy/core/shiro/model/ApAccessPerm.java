@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
@@ -19,6 +21,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.joda.time.DateTime;
+
+import com.brevy.core.shiro.util.ShiroUtils;
 
 
 /**
@@ -31,7 +36,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @Table(name="AP_ACCESS_PERM")
 public class ApAccessPerm implements Serializable {
 
-	private static final long serialVersionUID = -8644609340092837555L;
+	private static final long serialVersionUID = 3511418511288025295L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="AP_ACCESS_PERM_SEQ")
@@ -200,6 +205,18 @@ public class ApAccessPerm implements Serializable {
 	 */
 	public void setRoles(Set<ApRole> roles) {
 		this.roles = roles;
+	}
+	
+	@PrePersist
+	public void onPersist(){
+		this.setCreator(ShiroUtils.getCurrentUser().getUsername());
+		this.setCreateTime(new Timestamp(DateTime.now().getMillis()));
+	}
+	
+	@PreUpdate
+	public void onUpdate(){
+		this.setUpdator(ShiroUtils.getCurrentUser().getUsername());
+		this.setUpdateTime(new Timestamp(DateTime.now().getMillis()));
 	}
 
 	/* (non-Javadoc)

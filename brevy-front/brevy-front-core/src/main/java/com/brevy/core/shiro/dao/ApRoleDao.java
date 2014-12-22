@@ -19,6 +19,7 @@ import com.brevy.core.shiro.model.ApRole;
  * @version 1.0
  */
 public interface ApRoleDao extends CrudRepository<ApRole, Long> {
+	
 	/**
 	 * @Description 通过应用编号查询有效角色
 	 * @param appId 应用编号

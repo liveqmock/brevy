@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
@@ -23,6 +23,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.hibernate.annotations.Where;
+import org.joda.time.DateTime;
+
+import com.brevy.core.shiro.util.ShiroUtils;
 
 
 
@@ -36,7 +39,7 @@ import org.hibernate.annotations.Where;
 @Table(name="AP_ROLE")
 public class ApRole implements Serializable {
 
-	private static final long serialVersionUID = 9128618814881756814L;
+	private static final long serialVersionUID = -528782523698204783L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="AP_ROLE_SEQ")
@@ -79,7 +82,8 @@ public class ApRole implements Serializable {
 	/**
 	 * 角色关联的菜单
 	 */
-	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@Column(updatable=false)
+	@ManyToMany(fetch=FetchType.LAZY)
 	@Where(clause="STATUS='1'")
 	@JoinTable(		
 			name="AP_REF_ROLE_MENU", //中间表表名
@@ -91,7 +95,8 @@ public class ApRole implements Serializable {
 	/**
 	 * 角色关联的访问权限
 	 */
-	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@Column(updatable=false)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@Where(clause="STATUS='1'")	
 	@JoinTable(		
 			name="AP_REF_ROLE_ACCESS_PERM", //中间表表名
@@ -103,7 +108,8 @@ public class ApRole implements Serializable {
 	/**
 	 * 角色关联的操作权限
 	 */
-	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@Column(updatable=false)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@Where(clause="STATUS='1'")
 	@JoinTable(		
 			name="AP_REF_ROLE_OPER_PERM", //中间表表名
@@ -256,6 +262,18 @@ public class ApRole implements Serializable {
 	 */
 	public void setOperPerms(Set<ApOperPerm> operPerms) {
 		this.operPerms = operPerms;
+	}
+	
+	@PrePersist
+	public void onPersist(){
+		this.setCreator(ShiroUtils.getCurrentUser().getUsername());
+		this.setCreateTime(new Timestamp(DateTime.now().getMillis()));
+	}
+	
+	@PreUpdate
+	public void onUpdate(){
+		this.setUpdator(ShiroUtils.getCurrentUser().getUsername());
+		this.setUpdateTime(new Timestamp(DateTime.now().getMillis()));
 	}
 
 	/* (non-Javadoc)

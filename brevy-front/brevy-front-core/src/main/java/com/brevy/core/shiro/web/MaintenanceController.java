@@ -25,9 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.brevy.core.shiro.model.ApAccessPerm;
 import com.brevy.core.shiro.model.ApGroup;
+import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
 import com.brevy.core.shiro.model.ApRole;
+import com.brevy.core.shiro.model.ApRoleSingle;
 import com.brevy.core.shiro.service.MaintenanceService;
 import com.brevy.core.shiro.util.ShiroUtils;
 import com.brevy.core.support.exception.CoreException;
@@ -253,14 +255,14 @@ public class MaintenanceController extends BaseController {
 	 */
 	@RequestMapping("/role/saveOrUpdate")
 	@ResponseBody
-	public ModelAndView saveOrUpdateOperPerm(@RequestBody ApRole apRole){
+	public ModelAndView saveOrUpdateOperPerm(@RequestBody ApRoleSingle apRole){
 		log.debug(">>>> apRole from request is : {}", new Object[]{apRole});
 		if(apRole.getId() == 0 && !maintenanceService.checkApRoleCode(apRole.getCode())){//新增且重复code
 			Map<String, String> errorFields = new HashMap<String, String>();
 			errorFields.put("code", UNIQUE_OPER_PERM_CODE);
 			return this.failureView(this.createMav(), new CoreException(UNIQUE_ROLE_CODE), errorFields);
 		}
-		maintenanceService.saveOrUpdateApRole(apRole);
+		maintenanceService.saveOrUpdateApRoleSingle(apRole);
 		return this.successView();
 	}
 	
@@ -576,14 +578,14 @@ public class MaintenanceController extends BaseController {
 	 */
 	@RequestMapping("/userGroup/saveOrUpdate")
 	@ResponseBody
-	public ModelAndView saveOrUpdateUserGroup(@RequestBody ApGroup apGroup){
+	public ModelAndView saveOrUpdateUserGroup(@RequestBody ApGroupSingle apGroup){
 		log.debug(">>>> apGroup from request is : {}", new Object[]{apGroup});
-		if(apGroup.getId() == 0 && !maintenanceService.checkApAccessPermCode(apGroup.getCode())){//新增且重复code
+		if(apGroup.getId() == 0 && !maintenanceService.checkApGroupCode(apGroup.getCode())){//新增且重复code
 			Map<String, String> errorFields = new HashMap<String, String>();
 			errorFields.put("code", UNIQUE_GROUP_CODE);
 			return this.failureView(this.createMav(), new CoreException(UNIQUE_GROUP_CODE), errorFields);
 		}
-		maintenanceService.saveOrUpdateApGroup(apGroup);
+		maintenanceService.saveOrUpdateApGroupSingle(apGroup);
 		return this.successView();
 	}
 

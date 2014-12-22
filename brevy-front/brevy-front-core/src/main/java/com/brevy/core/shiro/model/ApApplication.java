@@ -1,12 +1,16 @@
 package com.brevy.core.shiro.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.joda.time.DateTime;
+
+import com.brevy.core.shiro.util.ShiroUtils;
 
 import java.sql.Timestamp;
 
@@ -21,7 +25,7 @@ import java.sql.Timestamp;
 @Table(name="AP_APPLICATION")
 public class ApApplication implements Serializable {
 
-	private static final long serialVersionUID = 7276457220710319141L;
+	private static final long serialVersionUID = -6471642628593668799L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="AP_APPLICATION_SEQ")
@@ -152,6 +156,18 @@ public class ApApplication implements Serializable {
 	 */
 	public void setCreator(String creator) {
 		this.creator = creator;
+	}
+	
+	@PrePersist
+	public void onPersist(){
+		this.setCreator(ShiroUtils.getCurrentUser().getUsername());
+		this.setCreateTime(new Timestamp(DateTime.now().getMillis()));
+	}
+	
+	@PreUpdate
+	public void onUpdate(){
+		this.setUpdator(ShiroUtils.getCurrentUser().getUsername());
+		this.setUpdateTime(new Timestamp(DateTime.now().getMillis()));
 	}
 	
 	/* (non-Javadoc)

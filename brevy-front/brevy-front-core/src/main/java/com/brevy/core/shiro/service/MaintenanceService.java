@@ -8,9 +8,11 @@ import org.springframework.data.domain.Pageable;
 
 import com.brevy.core.shiro.model.ApAccessPerm;
 import com.brevy.core.shiro.model.ApGroup;
+import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
 import com.brevy.core.shiro.model.ApRole;
+import com.brevy.core.shiro.model.ApRoleSingle;
 
 /**
  * @Description 权限管理维护Service
@@ -193,7 +195,7 @@ public interface MaintenanceService {
 	 * @param apRole
 	 * @author caobin
 	 */
-	void saveOrUpdateApRole(ApRole apRole);
+	void saveOrUpdateApRoleSingle(ApRoleSingle apRole);
 	
 	/**
 	 * @Description 检查角色代码是否重复
@@ -366,7 +368,7 @@ public interface MaintenanceService {
 	 * @param apGroup
 	 * @author caobin
 	 */
-	void saveOrUpdateApGroup(ApGroup apGroup);
+	void saveOrUpdateApGroupSingle(ApGroupSingle apGroup);
 	
 	
 	/**

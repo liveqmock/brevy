@@ -2,18 +2,12 @@ package com.brevy.core.shiro.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -22,23 +16,22 @@ import javax.persistence.TableGenerator;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.Where;
 import org.joda.time.DateTime;
 
 import com.brevy.core.shiro.util.ShiroUtils;
 
 
 /**
- * @Description 用户实体类
+ * @Description 用户实体类（单一）
  * @author caobin
  * @date 2013-12-23
  * @version 1.0
  */
 @Entity
 @Table(name="AP_USER")
-public class ApUser implements Serializable {
+public class ApUserSingle implements Serializable {
 
-	private static final long serialVersionUID = -4045669060941865244L;
+	private static final long serialVersionUID = 5825924368446566510L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="AP_USER_SEQ")
@@ -92,47 +85,9 @@ public class ApUser implements Serializable {
 	private String userType;
 
 	private String username;
-	
-	/**
-	 * 用户关联的应用
-	 */
-	@Column(updatable=false)
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(		
-			name="AP_REF_USER_APP", //中间表表名
-			joinColumns = @JoinColumn(name="USER_ID"),//和当前表中ID关联的中间表的列名
-			inverseJoinColumns = @JoinColumn(name="APP_ID")//和关联表中ID关联的中间表的列名
-	)
-	private Set<ApApplication> app = new HashSet<ApApplication>();
-	
-	/**
-	 * 用户关联的组
-	 */
-	@Column(updatable=false)
-	@ManyToMany(fetch=FetchType.LAZY)
-	@Where(clause="STATUS='1'")
-	@JoinTable(		
-			name="AP_REF_USER_GROUP", //中间表表名
-			joinColumns = @JoinColumn(name="USER_ID"),//和当前表中ID关联的中间表的列名
-			inverseJoinColumns = @JoinColumn(name="GROUP_ID")//和关联表中ID关联的中间表的列名
-	)
-	private Set<ApGroup> groups = new HashSet<ApGroup>();
-	
-	
-	/**
-	 * 用户关联的角色
-	 */
-	@Column(updatable=false)
-	@ManyToMany(fetch=FetchType.LAZY)
-	@Where(clause="STATUS='1'")
-	@JoinTable(		
-			name="AP_REF_USER_ROLE", //中间表表名
-			joinColumns = @JoinColumn(name="USER_ID"),//和当前表中ID关联的中间表的列名
-			inverseJoinColumns = @JoinColumn(name="ROLE_ID")//和关联表中ID关联的中间表的列名
-	)
-	private Set<ApRole> roles = new HashSet<ApRole>();
 
-    public ApUser() {
+
+    public ApUserSingle() {
     }
 
 	public long getId() {
@@ -262,50 +217,7 @@ public class ApUser implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-	
-	/**
-	 * @return the app
-	 */
-	public Set<ApApplication> getApp() {
-		return app;
-	}
 
-	/**
-	 * @param app the app to set
-	 */
-	public void setApp(Set<ApApplication> app) {
-		this.app = app;
-	}
-	
-
-	/**
-	 * @return the groups
-	 */
-	public Set<ApGroup> getGroups() {
-		return groups;
-	}
-
-	/**
-	 * @param groups the groups to set
-	 */
-	public void setGroups(Set<ApGroup> groups) {
-		this.groups = groups;
-	}
-
-	/**
-	 * @return the roles
-	 */
-	public Set<ApRole> getRoles() {
-		return roles;
-	}
-
-	/**
-	 * @param roles the roles to set
-	 */
-	public void setRoles(Set<ApRole> roles) {
-		this.roles = roles;
-	}
 	
 	@PrePersist
 	public void onPersist(){
@@ -324,7 +236,7 @@ public class ApUser implements Serializable {
 	 */
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this, new String[]{"app", "roles", "groups"});
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	/* (non-Javadoc)
@@ -332,7 +244,7 @@ public class ApUser implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj, new String[]{"app", "roles", "groups"});
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/* (non-Javadoc)
@@ -340,7 +252,7 @@ public class ApUser implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return ReflectionToStringBuilder.toStringExclude(this, new String[]{"app", "roles", "groups"});
+		return ReflectionToStringBuilder.toString(this);
 	}
 
 }

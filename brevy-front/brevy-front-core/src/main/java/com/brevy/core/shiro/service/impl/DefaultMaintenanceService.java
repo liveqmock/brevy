@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.brevy.core.shiro.dao.ApAccessPermDao;
 import com.brevy.core.shiro.dao.ApGroupDao;
+import com.brevy.core.shiro.dao.ApGroupSingleDao;
 import com.brevy.core.shiro.dao.ApMenuDao;
 import com.brevy.core.shiro.dao.ApOperPermDao;
 import com.brevy.core.shiro.dao.ApRefGroupRoleDao;
@@ -28,8 +29,10 @@ import com.brevy.core.shiro.dao.ApRefRoleAccessPermDao;
 import com.brevy.core.shiro.dao.ApRefRoleMenuDao;
 import com.brevy.core.shiro.dao.ApRefRoleOperPermDao;
 import com.brevy.core.shiro.dao.ApRoleDao;
+import com.brevy.core.shiro.dao.ApRoleSingleDao;
 import com.brevy.core.shiro.model.ApAccessPerm;
 import com.brevy.core.shiro.model.ApGroup;
+import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
 import com.brevy.core.shiro.model.ApRefGroupRole;
@@ -41,6 +44,7 @@ import com.brevy.core.shiro.model.ApRefRoleMenuPK;
 import com.brevy.core.shiro.model.ApRefRoleOperPerm;
 import com.brevy.core.shiro.model.ApRefRoleOperPermPK;
 import com.brevy.core.shiro.model.ApRole;
+import com.brevy.core.shiro.model.ApRoleSingle;
 import com.brevy.core.shiro.service.MaintenanceService;
 import com.brevy.core.shiro.util.ShiroUtils;
 
@@ -80,7 +84,13 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	private ApRoleDao apRoleDao;
 	
 	@Autowired
+	private ApRoleSingleDao apRoleSingleDao;
+	
+	@Autowired
 	private ApGroupDao apGroupDao;
+	
+	@Autowired
+	private ApGroupSingleDao apGroupSingleDao;
 	
 	@Autowired
 	private AbstractShiroFilter abstractShiroFilter;
@@ -288,8 +298,8 @@ public class DefaultMaintenanceService implements MaintenanceService {
 
 	@Transactional
 	@Override
-	public void saveOrUpdateApRole(ApRole apRole) {
-		apRoleDao.save(apRole);
+	public void saveOrUpdateApRoleSingle(ApRoleSingle apRole) {
+		apRoleSingleDao.save(apRole);
 	}
 
 	@Override
@@ -459,8 +469,8 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 	@Transactional
 	@Override
-	public void saveOrUpdateApGroup(ApGroup apGroup) {
-		apGroupDao.save(apGroup);
+	public void saveOrUpdateApGroupSingle(ApGroupSingle apGroup) {		
+		apGroupSingleDao.save(apGroup);
 	}
 
 	@Override

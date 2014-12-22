@@ -2,19 +2,12 @@ package com.brevy.core.shiro.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -29,16 +22,16 @@ import com.brevy.core.shiro.util.ShiroUtils;
 
 
 /**
- * @Description 组实体类
+ * @Description 组实体类（单一）
  * @author caobin
  * @date 2013-12-23
  * @version 1.0
  */
 @Entity
 @Table(name="AP_GROUP")
-public class ApGroup implements Serializable {
+public class ApGroupSingle implements Serializable {
 
-	private static final long serialVersionUID = 1046743005237312943L;
+	private static final long serialVersionUID = 3017624336942204809L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="AP_GROUP_SEQ")
@@ -77,20 +70,9 @@ public class ApGroup implements Serializable {
 	private Timestamp updateTime;
 
 	private String updator;
+
 	
-	/**
-	 * 组关联的角色
-	 */
-	@Column(updatable=false)
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(		
-			name="AP_REF_GROUP_ROLE", //中间表表名
-			joinColumns = @JoinColumn(name="GROUP_ID"),//和当前表中ID关联的中间表的列名
-			inverseJoinColumns = @JoinColumn(name="ROLE_ID")//和关联表中ID关联的中间表的列名
-	)
-	private Set<ApRole> roles = new HashSet<ApRole>();
-	
-    public ApGroup() {
+    public ApGroupSingle() {
     }
 
 	public long getId() {
@@ -181,19 +163,6 @@ public class ApGroup implements Serializable {
 		this.updator = updator;
 	}
 
-	/**
-	 * @return the roles
-	 */
-	public Set<ApRole> getRoles() {
-		return roles;
-	}
-
-	/**
-	 * @param roles the roles to set
-	 */
-	public void setRoles(Set<ApRole> roles) {
-		this.roles = roles;
-	}
 	
 	@PrePersist
 	public void onPersist(){
@@ -212,7 +181,7 @@ public class ApGroup implements Serializable {
 	 */
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this, new String[]{"roles"});
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	/* (non-Javadoc)
@@ -220,7 +189,7 @@ public class ApGroup implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj, new String[]{"roles"});
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	/* (non-Javadoc)
@@ -228,7 +197,7 @@ public class ApGroup implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return ReflectionToStringBuilder.toStringExclude(this, new String[]{"roles"});
+		return ReflectionToStringBuilder.toString(this);
 	}
 
 }

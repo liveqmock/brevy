@@ -2,19 +2,12 @@ package com.brevy.core.shiro.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -29,69 +22,55 @@ import com.brevy.core.shiro.util.ShiroUtils;
 
 
 /**
- * @Description 组实体类
+ * @description 角色实体类（单一）
  * @author caobin
- * @date 2013-12-23
- * @version 1.0
+ * @date 2014年12月22日
  */
 @Entity
-@Table(name="AP_GROUP")
-public class ApGroup implements Serializable {
+@Table(name="AP_ROLE")
+public class ApRoleSingle implements Serializable {
 
-	private static final long serialVersionUID = 1046743005237312943L;
+	private static final long serialVersionUID = -3862293448241882443L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE, generator="AP_GROUP_SEQ")
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="AP_ROLE_SEQ")
 	@TableGenerator(
-			name="AP_GROUP_SEQ",
+			name="AP_ROLE_SEQ",
 			table="AP_SEQ",
 			pkColumnName="SEQ_NAME",
 			valueColumnName="SEQ_VALUE",
-			pkColumnValue="AP_GROUP_SEQ",
+			pkColumnValue="AP_ROLE_SEQ",
 			initialValue=1,
-			allocationSize=1
-			
+			allocationSize=1		
 	)
 	private long id;
 
-	@Column(name="APP_ID")
+	@Column(name = "APP_ID")
 	private long appId;
 
 	private String code;
 
-	@Column(name="CREATE_TIME")
-	private Timestamp createTime;
-
-	private String creator;
-
-	@Column(name="DESC_")
+	@Column(name = "DESC_")
 	private String desc;
 
 	private String name;
 
-	private String status;
-
 	private String type;
 
-	@Column(name="UPDATE_TIME")
-	private Timestamp updateTime;
+	private String status;
 
 	private String updator;
-	
-	/**
-	 * 组关联的角色
-	 */
-	@Column(updatable=false)
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(		
-			name="AP_REF_GROUP_ROLE", //中间表表名
-			joinColumns = @JoinColumn(name="GROUP_ID"),//和当前表中ID关联的中间表的列名
-			inverseJoinColumns = @JoinColumn(name="ROLE_ID")//和关联表中ID关联的中间表的列名
-	)
-	private Set<ApRole> roles = new HashSet<ApRole>();
-	
-    public ApGroup() {
-    }
+
+	@Column(name = "UPDATE_TIME")
+	private Timestamp updateTime;
+
+	@Column(name = "CREATE_TIME")
+	private Timestamp createTime;
+
+	private String creator;
+
+	public ApRoleSingle() {
+	}
 
 	public long getId() {
 		return this.id;
@@ -115,22 +94,6 @@ public class ApGroup implements Serializable {
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-
-	public Timestamp getCreateTime() {
-		return this.createTime;
-	}
-
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
-	}
-
-	public String getCreator() {
-		return this.creator;
-	}
-
-	public void setCreator(String creator) {
-		this.creator = creator;
 	}
 
 	public String getDesc() {
@@ -182,17 +145,33 @@ public class ApGroup implements Serializable {
 	}
 
 	/**
-	 * @return the roles
+	 * @return the createTime
 	 */
-	public Set<ApRole> getRoles() {
-		return roles;
+	public Timestamp getCreateTime() {
+		return createTime;
 	}
 
 	/**
-	 * @param roles the roles to set
+	 * @param createTime
+	 *            the createTime to set
 	 */
-	public void setRoles(Set<ApRole> roles) {
-		this.roles = roles;
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+
+	/**
+	 * @return the creator
+	 */
+	public String getCreator() {
+		return creator;
+	}
+
+	/**
+	 * @param creator
+	 *            the creator to set
+	 */
+	public void setCreator(String creator) {
+		this.creator = creator;
 	}
 	
 	@PrePersist
@@ -207,28 +186,33 @@ public class ApGroup implements Serializable {
 		this.setUpdateTime(new Timestamp(DateTime.now().getMillis()));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this, new String[]{"roles"});
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj, new String[]{"roles"});
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return ReflectionToStringBuilder.toStringExclude(this, new String[]{"roles"});
+		return ReflectionToStringBuilder.toString(this);
 	}
-
 }
