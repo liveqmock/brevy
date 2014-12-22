@@ -472,7 +472,7 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	@Override
 	public void deleteApGroup(Collection<Long> ids, long appId) {
 		apGroupDao.deleteGroupByIds(ids);
-		apRefGroupRoleDao.deleteRelsByRoleIds(ids);		
+		apRefGroupRoleDao.deleteRelsByGroupIds(ids);		
 	}
 	
 

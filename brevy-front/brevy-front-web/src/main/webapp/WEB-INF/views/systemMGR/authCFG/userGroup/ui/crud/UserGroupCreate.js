@@ -56,11 +56,11 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupCreate", {
 		
 		
 		var desc = {
-			fieldLabel: this.required(this.desc),
+			fieldLabel: this.desc,
 			name: "desc",
 			flex: 1,
 			newLine: 1,
-			allowBlank: false,
+			allowBlank: true,
 			xtype: "textareafield",
 			maxLength: 256
 		}
