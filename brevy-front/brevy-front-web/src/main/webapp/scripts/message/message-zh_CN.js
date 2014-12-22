@@ -308,10 +308,15 @@ Ext.define("Msg", {
 			
 		},
 		
+		"App.systemMGR.authCFG.userGroup.UserGroupUI" : {
+			currentUserGroup: "当前用户组：{0}-[{1}]"
+		},
+		
 		"App.systemMGR.authCFG.userGroup.crud.UserGroupRead" : {
 			name: "用户组名称",
 			code: "用户组代码",
 			status: "状态",
+			desc: "描述",
 			valid: "有效",
 			invalid: "无效",
 			keywordSearch: "关键字查询"
@@ -330,6 +335,7 @@ Ext.define("Msg", {
 			name: "用户组名称",
 			code: "用户组代码",
 			status: "状态",
+			desc: "描述",
 			userGroupBasicInfo: "用户组基础信息",
 			editUserGroupTitle: "编辑用户组"	
 		},
@@ -344,7 +350,14 @@ Ext.define("Msg", {
 			refRoleEastNameText: "可选角色名称",
 			refRoleEastLeafText: "角色类型",
 			refRoleEastActionText: "操作",
-			refRoleEastActionTooltip: "添加角色关联"
+			refRoleEastActionTooltip: "添加角色关联",
+			cancelRefs: "撤销当页所有角色关联",
+			addRefs: "添加当页所有角色关联",
+			keywordSearch: "关键字查询",
+			confirmCancelAllRefs: "确认撤销当页所有角色关联？",
+			confirmAddAllRefs: "确认添加当页所有角色关联？",
+			userGroupName: "用户组名称",
+			userGroupCode: "用户组代码"
 		}
 		
 	}

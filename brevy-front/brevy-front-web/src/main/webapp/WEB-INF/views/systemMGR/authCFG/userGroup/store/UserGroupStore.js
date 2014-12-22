@@ -13,7 +13,7 @@ Ext.define("userGroupModel", {
 
 
 //sort_ascend
-var roleDS = Ext.create("Ext.data.Store", {
+var userGroupDS = Ext.create("Ext.data.Store", {
 	model: userGroupModel,
 	autoLoad: false,	
 	proxy: {

@@ -66,15 +66,15 @@ Ext.define("App.systemMGR.authCFG.userGroup.refRole.RefRole", {
 			{text: this.cancelRefs, iconCls: Ext.ux.Icons.fugue_cross_octagon, handler: function(btn){
 				Pub.MsgBox.showMsgBox(Pub.MsgBox.CONFIRM, me.confirmCancelAllRefs, null, function(c){
 					if(c == "yes"){
-						var selection = Ext.getCmp("RoleReadMainGridID").getSelectionModel().getSelection()[0];
+						var selection = Ext.getCmp("UserGroupReadMainGridID").getSelectionModel().getSelection()[0];
 						var count = userGroupRefRoleSelectedDS.getCount();
 						var roleIds = [];
 						if(count > 0){
 							userGroupRefRoleSelectedDS.each(function(r){
-								accessPermIds.push(r.get("id"))
+								roleIds.push(r.get("id"))
 							});
 							Ext.Ajax.request({
-								url: "../maintenance/userGroup/delRoleRefUserGroup.json",
+								url: "../maintenance/userGroup/delRolesRefUserGroup.json",
 								method: "POST",
 								jsonData: {
 							        userGroupId: selection.get("id"),
@@ -86,7 +86,7 @@ Ext.define("App.systemMGR.authCFG.userGroup.refRole.RefRole", {
 								success: function(response){ 
 									Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.updateSuccess, "br");	
 									userGroupRefRoleSelectedDS.reload();
-									userGroupRefRoleSelectedDS.reload();
+									userGroupRefRoleCandidateDS.reload();
 								},
 								scope: this
 							});
@@ -111,8 +111,8 @@ Ext.define("App.systemMGR.authCFG.userGroup.refRole.RefRole", {
 		var me = this;
 		return [
 				{xtype: "rownumberer"},
-		    	{text: this.roleName, dataIndex: "name", flex: 3},
-		    	{text: this.roleCode, dataIndex: "code", flex: 3},
+		    	{text: this.userGroupName, dataIndex: "name", flex: 3},
+		    	{text: this.userGroupCode, dataIndex: "code", flex: 3},
 	            {
 	                text: this.refRoleWestText,
 	                width: 115,
@@ -193,11 +193,11 @@ Ext.define("App.systemMGR.authCFG.userGroup.refRole.RefRole", {
 								roleIds.push(r.get("id"))
 							});
 							Ext.Ajax.request({
-								url: "../maintenance/userGroup/addRoleRefUserGroup.json",
+								url: "../maintenance/userGroup/addRolesRefUserGroup.json",
 								method: "POST",
 								jsonData: {
 							        userGroupId: selection.get("id"),
-							        roleIds: accessPermIds.join(",")
+							        roleIds: roleIds.join(",")
 							    },
 								loadMask: true,
 								loadMaskEl: Ext.getCmp("RefRoleWestPanelID").getEl(),
@@ -231,8 +231,8 @@ Ext.define("App.systemMGR.authCFG.userGroup.refRole.RefRole", {
 		var me = this;
 		return [
 			{xtype: "rownumberer"},
-		 	{text: this.roleName, dataIndex: "name", flex: 3},
-		    {text: this.roleCode, dataIndex: "code", flex: 3},
+		 	{text: this.userGroupName, dataIndex: "name", flex: 3},
+		    {text: this.userGroupCode, dataIndex: "code", flex: 3},
 		 	{
 				text: this.refRoleEastActionText,
 				width: 115,

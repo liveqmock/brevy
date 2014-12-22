@@ -468,7 +468,7 @@ public class DefaultMaintenanceService implements MaintenanceService {
 		return apGroupDao.findByCode(code) == null;
 	}
 	
-
+	@Transactional
 	@Override
 	public void deleteApGroup(Collection<Long> ids, long appId) {
 		apGroupDao.deleteGroupByIds(ids);

@@ -10,7 +10,7 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupRead", {
 			id: "UserGroupReadMainGridID",
 		    title: this.moduleText,
 			iconCls: this.moduleIcon,
-			store: roleDS,
+			store: userGroupDS,
 			tbar: this.createToolbar(),
 			viewConfig: {
 		        stripeRows: true,
@@ -20,7 +20,7 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupRead", {
 		    selModel: this.createSelectionModel(),
 		    dockedItems: [{
 		        xtype: "pagingtoolbar",
-		        store: roleDS,
+		        store: userGroupDS,
 		        dock: "bottom",
 		        displayInfo: true,
 		        plugins : [Ext.create("Ext.ux.PagingToolbarResizer", {options : this.pageSizeOptions, width: 70})]
@@ -48,8 +48,8 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupRead", {
 				listeners: {
 					change: {
 						fn: function(o, newVal, oldVal){
-							roleDS.getProxy().setExtraParam("appId", newVal)
-							roleDS.load();						
+							userGroupDS.getProxy().setExtraParam("appId", newVal)
+							userGroupDS.load();						
 						},
 						scope: this		
 					}
@@ -87,7 +87,7 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupRead", {
 				labelWidth: Ext.isChrome ? 70 : 60,
 				xtype: "searchfield",
 				width: 260,
-				store: roleDS
+				store: userGroupDS
 			}
 		];
 	},
@@ -110,7 +110,11 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupRead", {
 	    	{text: this.code, dataIndex: "code", flex: 3},
 	    	{text: this.status, dataIndex: "status", flex: 1,  renderer: function(value) {
 	            return value == 0 ? me.invalid : me.valid;
-	        }}
+	        }},
+	        {text: this.desc, dataIndex: "desc", flex: 8, renderer: function(value, metadata) {  
+                metadata.tdAttr = 'data-qtip="' + value +'"';  
+                return value;  
+            }}
 		];
 	},
 	

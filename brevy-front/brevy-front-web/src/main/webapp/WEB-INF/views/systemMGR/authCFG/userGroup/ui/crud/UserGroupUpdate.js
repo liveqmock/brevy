@@ -45,17 +45,7 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupUpdate", {
 			value: this.params.get("code")
 		}
 		
-		
-		var desc = {
-			fieldLabel: this.required(this.desc),
-			name: "desc",
-			flex: 1,
-			allowBlank: false,
-			xtype: "textareafield",
-			maxLength: 256,
-			value: this.params.get("desc")
-		}
-		
+
 		var status = {
 			fieldLabel: this.required(this.status),
 			name: "status",
@@ -70,6 +60,17 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupUpdate", {
    			displayField: "text",
     		valueField: "name",
 			value: this.params.get("status")
+		}
+		
+		var desc = {
+			fieldLabel: this.required(this.desc),
+			name: "desc",
+			flex: 1,
+			newLine: 1,
+			allowBlank: false,
+			xtype: "textareafield",
+			maxLength: 256,
+			value: this.params.get("desc")
 		}
 		
 		
@@ -96,7 +97,7 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupUpdate", {
 		return Ext.create("Ext.window.Window", {
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 240,
+		    height: 280,
 		    width: 660,
 		    layout: "fit",
 		    modal: true,

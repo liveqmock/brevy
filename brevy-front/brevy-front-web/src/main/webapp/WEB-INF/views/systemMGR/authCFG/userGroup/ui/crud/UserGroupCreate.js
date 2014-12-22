@@ -37,15 +37,6 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupCreate", {
 			maxLength: 32
 		}
 		
-		var desc = {
-			fieldLabel: this.required(this.desc),
-			name: "desc",
-			flex: 1,
-			allowBlank: false,
-			xtype: "textareafield",
-			maxLength: 256
-		}
-		
 		
 		var status = {
 			fieldLabel: this.required(this.status),
@@ -61,6 +52,17 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupCreate", {
    			displayField: "text",
     		valueField: "name",
 			value: "1"
+		}
+		
+		
+		var desc = {
+			fieldLabel: this.required(this.desc),
+			name: "desc",
+			flex: 1,
+			newLine: 1,
+			allowBlank: false,
+			xtype: "textareafield",
+			maxLength: 256
 		}
 		
 		var createBtn = {
@@ -86,7 +88,7 @@ Ext.define("App.systemMGR.authCFG.userGroup.crud.UserGroupCreate", {
 		return Ext.create("Ext.window.Window", {
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 240,
+		    height: 280,
 		    width: 660,
 		    layout: "fit",
 		    modal: true,

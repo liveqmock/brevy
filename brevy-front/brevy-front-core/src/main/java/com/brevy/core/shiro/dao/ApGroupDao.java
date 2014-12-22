@@ -45,7 +45,7 @@ public interface ApGroupDao extends CrudRepository<ApGroup, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from ApGroup a where a.appId=:appId and (a.name like :kw or a.code like :kw)")
+	@Query("select a from ApGroup a where a.appId=:appId and (a.name like :kw or a.code like :kw or a.desc like :kw)")
 	Page<ApGroup> searchByKeyword(@Param("kw")String keyword, @Param("appId")long appId, Pageable pageable);
 
 	/**

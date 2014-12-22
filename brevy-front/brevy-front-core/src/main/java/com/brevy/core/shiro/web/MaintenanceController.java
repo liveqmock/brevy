@@ -478,7 +478,7 @@ public class MaintenanceController extends BaseController {
 	 * @return
 	 * @author caobin
 	 */
-	@RequestMapping("/role/getRefRole")
+	@RequestMapping("/role/getRefRoleOperAuth")
 	@ResponseBody
 	public Page<ApOperPerm> getRefRoleOperAuth(@RequestBody Map<String, String> p){
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
@@ -646,7 +646,7 @@ public class MaintenanceController extends BaseController {
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
 		//获取查询参数
 		String keyword = getString(p, "query", "");
-		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE), Direction.ASC, "sort");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
 		Page<ApRole> pageList = maintenanceService.findUserGroupRefRole(getLongValue(p, "userGroupId"), keyword, pageable);	
 		Iterator<ApRole> apRoleIter = pageList.iterator();
 		while(apRoleIter.hasNext()){
@@ -672,7 +672,7 @@ public class MaintenanceController extends BaseController {
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
 		//获取查询参数
 		String keyword = getString(p, "query", "");
-		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE), Direction.ASC, "sort");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
 		Page<ApRole> pageList =  maintenanceService.findCandidateRole(getLongValue(p, "appId"), getLongValue(p, "userGroupId"), keyword, pageable);	
 		Iterator<ApRole> apRoleIter = pageList.iterator();
 		while(apRoleIter.hasNext()){

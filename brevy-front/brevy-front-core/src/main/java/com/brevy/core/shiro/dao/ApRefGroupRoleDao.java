@@ -47,7 +47,7 @@ public interface ApRefGroupRoleDao extends CrudRepository<ApRefGroupRole, ApRefG
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select ar from ApRole ar where ar.id in (select argr.id.roleId from ApRefGroupRole argr where argr.id.groupId=:groupId) and (ar.name like :kw or ar.code like :kw)")
+	@Query("select ar from ApRole ar where ar.id in (select argr.id.roleId from ApRefGroupRole argr where argr.id.groupId=:groupId) and (ar.name like :kw or ar.code like :kw or ar.desc like :kw)")
 	Page<ApRole> findGroupRefRole(@Param("groupId")long groupId, @Param("kw")String keyword, Pageable pageable);
 	
 	
@@ -60,7 +60,7 @@ public interface ApRefGroupRoleDao extends CrudRepository<ApRefGroupRole, ApRefG
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select ar from ApRole ar where ar.appId =:appId and ar.id not in (select argr.id.roleId from ApRefGroupRole argr where argr.id.groupId=:groupId) and (ar.name like :kw or ar.code like :kw)")
+	@Query("select ar from ApRole ar where ar.appId =:appId and ar.id not in (select argr.id.roleId from ApRefGroupRole argr where argr.id.groupId=:groupId) and (ar.name like :kw or ar.code like :kw or ar.desc like :kw)")
 	Page<ApRole> findCadidateGroupRefRole(@Param("appId")long appId, @Param("groupId")long groupId, @Param("kw")String keyword, Pageable pageable);
 
 }

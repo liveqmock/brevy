@@ -30,29 +30,33 @@ Ext.define("App.systemMGR.authCFG.userGroup.UserGroupUI", {
 		panel.on({
 			beforeactivate: function(c){			
 				if(Ext.getCmp(gridID).getSelectionModel().hasSelection()){
-					if(Ext.getCmp(gridID).getSelectionModel().getCount() == 1){
-						Ext.getCmp("RefRoleWestPanelID").getRootNode().expand();
-						return true;
-					}else{
+					if(Ext.getCmp(gridID).getSelectionModel().getCount() != 1){
 						Pub.MsgBox.showMsgBox(Pub.MsgBox.WARN, Msg.Prompt.warnCheck);
 						return false;
-					}	
-						
+					}else{
+						return true;
+					}
 				}
-				Pub.MsgBox.showMsgBox(Pub.MsgBox.WARN, Msg.Prompt.warnChecks);
+				Pub.MsgBox.showMsgBox(Pub.MsgBox.WARN, Msg.Prompt.warnCheck);
 				return false;
 			},
 			
 			activate: function(c){
 				var r = Ext.getCmp(gridID).getSelectionModel().getSelection()[0];
-				var newUserGroupText = Ext.String.format(this.currentRole, r.get("name"), r.get("code"));
-				Ext.getCmp("RefRoleNorthPanelID").update(newRoleText);
-				if(isReActivate && roleText != newRoleText){
+				var newUserGroupText = Ext.String.format(this.currentUserGroup, r.get("name"), r.get("code"));
+				Ext.getCmp("RefRoleNorthPanelID").update(newUserGroupText);
+				if(userGroupText != newUserGroupText){
+					userGroupRefRoleSelectedDS.getProxy().extraParams = {
+						userGroupId: r.get("id")
+					};
+					userGroupRefRoleCandidateDS.getProxy().extraParams = {
+						appId: r.get("appId"),
+						userGroupId: r.get("id")
+					};
 					userGroupRefRoleSelectedDS.load();
-				}else{
-					isReActivate = true;			
+					userGroupRefRoleCandidateDS.load();
 				}
-				userGroupText = newUserGroupText;
+				userGroupText = newUserGroupText;			
 				
 			},			
 			scope: this
