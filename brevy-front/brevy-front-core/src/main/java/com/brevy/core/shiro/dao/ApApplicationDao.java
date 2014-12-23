@@ -20,8 +20,7 @@ import com.brevy.core.shiro.model.ApApplication;
  */
 public interface ApApplicationDao extends CrudRepository<ApApplication, Long> {
 
-	@Query("from ApApplication aap where aap.STATUS='1'")
-	List<ApApplication> findAll();
+	List<ApApplication> findByStatus(String status);
 	
 	/**
 	 * @Description 通过应用编号分页查询应用系统

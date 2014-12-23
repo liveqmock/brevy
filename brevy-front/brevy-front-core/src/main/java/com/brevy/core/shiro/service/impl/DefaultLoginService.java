@@ -20,7 +20,7 @@ public class DefaultLoginService implements LoginService {
 
 	@Override
 	public List<ApApplication> findAllApps() {
-		return apApplicationDao.findAll();
+		return apApplicationDao.findByStatus("1");
 	}
 	
 	@Autowired
