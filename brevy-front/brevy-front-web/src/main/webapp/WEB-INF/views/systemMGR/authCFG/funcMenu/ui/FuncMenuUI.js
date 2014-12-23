@@ -525,12 +525,11 @@ Ext.define("App.systemMGR.authCFG.funcMenu.FuncMenuUI", {
 	
 					if(Ext.getCmp("cfp.opid").getValue() != Ext.getCmp("cfp.parentId").getValue()){
 						Ext.getCmp("wtp.panel").getSelectionModel().deselectAll();
-						treeDS.load({node: treeDS.getRootNode()});							
-					}else{
-						treeDS.load({node: treeDS.getNodeById(Ext.getCmp("cfp.parentId").getValue())});
+						//treeDS.load({node: treeDS.getRootNode()});	
 					}
-					this.formClear();
 					
+					treeDS.load({node: treeDS.getNodeById(Ext.getCmp("cfp.parentId").getValue())});
+					this.formClear();					
 					this.reloadParentDS();
 				},
 				failure : function(form, action) {			
