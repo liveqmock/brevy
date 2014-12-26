@@ -181,7 +181,8 @@ Ext.define("Ext.locale.zh_CN.form.field.VTypes", {
     alphaText: '该输入项只能包含半角字母和_',
     alphanumText: '该输入项只能包含半角字母,数字和_',
     timeText: '该输入项必须是有效时间，格式如： "12:34 PM"',
-    wildcardText: '该输入项必须是有效的通配符'
+    wildcardText: '该输入项必须是有效的通配符',
+    passwordText: '两次输入的密码不一致'
 });
 
 //add HTMLEditor's tips by andy_ghg

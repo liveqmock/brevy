@@ -27,4 +27,21 @@ Ext.apply(Ext.form.field.VTypes, {
 	wildcardMask: /(?:[a-z]|[0-9]|[\+\*\-\/\.\?_\#])/i
 });
 
+/**
+ * @description 密码确认
+ * @author caobin
+ */
+Ext.apply(Ext.form.field.VTypes, {
+    password: function (val, field) {
+        if (field.initialPassField) {
+            var pwd = Ext.getCmp(field.initialPassField);
+            return (val == pwd.getValue());
+        }
+        return true;
+    },
+    passwordText: 'Passwords do not match'
+});
+
+
+
 

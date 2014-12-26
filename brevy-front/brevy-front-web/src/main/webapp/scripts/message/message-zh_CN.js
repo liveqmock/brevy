@@ -462,6 +462,15 @@ Ext.define("Msg", {
 			confirmCancelAllRefs: "确认撤销当页所有访问权限关联？",
 			confirmAddAllRefs: "确认添加当页所有访问权限关联？"*/
 			
+		},
+		
+		"App.systemMGR.authCFG.user.crud.UserCreate" : {
+			username: "用户名",
+			password: "密码",
+			confirm_password: "确认密码",
+			status: "状态",
+			userBasicInfo: "用户基础信息",
+			createUserTitle: "添加用户"
 		}
 		
 		

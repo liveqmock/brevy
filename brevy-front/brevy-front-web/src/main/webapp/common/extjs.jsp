@@ -32,6 +32,7 @@
 	<src>/scripts/extjs/ux/Icons.js</src>
 	<src>/scripts/extjs/ux/BizIcons.js</src>
 	<src>/scripts/extjs/ux/PasswordField.js</src>
+	<src>/scripts/extjs/ux/PasswordMeter.js</src>
 	<src>/scripts/extjs/ux/CaptchaField.js</src>
 	<src>/scripts/extjs/ux/StatusBar.js</src>	
 	<src>/scripts/extjs/ux/StaticMenuBar.js</src>
