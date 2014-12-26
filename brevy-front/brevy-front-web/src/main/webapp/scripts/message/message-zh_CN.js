@@ -387,7 +387,84 @@ Ext.define("Msg", {
 			desc: "描述",
 			appBasicInfo: "应用系统基础信息",
 			editAppTitle: "编辑应用系统"	
+		},
+		
+		"App.systemMGR.authCFG.user.UserUI" : {
+			currentRole: "当前用户：{0}-[{1}]"
+		},
+		
+		"App.systemMGR.authCFG.user.crud.UserRead" : {
+			username: "用户名",
+			chName: "姓名",
+			status: "状态",
+			position: "职位",
+			dept: "部门",
+			valid: "有效",
+			invalid: "无效",
+			keywordSearch: "关键字查询"
+		},
+		
+		"App.systemMGR.authCFG.user.refApp.RefApp" : {
+			refAppTitle: "用户关联应用系统配置"/*,
+			refAccessAuthWestName: "角色已关联访问权限",
+			refAccessAuthWestText: "操作",
+			refAccessAuthWestTooltip: "撤销访问权限关联",
+			refAccessAuthEastIconTooltip: "添加访问权限关联",
+			refAccessAuthEastNameText: "可选访问权限名称",
+			refAccessAuthEastActionText: "操作",
+			refAccessAuthEastActionTooltip: "添加访问权限关联",
+			keywordSearch: "关键字查询",
+			accessAuthName: "访问权限名称",
+			accessAuthCode: "访问权限代码",
+			accessAuthUrlPattern: "URL匹配模式",
+			cancelRefs: "撤销当页所有访问权限关联",
+			addRefs: "添加当页所有访问权限关联",
+			confirmCancelAllRefs: "确认撤销当页所有访问权限关联？",
+			confirmAddAllRefs: "确认添加当页所有访问权限关联？"*/
+			
+		},
+		
+		"App.systemMGR.authCFG.user.refGroup.RefGroup" : {
+			refGroupTitle: "用户关联用户组配置"/*,
+			refAccessAuthWestName: "角色已关联访问权限",
+			refAccessAuthWestText: "操作",
+			refAccessAuthWestTooltip: "撤销访问权限关联",
+			refAccessAuthEastIconTooltip: "添加访问权限关联",
+			refAccessAuthEastNameText: "可选访问权限名称",
+			refAccessAuthEastActionText: "操作",
+			refAccessAuthEastActionTooltip: "添加访问权限关联",
+			keywordSearch: "关键字查询",
+			accessAuthName: "访问权限名称",
+			accessAuthCode: "访问权限代码",
+			accessAuthUrlPattern: "URL匹配模式",
+			cancelRefs: "撤销当页所有访问权限关联",
+			addRefs: "添加当页所有访问权限关联",
+			confirmCancelAllRefs: "确认撤销当页所有访问权限关联？",
+			confirmAddAllRefs: "确认添加当页所有访问权限关联？"*/
+			
+		},
+		
+		"App.systemMGR.authCFG.user.refRole.RefRole" : {
+			refRoleTitle: "用户关联角色配置"/*,
+			refAccessAuthWestName: "角色已关联访问权限",
+			refAccessAuthWestText: "操作",
+			refAccessAuthWestTooltip: "撤销访问权限关联",
+			refAccessAuthEastIconTooltip: "添加访问权限关联",
+			refAccessAuthEastNameText: "可选访问权限名称",
+			refAccessAuthEastActionText: "操作",
+			refAccessAuthEastActionTooltip: "添加访问权限关联",
+			keywordSearch: "关键字查询",
+			accessAuthName: "访问权限名称",
+			accessAuthCode: "访问权限代码",
+			accessAuthUrlPattern: "URL匹配模式",
+			cancelRefs: "撤销当页所有访问权限关联",
+			addRefs: "添加当页所有访问权限关联",
+			confirmCancelAllRefs: "确认撤销当页所有访问权限关联？",
+			confirmAddAllRefs: "确认添加当页所有访问权限关联？"*/
+			
 		}
+		
+		
 		
 	}
 });

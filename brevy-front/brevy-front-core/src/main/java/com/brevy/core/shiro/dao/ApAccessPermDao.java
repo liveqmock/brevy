@@ -45,7 +45,7 @@ public interface ApAccessPermDao extends PagingAndSortingRepository<ApAccessPerm
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from ApAccessPerm a where a.appId=:appId and (a.name like :kw or a.code like :kw or a.urlPattern like :kw or a.authenticationFilter like :kw or a.authorizationFilter like :kw or a.sort like :kw)")
+	@Query("select a from ApAccessPerm a where a.appId=:appId and (lower(a.name) like lower(:kw) or lower(a.code) like lower(:kw) or lower(a.urlPattern) like lower(:kw) or lower(a.authenticationFilter) like lower(:kw) or lower(a.authorizationFilter) like lower(:kw) or a.sort like :kw)")
 	Page<ApAccessPerm> searchByKeyword(@Param("kw")String keyword, @Param("appId")long appId, Pageable pageable);
 
 	/**

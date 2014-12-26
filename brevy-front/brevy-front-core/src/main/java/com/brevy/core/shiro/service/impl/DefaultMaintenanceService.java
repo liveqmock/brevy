@@ -32,6 +32,8 @@ import com.brevy.core.shiro.dao.ApRefRoleOperPermDao;
 import com.brevy.core.shiro.dao.ApRefUserApplicationDao;
 import com.brevy.core.shiro.dao.ApRoleDao;
 import com.brevy.core.shiro.dao.ApRoleSingleDao;
+import com.brevy.core.shiro.dao.ApUserMapper;
+import com.brevy.core.shiro.dao.ApUserSingleDao;
 import com.brevy.core.shiro.model.ApAccessPerm;
 import com.brevy.core.shiro.model.ApApplication;
 import com.brevy.core.shiro.model.ApGroupSingle;
@@ -47,8 +49,11 @@ import com.brevy.core.shiro.model.ApRefRoleOperPerm;
 import com.brevy.core.shiro.model.ApRefRoleOperPermPK;
 import com.brevy.core.shiro.model.ApRole;
 import com.brevy.core.shiro.model.ApRoleSingle;
+import com.brevy.core.shiro.model.ApUserSingle;
 import com.brevy.core.shiro.service.MaintenanceService;
 import com.brevy.core.shiro.util.ShiroUtils;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
  * @Description 
@@ -99,6 +104,12 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 	@Autowired
 	private ApRefUserApplicationDao apRefUserApplicationDao;
+	
+	@Autowired
+	private ApUserSingleDao apUserSingleDao;
+	
+	@Autowired
+	private ApUserMapper apUserMapper;
 	
 	@Autowired
 	private AbstractShiroFilter abstractShiroFilter;
@@ -585,6 +596,17 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	public void deleteApApplication(Collection<Long> ids) {
 		apApplicationDao.deleteApplicationByIds(ids);
 		apRefUserApplicationDao.deleteRelsByApplicationIds(ids);	
+	}
+
+	@Override
+	public PageList<ApUserSingle> findApUsers(PageBounds pageBounds) {
+		return apUserMapper.findAll(pageBounds);
+	}
+
+	@Override
+	public PageList<ApUserSingle> searchApUsersByKeyword(String keyword,
+			PageBounds pageBounds) {
+		return apUserMapper.searchByKeyword("%".concat(keyword).concat("%"), pageBounds);
 	}
 
 }

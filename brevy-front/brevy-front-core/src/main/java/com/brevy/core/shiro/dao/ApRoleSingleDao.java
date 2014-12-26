@@ -31,6 +31,6 @@ public interface ApRoleSingleDao extends CrudRepository<ApRoleSingle, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from ApRoleSingle a where a.appId=:appId and (a.name like :kw or a.code like :kw)")
+	@Query("select a from ApRoleSingle a where a.appId=:appId and (lower(a.name) like lower(:kw) or lower(a.code) like lower(:kw))")
 	Page<ApRoleSingle> searchByKeyword(@Param("kw")String keyword, @Param("appId")long appId, Pageable pageable);
 }

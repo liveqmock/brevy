@@ -47,7 +47,7 @@ public interface ApRefRoleOperPermDao extends CrudRepository<ApRefRoleOperPerm, 
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select aop from ApOperPerm aop where aop.id in (select arrop.id.operPermId from ApRefRoleOperPerm arrop where arrop.id.roleId=:roleId) and (aop.name like :kw or aop.code like :kw or aop.authorizedOper like :kw)")
+	@Query("select aop from ApOperPerm aop where aop.id in (select arrop.id.operPermId from ApRefRoleOperPerm arrop where arrop.id.roleId=:roleId) and (lower(aop.name) like lower(:kw) or lower(aop.code) like lower(:kw) or lower(aop.authorizedOper) like lower(:kw))")
 	Page<ApOperPerm> findRoleRefOperAuth(@Param("roleId")long roleId, @Param("kw")String keyword, Pageable pageable);
 	
 	
@@ -60,6 +60,6 @@ public interface ApRefRoleOperPermDao extends CrudRepository<ApRefRoleOperPerm, 
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select aop from ApOperPerm aop where aop.appId =:appId and aop.id not in (select arrop.id.operPermId from ApRefRoleOperPerm arrop where arrop.id.roleId=:roleId) and (aop.name like :kw or aop.code like :kw or aop.authorizedOper like :kw)")
+	@Query("select aop from ApOperPerm aop where aop.appId =:appId and aop.id not in (select arrop.id.operPermId from ApRefRoleOperPerm arrop where arrop.id.roleId=:roleId) and (lower(aop.name) like lower(:kw) or lower(aop.code) like lower(:kw) or lower(aop.authorizedOper) like lower(:kw))")
 	Page<ApOperPerm> findCadidateRoleRefOperAuth(@Param("appId")long appId, @Param("roleId")long roleId, @Param("kw")String keyword, Pageable pageable);
 }

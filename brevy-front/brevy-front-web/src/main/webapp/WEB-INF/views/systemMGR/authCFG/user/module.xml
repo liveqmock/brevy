@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.systemMGR.authCFG.user.UserUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>store/UserStore.js</file>
+        	<file>store/UserRefStore.js</file>
+        	<file>ui/UserUI.js</file>
+        	<file>ui/crud/UserRead.js</file>
+        	<file>ui/refApp/RefApp.js</file>
+        	<file>ui/refGroup/RefGroup.js</file>
+        	<file>ui/refRole/RefRole.js</file>
+        </js>
+    </files>
+</module>

@@ -19,4 +19,5 @@ public interface ApUserDao extends CrudRepository<ApUser, Long> {
 	 * @author caobin
 	 */
 	ApUser findOneByUsername(String username);
+
 }

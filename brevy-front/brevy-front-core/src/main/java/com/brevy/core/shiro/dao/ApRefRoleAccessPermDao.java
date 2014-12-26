@@ -48,7 +48,7 @@ public interface ApRefRoleAccessPermDao extends CrudRepository<ApRefRoleAccessPe
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select aap from ApAccessPerm aap where aap.id in (select arrap.id.accessPermId from ApRefRoleAccessPerm arrap where arrap.id.roleId=:roleId) and (aap.name like :kw or aap.code like :kw or aap.urlPattern like :kw)")
+	@Query("select aap from ApAccessPerm aap where aap.id in (select arrap.id.accessPermId from ApRefRoleAccessPerm arrap where arrap.id.roleId=:roleId) and (lower(aap.name) like lower(:kw) or lower(aap.code) like lower(:kw) or lower(aap.urlPattern) like lower(:kw))")
 	Page<ApAccessPerm> findRoleRefAccessAuth(@Param("roleId")long roleId, @Param("kw")String keyword, Pageable pageable);
 	
 	
@@ -61,6 +61,6 @@ public interface ApRefRoleAccessPermDao extends CrudRepository<ApRefRoleAccessPe
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select aap from ApAccessPerm aap where aap.appId =:appId and aap.id not in (select arrap.id.accessPermId from ApRefRoleAccessPerm arrap where arrap.id.roleId=:roleId) and aap.authenticationFilter <> 'anon' and (aap.name like :kw or aap.code like :kw or aap.urlPattern like :kw)")
+	@Query("select aap from ApAccessPerm aap where aap.appId =:appId and aap.id not in (select arrap.id.accessPermId from ApRefRoleAccessPerm arrap where arrap.id.roleId=:roleId) and aap.authenticationFilter <> 'anon' and (lower(aap.name) like lower(:kw) or lower(aap.code) like lower(:kw) or lower(aap.urlPattern) like lower(:kw))")
 	Page<ApAccessPerm> findCadidateRoleRefAccessAuth(@Param("appId")long appId, @Param("roleId")long roleId, @Param("kw")String keyword, Pageable pageable);
 }

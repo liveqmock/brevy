@@ -29,10 +29,13 @@ import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
 import com.brevy.core.shiro.model.ApRoleSingle;
+import com.brevy.core.shiro.model.ApUserSingle;
 import com.brevy.core.shiro.service.MaintenanceService;
 import com.brevy.core.shiro.util.ShiroUtils;
 import com.brevy.core.support.exception.CoreException;
 import com.brevy.core.support.web.BaseController;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
  * @Description 权限维护（配置）控制器
@@ -269,6 +272,12 @@ public class MaintenanceController extends BaseController {
 	
 	
 	
+	/**
+	 * @description 获取角色列表
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
 	@RequestMapping("/role/getRoleList")
 	@ResponseBody
 	public Page<ApRoleSingle> getRoles(@RequestBody Map<String, String> p){
@@ -797,6 +806,29 @@ public class MaintenanceController extends BaseController {
 			maintenanceService.deleteApApplication(Arrays.asList(longs));
 		}
 		return this.successView();	
+	}
+	
+	/*############################################  用户维护    ############################################*/
+	
+	/**
+	 * @description 获取用户列表
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/getUserList")
+	@ResponseBody
+	public PageList<ApUserSingle> getUsers(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		PageBounds pageBounds = new PageBounds(getIntValue(p, PAGE), getIntValue(p, PAGE_SIZE));  
+		
+		//获取查询参数
+		String keyword = getString(p, "query");
+		PageList<ApUserSingle> pageList = 
+				StringUtils.isBlank(keyword) ? 
+						maintenanceService.findApUsers(pageBounds) : 
+							maintenanceService.searchApUsersByKeyword(keyword, pageBounds);
+		return pageList;
 	}
 	
 }

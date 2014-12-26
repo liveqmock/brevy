@@ -37,7 +37,7 @@ public interface ApApplicationDao extends CrudRepository<ApApplication, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from ApApplication a where a.name like :kw or a.code like :kw or a.desc like :kw")
+	@Query("select a from ApApplication a where lower(a.name) like lower(:kw) or lower(a.code) like lower(:kw) or lower(a.desc) like lower(:kw)")
 	Page<ApApplication> searchByKeyword(@Param("kw")String keyword, Pageable pageable);
 	
 	/**

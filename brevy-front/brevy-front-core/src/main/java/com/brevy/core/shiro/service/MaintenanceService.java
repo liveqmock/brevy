@@ -12,6 +12,9 @@ import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
 import com.brevy.core.shiro.model.ApRoleSingle;
+import com.brevy.core.shiro.model.ApUserSingle;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
  * @Description 权限管理维护Service
@@ -505,5 +508,28 @@ public interface MaintenanceService {
 	 * @author caobin
 	 */
 	void deleteApApplication(Collection<Long> ids);
+	
+	
+	/************************ 用户 *********************************/
+	
+	/**
+	 * @description 分页查询用户列表
+	 * @param pageBounds
+	 * @return
+	 * @author caobin
+	 */
+	public PageList<ApUserSingle> findApUsers(PageBounds pageBounds); 
+	
+	
+	/**
+	 * @description 分页模糊查询用户
+	 * @param keyword 关键字
+	 * @param pageBounds
+	 * @return
+	 * @author caobin
+	 */
+	public PageList<ApUserSingle> searchApUsersByKeyword(String keyword,
+			PageBounds pageBounds);
+
 }
 

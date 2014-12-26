@@ -38,7 +38,7 @@ import com.brevy.core.shiro.util.ShiroUtils;
 @Table(name="AP_USER")
 public class ApUser implements Serializable {
 
-	private static final long serialVersionUID = -4045669060941865244L;
+	private static final long serialVersionUID = -2429029669244939621L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="AP_USER_SEQ")
@@ -92,6 +92,14 @@ public class ApUser implements Serializable {
 	private String userType;
 
 	private String username;
+	
+	@Column(name="POSITION_ID")
+	private long positionId;
+	
+	@Column(name="DEPT_ID")
+	private long deptId;
+
+	
 	
 	/**
 	 * 用户关联的应用
@@ -263,7 +271,23 @@ public class ApUser implements Serializable {
 		this.username = username;
 	}
 	
-	
+
+	public long getPositionId() {
+		return positionId;
+	}
+
+	public void setPositionId(long positionId) {
+		this.positionId = positionId;
+	}
+
+	public long getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(long deptId) {
+		this.deptId = deptId;
+	}
+
 	/**
 	 * @return the app
 	 */

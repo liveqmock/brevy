@@ -7,10 +7,15 @@ import static com.brevy.core.support.SupportConstants.WEB_VIEW_RESULT_FAILURE;
 import static com.brevy.core.support.SupportConstants.WEB_VIEW_RESULT_KEY;
 import static com.brevy.core.support.SupportConstants.WEB_VIEW_RESULT_SUCCESS;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +23,7 @@ import org.springframework.web.servlet.View;
 
 import com.brevy.core.support.exception.CoreException;
 import com.brevy.core.support.web.http.RequestHead;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 
 /**
@@ -136,6 +142,7 @@ public abstract class BaseController {
 	protected RequestHead getReqHead(){
 		return (RequestHead)RequestContextHolder.getRequestAttributes().getAttribute(WEB_REQ_HEAD, RequestAttributes.SCOPE_SESSION);
 	}
+
 	
 	/**
 	 * 起始页

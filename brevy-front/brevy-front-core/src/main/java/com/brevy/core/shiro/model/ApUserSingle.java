@@ -12,6 +12,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -31,7 +32,7 @@ import com.brevy.core.shiro.util.ShiroUtils;
 @Table(name="AP_USER")
 public class ApUserSingle implements Serializable {
 
-	private static final long serialVersionUID = 5825924368446566510L;
+	private static final long serialVersionUID = -6394795549336824853L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="AP_USER_SEQ")
@@ -85,6 +86,19 @@ public class ApUserSingle implements Serializable {
 	private String userType;
 
 	private String username;
+	
+	@Column(name="POSITION_ID")
+	private long positionId;
+	
+	@Column(name="DEPT_ID")
+	private long deptId;
+	
+	
+	@Transient
+	private String dept;
+	
+	@Transient
+	private String position;
 
 
     public ApUserSingle() {
@@ -218,7 +232,41 @@ public class ApUserSingle implements Serializable {
 		this.username = username;
 	}
 
+
+	public long getPositionId() {
+		return positionId;
+	}
+
+	public void setPositionId(long positionId) {
+		this.positionId = positionId;
+	}
+
+	public long getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(long deptId) {
+		this.deptId = deptId;
+	}
 	
+	
+
+	public String getDept() {
+		return dept;
+	}
+
+	public void setDept(String dept) {
+		this.dept = dept;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
 	@PrePersist
 	public void onPersist(){
 		this.setCreator(ShiroUtils.getCurrentUser().getUsername());
@@ -230,6 +278,7 @@ public class ApUserSingle implements Serializable {
 		this.setUpdator(ShiroUtils.getCurrentUser().getUsername());
 		this.setUpdateTime(new Timestamp(DateTime.now().getMillis()));
 	}
+	
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
