@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +32,9 @@ import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
 import com.brevy.core.shiro.model.ApRoleSingle;
 import com.brevy.core.shiro.model.ApUserSingle;
+import com.brevy.core.shiro.model.CadDictDetail;
 import com.brevy.core.shiro.service.MaintenanceService;
+import com.brevy.core.shiro.support.realm.CustomJdbcRealm;
 import com.brevy.core.shiro.util.ShiroUtils;
 import com.brevy.core.support.exception.CoreException;
 import com.brevy.core.support.web.BaseController;
@@ -47,9 +51,6 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 @RequestMapping("/maintenance")
 public class MaintenanceController extends BaseController {
 	
-	@Autowired
-	private MaintenanceService maintenanceService;
-	
 	private final static String UNIQUE_GROUP_CODE = "用户组代码必须唯一";
 
 	private final static String UNIQUE_ACCESS_PERM_CODE = "访问权限代码必须唯一";
@@ -60,6 +61,15 @@ public class MaintenanceController extends BaseController {
 	
 	private final static String UNIQUE_APPLICATION = "应用系统代码必须唯一";
 	
+	private final static String UNIQUE_USERNAME = "用户名必须唯一";
+	
+	@Autowired
+	private MaintenanceService maintenanceService;
+	
+	@Autowired
+	private CustomJdbcRealm customJdbcRealm;
+	
+
 	/*############################################  公共    ############################################*/
 	
 	/**
@@ -818,7 +828,7 @@ public class MaintenanceController extends BaseController {
 	 */
 	@RequestMapping("/user/getUserList")
 	@ResponseBody
-	public PageList<ApUserSingle> getUsers(@RequestBody Map<String, String> p){
+	public Page<ApUserSingle> getUsers(@RequestBody Map<String, String> p){
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
 		PageBounds pageBounds = new PageBounds(getIntValue(p, PAGE), getIntValue(p, PAGE_SIZE));  
 		
@@ -828,7 +838,73 @@ public class MaintenanceController extends BaseController {
 				StringUtils.isBlank(keyword) ? 
 						maintenanceService.findApUsers(pageBounds) : 
 							maintenanceService.searchApUsersByKeyword(keyword, pageBounds);
-		return pageList;
+		return this.toPage(pageList);
+	}
+		
+	@RequestMapping("/user/getDictStore")
+	@ResponseBody
+	public List<CadDictDetail> getDictStore(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		return maintenanceService.findCadDictDetails(getLongValue(p, "dictId"));
 	}
 	
+	/**
+	 * @Description 保存（更新）用户
+	 * @param apUser
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/saveOrUpdate")
+	@ResponseBody
+	public ModelAndView saveOrUpdateUser(@RequestBody ApUserSingle apUser){
+		log.debug(">>>> apUser from request is : {}", new Object[]{apUser});
+		if(apUser.getId() == 0 && !maintenanceService.checkApUserUsername(apUser.getUsername())){//新增且重复用户名
+			Map<String, String> errorFields = new HashMap<String, String>();
+			errorFields.put("code", UNIQUE_USERNAME);
+			return this.failureView(this.createMav(), new CoreException(UNIQUE_USERNAME), errorFields);
+		}
+		HashedCredentialsMatcher hcm = (HashedCredentialsMatcher)customJdbcRealm.getCredentialsMatcher();
+		//密码处理
+		
+		if(apUser.getId() == 0){//insert	
+			Md5Hash md5Hash = new Md5Hash(apUser.getPassword(), null, hcm.getHashIterations());
+			String md5Hex = md5Hash.toHex();
+			log.debug("md5 hex: {}", new Object[]{md5Hex});
+			apUser.setPassword(md5Hex);
+		}else{//update
+			ApUserSingle apUserOriginal = maintenanceService.findUser(apUser.getId());
+			if(!apUserOriginal.getPassword().equals(apUser.getPassword())){
+				Md5Hash md5Hash = new Md5Hash(apUser.getPassword(), null, hcm.getHashIterations());
+				String md5Hex = md5Hash.toHex();
+				log.debug("md5 hex: {}", new Object[]{md5Hex});
+				apUser.setPassword(md5Hex);
+			}
+		}
+		maintenanceService.saveOrUpdateApUserSingle(apUser);
+		return this.successView();
+	}
+	
+	
+	/**
+	 * @description 删除用户
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/delete")
+	@ResponseBody
+	public ModelAndView deleteUsers(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		String params = getString(p, "ids");	
+		if(StringUtils.isNotBlank(params)){
+			String[] arrParams = params.split("\\,");
+			Long[] longs = new Long[arrParams.length];
+			for(int i = 0; i< arrParams.length; i++){
+				longs[i] = Long.parseLong(arrParams[i]);
+			}
+			maintenanceService.deleteApUser(Arrays.asList(longs));
+		}
+		return this.successView();	
+	}
+
 }

@@ -12,4 +12,5 @@ import com.brevy.core.shiro.model.ApUserSingle;
  */
 public interface ApUserSingleDao extends CrudRepository<ApUserSingle, Long>{
 
+
 }

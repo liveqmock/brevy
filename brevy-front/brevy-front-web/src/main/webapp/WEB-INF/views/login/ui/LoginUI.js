@@ -109,6 +109,7 @@ Ext.define("App.login.LoginUI", {
 			items : [
 				{
 					fieldLabel: this.appname,
+					id : "login.appSelect",
 					name : "appid",
 					xtype : "combo",
 					triggerAction: "all",
@@ -116,7 +117,7 @@ Ext.define("App.login.LoginUI", {
 					editable: false,
 					emptyText: this.emptyAppname,
 					allowBlank : false,
-				    store: App.login.LoginStore.getAppStore(),
+				    store: this.getAppStore(),
 				    displayField: "name",
 				    valueField: "id",
 				    blankText : this.blankAppname,
@@ -134,6 +135,7 @@ Ext.define("App.login.LoginUI", {
 					fieldLabel : this.password,
 					name : "password",
 					xtype : "uxpasswordfield",
+					minLength : 6,
 					showVirtualKeyboard : true,
 					enableCapsLockWarning : true,
 					//emptyText : this.emptyUsername,
@@ -186,6 +188,14 @@ Ext.define("App.login.LoginUI", {
 	
 	afterInit : function(){
 		this.loginWin.show();
+	},
+	
+	getAppStore : function(){
+		var store = App.login.LoginStore.getAppStore(true);
+		store.on("load", function(){
+			Ext.getCmp("login.appSelect").setValue(1000);
+		}, this);
+		return store;
 	}
 	
 });

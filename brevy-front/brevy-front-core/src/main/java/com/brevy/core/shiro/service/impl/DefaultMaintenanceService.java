@@ -32,8 +32,10 @@ import com.brevy.core.shiro.dao.ApRefRoleOperPermDao;
 import com.brevy.core.shiro.dao.ApRefUserApplicationDao;
 import com.brevy.core.shiro.dao.ApRoleDao;
 import com.brevy.core.shiro.dao.ApRoleSingleDao;
+import com.brevy.core.shiro.dao.ApUserDao;
 import com.brevy.core.shiro.dao.ApUserMapper;
 import com.brevy.core.shiro.dao.ApUserSingleDao;
+import com.brevy.core.shiro.dao.CadDictDetailDao;
 import com.brevy.core.shiro.model.ApAccessPerm;
 import com.brevy.core.shiro.model.ApApplication;
 import com.brevy.core.shiro.model.ApGroupSingle;
@@ -49,7 +51,9 @@ import com.brevy.core.shiro.model.ApRefRoleOperPerm;
 import com.brevy.core.shiro.model.ApRefRoleOperPermPK;
 import com.brevy.core.shiro.model.ApRole;
 import com.brevy.core.shiro.model.ApRoleSingle;
+import com.brevy.core.shiro.model.ApUser;
 import com.brevy.core.shiro.model.ApUserSingle;
+import com.brevy.core.shiro.model.CadDictDetail;
 import com.brevy.core.shiro.service.MaintenanceService;
 import com.brevy.core.shiro.util.ShiroUtils;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -106,10 +110,16 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	private ApRefUserApplicationDao apRefUserApplicationDao;
 	
 	@Autowired
+	private ApUserDao apUserDao;
+	
+	@Autowired
 	private ApUserSingleDao apUserSingleDao;
 	
 	@Autowired
 	private ApUserMapper apUserMapper;
+	
+	@Autowired
+	private CadDictDetailDao cadDictDetailDao;
 	
 	@Autowired
 	private AbstractShiroFilter abstractShiroFilter;
@@ -607,6 +617,35 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	public PageList<ApUserSingle> searchApUsersByKeyword(String keyword,
 			PageBounds pageBounds) {
 		return apUserMapper.searchByKeyword("%".concat(keyword).concat("%"), pageBounds);
+	}
+
+	
+	@Override
+	public List<CadDictDetail> findCadDictDetails(long dictId) {
+		return cadDictDetailDao.findByDictId(dictId);
+	}
+
+	@Transactional
+	@Override
+	public void saveOrUpdateApUserSingle(ApUserSingle apUser) {
+		apUserSingleDao.save(apUser);
+	}
+
+	@Override
+	public boolean checkApUserUsername(String username) {
+		return apUserDao.findOneByUsername(username) == null;
+	}
+	
+	@Transactional
+	@Override
+	public void deleteApUser(Collection<Long> ids) {
+		Iterable<ApUser> iter = apUserDao.findAll(ids);
+		apUserDao.delete(iter);	
+	}
+
+	@Override
+	public ApUserSingle findUser(long id) {
+		return apUserSingleDao.findOne(id);
 	}
 
 }

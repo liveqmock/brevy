@@ -11,9 +11,19 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserCreate", {
 
 	init: function(){
 		
+		var chName = {
+			fieldLabel: this.required(this.chName),
+			name: "chName",
+			flex: 1,
+			allowBlank: false,
+			xtype: "textfield",
+			maxLength: 32
+		}
+		
 		var username = {
 			fieldLabel: this.required(this.username),
 			name: "username",
+			newLine: 1,
 			flex: 1,
 			allowBlank: false,
 			xtype: "textfield",
@@ -30,11 +40,12 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserCreate", {
 			allowBlank: false,
 			xtype: "ux.passwordmeterfield",
 			vtype: "alphanum",
+			minLength : 6,
 			maxLength: 32
 		}
 		
-		var confirm_password = {
-			fieldLabel: this.required(this.confirm_password),
+		var confirmPassword = {
+			fieldLabel: this.required(this.confirmPassword),
 			newLine: 1,
 			flex: 1,
 			allowBlank: false,	
@@ -62,6 +73,39 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserCreate", {
 			value: "1"
 		}
 		
+		var position = {
+			fieldLabel: this.required(this.position),
+			name: "positionId",
+			flex: 1,
+			newLine: 1,
+			allowBlank: false,
+			xtype: "combo",
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			emptyText: this.emptyPositionName,
+			allowBlank : false,
+			store: userDictPositionDS,
+			displayField: "name",
+			valueField: "id"
+		}
+		
+		var dept = {
+			fieldLabel: this.required(this.dept),
+			name: "deptId",
+			flex: 1,
+			newLine: 1,
+			allowBlank: false,
+			xtype: "combo",
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			emptyText: this.emptyDeptName,
+			allowBlank : false,
+			store: userDictDeptDS,
+			displayField: "name",
+			valueField: "id"
+		}
 		
 		var createBtn = {
 			text: Msg.App.add,
@@ -86,8 +130,8 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserCreate", {
 		return Ext.create("Ext.window.Window", {
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 270,
-		    width: 360,
+		    height: 330,
+		    width: 480,
 		    layout: "fit",
 		    modal: true,
 		    resizable: false,
@@ -108,7 +152,7 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserCreate", {
 					collapsible: false
 				},
 				items:[
-					username, password, confirm_password, status
+					chName, username, password, confirmPassword, position, dept, status
 				],
 				buttonAlign: "center",
 				buttons: [createBtn, resetBtn]

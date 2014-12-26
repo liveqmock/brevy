@@ -13,6 +13,7 @@ import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
 import com.brevy.core.shiro.model.ApRoleSingle;
 import com.brevy.core.shiro.model.ApUserSingle;
+import com.brevy.core.shiro.model.CadDictDetail;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
@@ -513,6 +514,14 @@ public interface MaintenanceService {
 	/************************ 用户 *********************************/
 	
 	/**
+	 * @description 通过ID查询用户
+	 * @param id
+	 * @return
+	 * @author caobin
+	 */
+	public ApUserSingle findUser(long id); 
+	
+	/**
 	 * @description 分页查询用户列表
 	 * @param pageBounds
 	 * @return
@@ -530,6 +539,37 @@ public interface MaintenanceService {
 	 */
 	public PageList<ApUserSingle> searchApUsersByKeyword(String keyword,
 			PageBounds pageBounds);
+	
+	
+	/**
+	 * @description 查询字典明细
+	 * @param dictId 字典类型
+	 * @return
+	 * @author caobin
+	 */
+	public List<CadDictDetail> findCadDictDetails(long dictId);
+	
+	/**
+	 * @Description 保存（更新）用户
+	 * @param apRole
+	 * @author caobin
+	 */
+	void saveOrUpdateApUserSingle(ApUserSingle apUser);
+	
+	/**
+	 * @description 用户名重复性检查
+	 * @param username
+	 * @return
+	 * @author caobin
+	 */
+	boolean checkApUserUsername(String username);
+	
+	/**
+	 * @description 通过ID删除用户（级其关联关系）
+	 * @param ids
+	 * @author caobin
+	 */
+	void deleteApUser(Collection<Long> ids);
 
 }
 

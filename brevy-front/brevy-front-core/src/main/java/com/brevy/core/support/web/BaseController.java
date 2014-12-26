@@ -145,6 +145,109 @@ public abstract class BaseController {
 
 	
 	/**
+	 * @description pageList转换为page
+	 * @param pageList
+	 * @return
+	 * @author caobin
+	 */
+	protected<T> Page<T> toPage(final PageList<T> pageList){
+		if(pageList != null){
+			return new Page<T>() {
+
+				@Override
+				public int getNumber() {
+					// TODO Auto-generated method stub
+					return 0;
+				}
+
+				@Override
+				public int getSize() {
+					// TODO Auto-generated method stub
+					return 0;
+				}
+
+				@Override
+				public int getTotalPages() {
+					// TODO Auto-generated method stub
+					return 0;
+				}
+
+				@Override
+				public int getNumberOfElements() {
+					// TODO Auto-generated method stub
+					return 0;
+				}
+
+				@Override
+				public long getTotalElements() {
+					return pageList.getPaginator().getTotalCount();
+				}
+
+				@Override
+				public boolean hasPreviousPage() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+
+				@Override
+				public boolean isFirstPage() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+
+				@Override
+				public boolean hasNextPage() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+
+				@Override
+				public boolean isLastPage() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+
+				@Override
+				public Pageable nextPageable() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public Pageable previousPageable() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public Iterator<T> iterator() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public List<T> getContent() {
+					return pageList;
+				}
+
+				@Override
+				public boolean hasContent() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+
+				@Override
+				public Sort getSort() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+			};
+		}
+		return null;
+	}
+	
+	/**
 	 * 起始页
 	 */
 	protected final static String PAGE = "page";

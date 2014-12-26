@@ -11,6 +11,12 @@ Ext.define("userModel", {
     ]
 });
 
+//user dict model
+Ext.define("userDictModel", {
+	extend: "Ext.data.Model",
+   	fields: ["id", "name"]
+});
+
 
 var userDS = Ext.create("Ext.data.Store", {
 	model: userModel,
@@ -35,4 +41,38 @@ var statusDS = Ext.create("Ext.data.Store", {
         {"name":"0", "text":Msg.Constants.invalid}
     ]
 });
+
+
+
+
+var userDictPositionDS = Ext.create("Ext.data.Store", {
+	model: userDictModel,
+	autoLoad: false,	
+	proxy: {
+	    type: "jsonajax",
+	    url: _ctxPath + "/maintenance/user/getDictStore.json",
+	    extraParams: {
+	    	dictId: 1	    
+	    },
+	    reader: {
+	        type: "json"
+	    }
+	}
+});
+
+var userDictDeptDS = Ext.create("Ext.data.Store", {
+	model: userDictModel,
+	autoLoad: false,	
+	proxy: {
+	    type: "jsonajax",
+	    url: _ctxPath + "/maintenance/user/getDictStore.json",
+	    extraParams: {
+	    	dictId: 2	    
+	    },
+	    reader: {
+	        type: "json"
+	    }
+	}
+});
+
 
