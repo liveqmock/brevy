@@ -4,7 +4,10 @@ Ext.define("userModel", {
     fields: [
     	{name: "id", mapping: "id"},
 	    {name: "username", mapping: "username"},  
+	    {name: "password", mapping: "password"},  
 	    {name: "chName", mapping: "chName"},  
+	    {name: "deptId", mapping: "deptId"},
+	    {name: "positionId", mapping: "positionId"},
 	    {name: "dept", mapping: "dept"},
 	    {name: "position", mapping: "position"},
 	    {name: "status", mapping: "status"}

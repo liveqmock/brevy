@@ -7,14 +7,15 @@ Ext.define('Ext.ux.form.field.PasswordMeter', {
         this.callParent();
         this.updateMeter();
     },
-
+	
+    //modify by caobin - add tpl attr: value="{value}"
     fieldSubTpl: [
-        '<div><input id="{id}" type="{type}" ',
+        '<div><input id="{id}" type="{type}"',
         '<tpl if="name">name="{name}" </tpl>',
         '<tpl if="fieldStyle"> style="{fieldStyle}"</tpl>',
         '<tpl if="size">size="{size}" </tpl>',
         '<tpl if="tabIdx">tabIndex="{tabIdx}" </tpl>',
-        'class="{fieldCls} {typeCls}" autocomplete="off" /></div>',
+        'class="{fieldCls} {typeCls}" autocomplete="off" value="{value}"/></div>',
         '<div class="' + Ext.baseCSSPrefix + 'form-strengthmeter">',
         '<div class="' + Ext.baseCSSPrefix + 'form-strengthmeter-scorebar">&nbsp;</div>',
         '</div>',

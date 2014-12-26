@@ -476,6 +476,20 @@ Ext.define("Msg", {
 			createUserTitle: "添加用户",
 			emptyPositionName : "请选择一个职位",
 			emptyDeptName : "请选择一个部门"
+		},
+		
+		"App.systemMGR.authCFG.user.crud.UserUpdate" : {
+			chName: "姓名",
+			username: "用户名",
+			password: "密码",
+			confirmPassword: "确认密码",
+			status: "状态",
+			position: "职位",
+			dept: "部门",
+			userBasicInfo: "用户基础信息",
+			createUserTitle: "添加用户",
+			emptyPositionName : "请选择一个职位",
+			emptyDeptName : "请选择一个部门"
 		}
 		
 		
