@@ -40,6 +40,7 @@ import com.brevy.core.shiro.dao.ApUserSingleDao;
 import com.brevy.core.shiro.dao.CadDictDetailDao;
 import com.brevy.core.shiro.model.ApAccessPerm;
 import com.brevy.core.shiro.model.ApApplication;
+import com.brevy.core.shiro.model.ApGroup;
 import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
@@ -295,7 +296,7 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	@Override
 	public void deleteApAccessPerm(Collection<Long> ids, long appId) {
 		apAccessPermDao.deleteAccessPermByIds(ids);
-		apRefRoleAccessPermDao.deleteRelsByAccessPermIds(ids);		
+		apRefRoleAccessPermDao.deleteRelsByAccessPermIds(ids);	
 		ShiroUtils.reloadFilterChainDefinitions(apAccessPermDao.findByAppIdOrderBySortAsc(appId), abstractShiroFilter);
 	}
 	
@@ -357,10 +358,8 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	@Transactional
 	@Override
 	public void deleteApRole(Collection<Long> ids, long appId) {
-		apRoleDao.deleteRoleByIds(ids);
-		apRefRoleMenuDao.deleteRelsByRoldIds(ids);
-		apRefRoleOperPermDao.deleteRelsByRoldIds(ids);
-		apRefRoleAccessPermDao.deleteRelsByRoldIds(ids);		
+		Iterable<ApRole> iter = apRoleDao.findAll(ids);
+		apRoleDao.delete(iter);			
 	}
 
 	@Override
@@ -527,9 +526,9 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 	@Transactional
 	@Override
-	public void deleteApGroup(Collection<Long> ids, long appId) {
-		apGroupDao.deleteGroupByIds(ids);
-		apRefGroupRoleDao.deleteRelsByGroupIds(ids);		
+	public void deleteApGroup(Collection<Long> ids, long appId) {	
+		Iterable<ApGroup> iter = apGroupDao.findAll(ids);
+		apGroupDao.delete(iter);		
 	}
 	
 
