@@ -102,3 +102,56 @@ var userRefGroupCandidateDS = Ext.create("Ext.data.Store", {
     	}
     }
 });
+
+
+/** 用户关联角色部分DS **/
+Ext.define("UserRefRoleModel", {
+    extend: "Ext.data.Model",
+    fields:  [
+    	"id", 
+    	"name", 
+    	"code",
+    	"desc",
+    	"status"
+    ]
+}); 
+var userRefRoleSelectedDS = Ext.create("Ext.data.Store", {
+	model: UserRefRoleModel,
+	autoLoad: false,	
+	proxy: {
+        type: "jsonpaging",
+        url: "../maintenance/user/getRefRole.json",
+        reader: {
+            type: "json",
+            root: "content",
+            totalProperty: "totalElements"
+        }
+    },
+    pageSize: 20
+});
+
+
+
+var userRefRoleCandidateDS = Ext.create("Ext.data.Store", {
+	model: UserRefRoleModel,
+	autoLoad: false,	
+	proxy: {
+        type: "jsonpaging",
+        url: "../maintenance/user/getCandidateRole.json",
+       	reader: {
+            type: "json",
+            root: "content",
+            totalProperty: "totalElements"
+        }
+    },
+    pageSize: 20,
+    listeners : {
+    	load : function(store, rs){
+    		if(rs.length == 0 && !store.filters.items[0]){
+    			Ext.getCmp("RefRoleCandidateGridID").hide();  
+    		}else{
+    			Ext.getCmp("RefRoleCandidateGridID").show();  
+    		}
+    	}
+    }
+});

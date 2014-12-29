@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 
 import com.brevy.core.shiro.model.ApAccessPerm;
 import com.brevy.core.shiro.model.ApApplication;
-import com.brevy.core.shiro.model.ApGroup;
 import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
@@ -683,6 +682,62 @@ public interface MaintenanceService {
 	 * @author caobin
 	 */
 	void delUserRefGroups(long userId, String groupIds);
+
+	
+	/**
+	 * @description 查询用户关联的角色
+	 * @param userId 用户ID
+	 * @param keyword 关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApRoleSingle> findUserRefRole(long userId, String keyword, Pageable pageable);
+	
+	
+	/**
+	 * @description 通过用户ID查询候选角色
+	 * @param userId 用户ID
+	 * @param keyword 关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApRoleSingle> findCandidateRole(long userId, String keyword, Pageable pageable);
+	
+	
+	/**
+	 * @Description 保存用户和角色的关系
+	 * @param userId 用户编号
+	 * @param roleId 角色编号
+	 * @author caobin
+	 */
+	void saveUserRefRole(long userId, long roleId);
+	
+	/**
+	 * @Description 批量保存用户和角色的关系
+	 * @param userId 用户编号
+	 * @param roleIds 角色编号
+	 * @author caobin
+	 */
+	void saveUserRefRoles(long userId, String roleIds);
+	
+	
+	/**
+	 * @Description 删除用户和角色的关系
+	 * @param userId 用户编号
+	 * @param roleId 角色编号
+	 * @author caobin
+	 */
+	void delUserRefRole(long userId, long roleId);
+	
+	/**
+	 * @Description 批量删除用户和角色的关系的关系
+	 * @param userId 用户编号
+	 * @param roleIds 角色编号
+	 * @author caobin
+	 */
+	void delUserRefRoles(long userId, String roleIds);
 
 }
 

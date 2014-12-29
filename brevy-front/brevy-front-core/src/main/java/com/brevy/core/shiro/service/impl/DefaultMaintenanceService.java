@@ -31,6 +31,7 @@ import com.brevy.core.shiro.dao.ApRefRoleMenuDao;
 import com.brevy.core.shiro.dao.ApRefRoleOperPermDao;
 import com.brevy.core.shiro.dao.ApRefUserApplicationDao;
 import com.brevy.core.shiro.dao.ApRefUserGroupDao;
+import com.brevy.core.shiro.dao.ApRefUserRoleDao;
 import com.brevy.core.shiro.dao.ApRoleDao;
 import com.brevy.core.shiro.dao.ApRoleSingleDao;
 import com.brevy.core.shiro.dao.ApUserDao;
@@ -54,6 +55,8 @@ import com.brevy.core.shiro.model.ApRefUserApp;
 import com.brevy.core.shiro.model.ApRefUserAppPK;
 import com.brevy.core.shiro.model.ApRefUserGroup;
 import com.brevy.core.shiro.model.ApRefUserGroupPK;
+import com.brevy.core.shiro.model.ApRefUserRole;
+import com.brevy.core.shiro.model.ApRefUserRolePK;
 import com.brevy.core.shiro.model.ApRole;
 import com.brevy.core.shiro.model.ApRoleSingle;
 import com.brevy.core.shiro.model.ApUser;
@@ -128,6 +131,9 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 	@Autowired
 	private ApRefUserGroupDao apRefUserGroupDao;
+	
+	@Autowired
+	private ApRefUserRoleDao apRefUserRoleDao;
 	
 	@Autowired
 	private CadDictDetailDao cadDictDetailDao;
@@ -756,6 +762,56 @@ public class DefaultMaintenanceService implements MaintenanceService {
 		String[] arrayGroupId = groupIds.split("\\,");
 		for(String groupId : arrayGroupId){
 			delUserRefGroup(userId, Long.parseLong(groupId));
+		}
+	}
+
+	@Override
+	public Page<ApRoleSingle> findUserRefRole(long userId, String keyword,
+			Pageable pageable) {
+		return apRefUserRoleDao.findUserRefRole(userId, "%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Override
+	public Page<ApRoleSingle> findCandidateRole(long userId, String keyword,
+			Pageable pageable) {
+		return apRefUserRoleDao.findCadidateUserRefRole(userId, "%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Transactional
+	@Override
+	public void saveUserRefRole(long userId, long roleId) {
+		ApRefUserRole arur = new ApRefUserRole();
+		ApRefUserRolePK pk = new ApRefUserRolePK();
+		pk.setUserId(userId);
+		pk.setRoleId(roleId);
+		arur.setId(pk);
+		apRefUserRoleDao.save(arur);
+	}
+
+	@Transactional
+	@Override
+	public void saveUserRefRoles(long userId, String roleIds) {
+		String[] arrayRoleId = roleIds.split("\\,");
+		for(String roleId : arrayRoleId){
+			saveUserRefRole(userId, Long.parseLong(roleId));
+		}
+	}
+
+	@Transactional
+	@Override
+	public void delUserRefRole(long userId, long roleId) {
+		ApRefUserRolePK pk = new ApRefUserRolePK();
+		pk.setUserId(userId);
+		pk.setRoleId(roleId);
+		apRefUserRoleDao.delete(pk);
+	}
+
+	@Transactional
+	@Override
+	public void delUserRefRoles(long userId, String roleIds) {
+		String[] arrayRoleId = roleIds.split("\\,");
+		for(String roleId : arrayRoleId){
+			delUserRefRole(userId, Long.parseLong(roleId));
 		}
 	}
 

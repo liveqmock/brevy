@@ -27,7 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.brevy.core.shiro.model.ApAccessPerm;
 import com.brevy.core.shiro.model.ApApplication;
-import com.brevy.core.shiro.model.ApGroup;
 import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
@@ -1094,4 +1093,97 @@ public class MaintenanceController extends BaseController {
 		return this.successView();
 	}
 
+	
+	/**
+	 * @Description 获取用户关联的角色
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/getRefRole")
+	@ResponseBody
+	public Page<ApRoleSingle> getRefRole(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		Page<ApRoleSingle> pageList = maintenanceService.findUserRefRole(getLongValue(p, "userId"), keyword, pageable);	
+		return pageList;
+	}
+	
+	
+	/**
+	 * @Description 获取关联用户可选的角色
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/getCandidateRole")
+	@ResponseBody
+	public Page<ApRoleSingle> getCandidateUserRefRole(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		Page<ApRoleSingle> pageList =  maintenanceService.findCandidateRole(getLongValue(p, "userId"), keyword, pageable);	
+		return pageList;
+	}
+	
+	/**
+	 * @Description 添加用户和角色关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/addRoleRefUser")
+	@ResponseBody
+	public ModelAndView addRoleRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.saveUserRefRole(getLongValue(p, "userId"), getLongValue(p, "roleId"));
+		return this.successView();
+	}
+	
+	/**
+	 * @Description 批量添加用户和角色关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/addRolesRefUser")
+	@ResponseBody
+	public ModelAndView addRolesRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.saveUserRefRoles(getLongValue(p, "userId"), getString(p, "roleIds"));
+		return this.successView();
+	}
+	
+	
+	/**
+	 * @Description 删除用户关联角色关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/delRoleRefUser")
+	@ResponseBody
+	public ModelAndView delRoleRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.delUserRefRole(getLongValue(p, "userId"), getLongValue(p, "roleId"));
+		return this.successView();
+	}
+	
+	/**
+	 * @Description 批量删除用户关联系统应用关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/delRolesRefUser")
+	@ResponseBody
+	public ModelAndView delRolesRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.delUserRefRoles(getLongValue(p, "userId"), getString(p, "roleIds"));
+		return this.successView();
+	}
+	
 }

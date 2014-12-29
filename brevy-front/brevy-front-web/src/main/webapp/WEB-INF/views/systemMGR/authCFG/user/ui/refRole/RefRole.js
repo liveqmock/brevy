@@ -13,17 +13,17 @@ Ext.define("App.systemMGR.authCFG.user.refRole.RefRole", {
 			layout: "border",
 			bodyStyle: Pub.Style.grayBody,
 			items: [
-				//this.createRoleInfoPanel(),
-				//this.createSelectedGrid(),
-				//this.createCandidateGrid()
+				this.createUserInfoPanel(),
+				this.createSelectedGrid(),
+				this.createCandidateGrid()
 			]
 		});
 	},
 	
-	//创建角色信息显示Panel
-	createRoleInfoPanel : function(){
+	//创建用户信息显示Panel
+	createUserInfoPanel : function(){
 		return Ext.create("Ext.panel.Panel", {
-			id: "RefAccessAuthNorthPanelID",
+			id: "RefRoleNorthPanelID",
 			region: "north",	
 			style: {
 				paddingLeft: "5px",
@@ -40,18 +40,18 @@ Ext.define("App.systemMGR.authCFG.user.refRole.RefRole", {
 	//创建已选Grid
 	createSelectedGrid : function(){
 		return Ext.create("Ext.grid.Panel", {
-			id: "RefAccessAuthWestPanelID",
+			id: "RefRoleWestPanelID",
 			flex: 1,
 			region: "center",
 			tbar: this.createSelectedToolbar(),
-			store: roleRefAccessAuthSelectedDS,
+			store: userRefRoleSelectedDS,
 			viewConfig: {
 		        stripeRows: true
 		    },
 		    columns: this.createSelectedColumns(),
 		    dockedItems: [{
 		        xtype: "pagingtoolbar",
-		        store: roleRefAccessAuthSelectedDS,
+		        store: userRefRoleSelectedDS,
 		        dock: "bottom",
 		        displayInfo: true,
 		        plugins : [Ext.create("Ext.ux.PagingToolbarResizer", {options : this.pageSizeOptions, width: 70})]
@@ -66,27 +66,27 @@ Ext.define("App.systemMGR.authCFG.user.refRole.RefRole", {
 			{text: this.cancelRefs, iconCls: Ext.ux.Icons.fugue_cross_octagon, handler: function(btn){
 				Pub.MsgBox.showMsgBox(Pub.MsgBox.CONFIRM, me.confirmCancelAllRefs, null, function(c){
 					if(c == "yes"){
-						var selection = Ext.getCmp("RoleReadMainGridID").getSelectionModel().getSelection()[0];
-						var count = roleRefAccessAuthSelectedDS.getCount();
-						var accessPermIds = [];
+						var selection = Ext.getCmp("UserReadMainGridID").getSelectionModel().getSelection()[0];
+						var count = userRefRoleSelectedDS.getCount();
+						var roleIds = [];
 						if(count > 0){
-							roleRefAccessAuthSelectedDS.each(function(r){
-								accessPermIds.push(r.get("id"))
+							userRefRoleSelectedDS.each(function(r){
+								roleIds.push(r.get("id"))
 							});
 							Ext.Ajax.request({
-								url: "../maintenance/role/delAccessAuthsRefRole.json",
+								url: "../maintenance/user/delRolesRefUser.json",
 								method: "POST",
 								jsonData: {
-							        roleId: selection.get("id"),
-							        accessPermIds: accessPermIds.join(",")
+							        userId: selection.get("id"),
+							        roleIds: roleIds.join(",")
 							    },
 								loadMask: true,
-								loadMaskEl: Ext.getCmp("RefAccessAuthWestPanelID").getEl(),
+								loadMaskEl: Ext.getCmp("RefRoleWestPanelID").getEl(),
 								loadMaskMsg: Msg.App.updating,	
 								success: function(response){ 
 									Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.updateSuccess, "br");	
-									roleRefAccessAuthSelectedDS.reload();
-									roleRefAccessAuthCandidateDS.reload();
+									userRefRoleSelectedDS.reload();
+									userRefRoleCandidateDS.reload();
 								},
 								scope: this
 							});
@@ -101,7 +101,7 @@ Ext.define("App.systemMGR.authCFG.user.refRole.RefRole", {
 				labelWidth: Ext.isChrome ? 70 : 60,
 				xtype: "searchfield",
 				width: 260,
-				store: roleRefAccessAuthSelectedDS
+				store: userRefRoleSelectedDS
 			}
 		];
 	},
@@ -111,32 +111,31 @@ Ext.define("App.systemMGR.authCFG.user.refRole.RefRole", {
 		var me = this;
 		return [
 				{xtype: "rownumberer"},
-		    	{text: this.accessAuthName, dataIndex: "name", flex: 2},
-		    	{text: this.accessAuthCode, dataIndex: "code", flex: 2},
-		    	{text: this.accessAuthUrlPattern, dataIndex: "urlPattern", flex: 5},
+		    	{text: this.roleName, dataIndex: "name", flex: 3},
+		    	{text: this.roleCode, dataIndex: "code", flex: 3},
 	            {
-	                text: this.refAccessAuthWestText,
+	                text: this.refRoleWestText,
 	                width: 115,
 	                menuDisabled: true,
 	                xtype: "actioncolumn",
-	                tooltip: me.refAccessAuthWestTooltip,
+	                tooltip: me.refRoleWestTooltip,
 	                align: "center",
 	                handler: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
-	                	var selection = Ext.getCmp("RoleReadMainGridID").getSelectionModel().getSelection()[0];
+	                	var selection = Ext.getCmp("UserReadMainGridID").getSelectionModel().getSelection()[0];
 						Ext.Ajax.request({
-							url: "../maintenance/role/delAccessAuthRefRole.json",
+							url: "../maintenance/user/delRoleRefUser.json",
 							method: "POST",
 							jsonData: {
-						        roleId: selection.get("id"),
-						        accessPermId: record.get("id")
+						        userId: selection.get("id"),
+						        roleId: record.get("id")
 						    },
 							loadMask: true,
-							loadMaskEl: Ext.getCmp("RefAccessAuthWestPanelID").getEl(),
+							loadMaskEl: Ext.getCmp("RefRoleWestPanelID").getEl(),
 							loadMaskMsg: Msg.App.updating,	
 							success: function(response){ 
 								Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.updateSuccess, "br");	
-								roleRefAccessAuthSelectedDS.reload();
-								roleRefAccessAuthCandidateDS.reload();
+								userRefRoleSelectedDS.reload();
+								userRefRoleCandidateDS.reload();
 							},
 							scope: this
 						});
@@ -151,12 +150,12 @@ Ext.define("App.systemMGR.authCFG.user.refRole.RefRole", {
 	//创建待选Grid
 	createCandidateGrid : function(){
 		return Ext.create("Ext.grid.Panel", {
-			id: "RefAccessAuthCandidateGridID",
+			id: "RefRoleCandidateGridID",
 			flex: 1,
 			title:"",
 			region: "east",
 			tbar: this.createCandidateToolbar(),
-			store: roleRefAccessAuthCandidateDS,
+			store: userRefRoleCandidateDS,
 			viewConfig: {
 		        stripeRows: true,
 		        forceFit: true
@@ -171,7 +170,7 @@ Ext.define("App.systemMGR.authCFG.user.refRole.RefRole", {
 		    columns: this.createCandidateColumns(),
 		    dockedItems: [{
 		        xtype: "pagingtoolbar",
-		        store: roleRefAccessAuthCandidateDS,
+		        store: userRefRoleCandidateDS,
 		        dock: "bottom",
 		        displayInfo: true,
 		        plugins : [Ext.create("Ext.ux.PagingToolbarResizer", {options : this.pageSizeOptions, width: 70})]
@@ -186,27 +185,27 @@ Ext.define("App.systemMGR.authCFG.user.refRole.RefRole", {
 			{text: this.addRefs, iconCls: Ext.ux.Icons.fugue_plus_octagon, handler: function(btn){
 				Pub.MsgBox.showMsgBox(Pub.MsgBox.CONFIRM, me.confirmAddAllRefs, null, function(c){
 					if(c == "yes"){
-						var selection = Ext.getCmp("RoleReadMainGridID").getSelectionModel().getSelection()[0];
-						var count = roleRefAccessAuthCandidateDS.getCount();
-						var accessPermIds = [];
+						var selection = Ext.getCmp("UserReadMainGridID").getSelectionModel().getSelection()[0];
+						var count = userRefRoleCandidateDS.getCount();
+						var roleIds = [];
 						if(count > 0){
-							roleRefAccessAuthCandidateDS.each(function(r){
-								accessPermIds.push(r.get("id"))
+							userRefRoleCandidateDS.each(function(r){
+								roleIds.push(r.get("id"))
 							});
 							Ext.Ajax.request({
-								url: "../maintenance/role/addAccessAuthsRefRole.json",
+								url: "../maintenance/user/addRolesRefUser.json",
 								method: "POST",
 								jsonData: {
-							        roleId: selection.get("id"),
-							        accessPermIds: accessPermIds.join(",")
+							        userId: selection.get("id"),
+							        roleIds: roleIds.join(",")
 							    },
 								loadMask: true,
-								loadMaskEl: Ext.getCmp("RefAccessAuthWestPanelID").getEl(),
+								loadMaskEl: Ext.getCmp("RefRoleWestPanelID").getEl(),
 								loadMaskMsg: Msg.App.updating,	
 								success: function(response){ 
 									Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.updateSuccess, "br");	
-									roleRefAccessAuthSelectedDS.reload();
-									roleRefAccessAuthCandidateDS.reload();
+									userRefRoleSelectedDS.reload();
+									userRefRoleCandidateDS.reload();
 								},
 								scope: this
 							});
@@ -222,7 +221,7 @@ Ext.define("App.systemMGR.authCFG.user.refRole.RefRole", {
 				labelWidth: Ext.isChrome ? 70 : 60,
 				xtype: "searchfield",
 				width: 260,
-				store: roleRefAccessAuthCandidateDS
+				store: userRefRoleCandidateDS
 			}
 		];
 	},
@@ -232,32 +231,31 @@ Ext.define("App.systemMGR.authCFG.user.refRole.RefRole", {
 		var me = this;
 		return [
 			{xtype: "rownumberer"},
-		 	{text: this.accessAuthName, dataIndex: "name", flex: 2},
-		    {text: this.accessAuthCode, dataIndex: "code", flex: 2},
-		    {text: this.accessAuthUrlPattern, dataIndex: "urlPattern", flex: 5},
+		 	{text: this.roleName, dataIndex: "name", flex: 3},
+		    {text: this.roleCode, dataIndex: "code", flex: 3},
 		 	{
-				text: this.refAccessAuthEastActionText,
+				text: this.refRoleEastActionText,
 				width: 115,
 				menuDisabled: true,
 				xtype: "actioncolumn",
-				tooltip: me.refAccessAuthEastActionTooltip,
+				tooltip: me.refRoleEastActionTooltip,
 				align: "center",
 				handler: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
-					var selection = Ext.getCmp("RoleReadMainGridID").getSelectionModel().getSelection()[0];
+					var selection = Ext.getCmp("UserReadMainGridID").getSelectionModel().getSelection()[0];
 					Ext.Ajax.request({
-						url: "../maintenance/role/addAccessAuthRefRole.json",
+						url: "../maintenance/user/addRoleRefUser.json",
 						method: "POST",
 						jsonData: {
-					        roleId: selection.get("id"),
-					        accessPermId: record.get("id")
+					        userId: selection.get("id"),
+					        roleId: record.get("id")
 					    },
 						loadMask: true,
-						loadMaskEl: Ext.getCmp("RefAccessAuthCandidateGridID").getEl(),
+						loadMaskEl: Ext.getCmp("RefRoleCandidateGridID").getEl(),
 						loadMaskMsg: Msg.App.updating,	
 						success: function(response){ 
 							Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.updateSuccess, "br");
-							roleRefAccessAuthSelectedDS.reload();
-							roleRefAccessAuthCandidateDS.reload();
+							userRefRoleSelectedDS.reload();
+							userRefRoleCandidateDS.reload();
 						},
 						scope: this
 					});
