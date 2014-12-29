@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.brevy.core.shiro.model.ApAccessPerm;
 import com.brevy.core.shiro.model.ApApplication;
+import com.brevy.core.shiro.model.ApGroup;
 import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
@@ -573,7 +574,7 @@ public interface MaintenanceService {
 	
 	
 	/**
-	 * @description 查询用户关联的系统应用
+	 * @description 查询用户关联的应用系统
 	 * @param userId 用户ID
 	 * @param keyword 关键字
 	 * @param pageable
@@ -584,7 +585,7 @@ public interface MaintenanceService {
 	
 	
 	/**
-	 * @description 通过用户ID查询候选应用
+	 * @description 通过用户ID查询候选应用系统
 	 * @param userId 用户ID
 	 * @param keyword 关键字
 	 * @param pageable
@@ -605,7 +606,7 @@ public interface MaintenanceService {
 	/**
 	 * @Description 批量保存用户和应用系统的关系
 	 * @param userId 用户编号
-	 * @param appId 应用系统限编号
+	 * @param appIds 应用系统限编号
 	 * @author caobin
 	 */
 	void saveUserRefApps(long userId, String appIds);
@@ -626,6 +627,62 @@ public interface MaintenanceService {
 	 * @author caobin
 	 */
 	void delUserRefApps(long userId, String appIds);
+	
+
+	/**
+	 * @description 查询用户关联的用户组
+	 * @param userId 用户ID
+	 * @param keyword 关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApGroupSingle> findUserRefGroup(long userId, String keyword, Pageable pageable);
+	
+	
+	/**
+	 * @description 通过用户ID查询候选用户组
+	 * @param userId 用户ID
+	 * @param keyword 关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApGroupSingle> findCandidateGroup(long userId, String keyword, Pageable pageable);
+	
+	
+	/**
+	 * @Description 保存用户和用户组的关系
+	 * @param userId 用户编号
+	 * @param groupId 用户组编号
+	 * @author caobin
+	 */
+	void saveUserRefGroup(long userId, long groupId);
+	
+	/**
+	 * @Description 批量保存用户和用户组的关系
+	 * @param userId 用户编号
+	 * @param groupIds 用户组编号
+	 * @author caobin
+	 */
+	void saveUserRefGroups(long userId, String groupIds);
+	
+	
+	/**
+	 * @Description 删除用户和用户组的关系
+	 * @param userId 用户编号
+	 * @param groupId 用户组编号
+	 * @author caobin
+	 */
+	void delUserRefGroup(long userId, long groupId);
+	
+	/**
+	 * @Description 批量删除用户和用户组的关系的关系
+	 * @param userId 用户编号
+	 * @param groupIds 用户组编号
+	 * @author caobin
+	 */
+	void delUserRefGroups(long userId, String groupIds);
 
 }
 

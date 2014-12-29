@@ -48,7 +48,7 @@ Ext.define("App.systemMGR.authCFG.user.UserUI", {
 			
 			activate: function(c){
 				var r = Ext.getCmp(gridID).getSelectionModel().getSelection()[0];
-				var newGroupText = Ext.String.format(this.currentUser, r.get("name"), r.get("code"));
+				var newGroupText = Ext.String.format(this.currentUser, r.get("chName"), r.get("username"));
 				Ext.getCmp("RefGroupNorthPanelID").update(newGroupText);
 				if(groupText != newGroupText){
 					userRefGroupSelectedDS.getProxy().extraParams = {
@@ -86,7 +86,7 @@ Ext.define("App.systemMGR.authCFG.user.UserUI", {
 			
 			activate: function(c){
 				var r = Ext.getCmp(gridID).getSelectionModel().getSelection()[0];
-				var newRoleText = Ext.String.format(this.currentUser, r.get("name"), r.get("code"));
+				var newRoleText = Ext.String.format(this.currentUser, r.get("chName"), r.get("username"));
 				Ext.getCmp("RefRoleNorthPanelID").update(newRoleText);
 				if(roleText != newRoleText){
 					userRefRoleSelectedDS.getProxy().extraParams = {

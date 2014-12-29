@@ -82,7 +82,6 @@ public class ApRole implements Serializable {
 	/**
 	 * 角色关联的菜单
 	 */
-	@Column(updatable=false)
 	@ManyToMany(fetch=FetchType.LAZY)
 	@Where(clause="STATUS='1'")
 	@JoinTable(		
@@ -95,7 +94,6 @@ public class ApRole implements Serializable {
 	/**
 	 * 角色关联的访问权限
 	 */
-	@Column(updatable=false)
 	@ManyToMany(fetch=FetchType.EAGER)
 	@Where(clause="STATUS='1'")	
 	@JoinTable(		
@@ -108,7 +106,6 @@ public class ApRole implements Serializable {
 	/**
 	 * 角色关联的操作权限
 	 */
-	@Column(updatable=false)
 	@ManyToMany(fetch=FetchType.EAGER)
 	@Where(clause="STATUS='1'")
 	@JoinTable(		

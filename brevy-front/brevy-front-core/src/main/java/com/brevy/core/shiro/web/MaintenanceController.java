@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.brevy.core.shiro.model.ApAccessPerm;
 import com.brevy.core.shiro.model.ApApplication;
+import com.brevy.core.shiro.model.ApGroup;
 import com.brevy.core.shiro.model.ApGroupSingle;
 import com.brevy.core.shiro.model.ApMenu;
 import com.brevy.core.shiro.model.ApOperPerm;
@@ -973,7 +974,7 @@ public class MaintenanceController extends BaseController {
 	
 	
 	/**
-	 * @Description 删除用户关联系统应用关系
+	 * @Description 删除用户关联应用系统关系
 	 * @param p
 	 * @return
 	 * @author caobin
@@ -987,7 +988,7 @@ public class MaintenanceController extends BaseController {
 	}
 	
 	/**
-	 * @Description 批量删除用户关联系统应用关系
+	 * @Description 批量删除用户关联应用系统关系
 	 * @param p
 	 * @return
 	 * @author caobin
@@ -997,6 +998,99 @@ public class MaintenanceController extends BaseController {
 	public ModelAndView delAppsRefUser(@RequestBody Map<String, String> p){
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
 		maintenanceService.delUserRefApps(getLongValue(p, "userId"), getString(p, "appIds"));
+		return this.successView();
+	}
+	
+
+	/**
+	 * @Description 获取用户关联的用户组
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/getRefUserGroup")
+	@ResponseBody
+	public Page<ApGroupSingle> getRefUserGroup(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		Page<ApGroupSingle> pageList = maintenanceService.findUserRefGroup(getLongValue(p, "userId"), keyword, pageable);	
+		return pageList;
+	}
+	
+	
+	/**
+	 * @Description 获取关联用户可选的用户组
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/getCandidateGroup")
+	@ResponseBody
+	public Page<ApGroupSingle> getCandidateGroup(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		Page<ApGroupSingle> pageList =  maintenanceService.findCandidateGroup(getLongValue(p, "userId"), keyword, pageable);	
+		return pageList;
+	}
+	
+	/**
+	 * @Description 添加用户和用户组关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/addGroupRefUser")
+	@ResponseBody
+	public ModelAndView addGroupRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.saveUserRefGroup(getLongValue(p, "userId"), getLongValue(p, "groupId"));
+		return this.successView();
+	}
+	
+	/**
+	 * @Description 批量添加用户和用户组关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/addGroupsRefUser")
+	@ResponseBody
+	public ModelAndView addGroupsRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.saveUserRefGroups(getLongValue(p, "userId"), getString(p, "groupIds"));
+		return this.successView();
+	}
+	
+	
+	/**
+	 * @Description 删除用户关联用户组关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/delGroupRefUser")
+	@ResponseBody
+	public ModelAndView delGroupRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.delUserRefGroup(getLongValue(p, "userId"), getLongValue(p, "groupId"));
+		return this.successView();
+	}
+	
+	/**
+	 * @Description 批量删除用户关联系统应用关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/delGroupsRefUser")
+	@ResponseBody
+	public ModelAndView delGroupsRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.delUserRefGroups(getLongValue(p, "userId"), getString(p, "groupIds"));
 		return this.successView();
 	}
 

@@ -40,7 +40,7 @@ var userGroupRefRoleCandidateDS = Ext.create("Ext.data.Store", {
     pageSize: 20,
     listeners : {
     	load : function(store, rs){
-    		if(rs.length == 0){
+    		if(rs.length == 0 && !store.filters.items[0]){
     			Ext.getCmp("RefRoleCandidateGridID").hide();  
     		}else{
     			Ext.getCmp("RefRoleCandidateGridID").show();  

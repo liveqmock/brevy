@@ -21,26 +21,26 @@ import com.brevy.core.shiro.model.ApRefUserAppPK;
 public interface ApRefUserApplicationDao extends CrudRepository<ApRefUserApp, ApRefUserAppPK>{
 	
 	/**
-	 * @Description 通过用户编号分页查询其关联的系统权限
+	 * @Description 通过用户编号分页查询其关联的应用系统
 	 * @param userId 用户编号
 	 * @param keyword 检索关键字
 	 * @param pageable
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select aa from ApApplication aa where aa.id in (select arua.id.appId from ApRefUserApp arua where arua.id.userId=:userId) and (lower(aa.name) like lower(:kw) or lower(aa.code) like lower(:kw) or lower(aa.desc) like lower(:kw))")
+	@Query("select aa from ApApplication aa where aa.id in (select arua.id.appId from ApRefUserApp arua where arua.id.userId=:userId) and (lower(aa.name) like lower(:kw) or lower(aa.code) like lower(:kw))")
 	Page<ApApplication> findUserRefApplication(@Param("userId")long userid, @Param("kw")String keyword, Pageable pageable);
 
 	
 	/**
-	 * @Description 分页查询用户可选系统应用
+	 * @Description 分页查询用户可选应用系统
 	 * @param userId 用户编号
 	 * @param keyword 检索关键字
 	 * @param pageable
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select aop from ApApplication aop where aop.id not in (select arrop.id.appId from ApRefUserApp arrop where arrop.id.userId=:userId) and (lower(aop.name) like lower(:kw) or lower(aop.code) like lower(:kw) or lower(aop.desc) like lower(:kw))")
+	@Query("select aa from ApApplication aa where aa.id not in (select arua.id.appId from ApRefUserApp arua where arua.id.userId=:userId) and (lower(aa.name) like lower(:kw) or lower(aa.code) like lower(:kw))")
 	Page<ApApplication> findCadidateUserRefApp(@Param("userId")long userId, @Param("kw")String keyword, Pageable pageable);
 	
 	/**

@@ -30,6 +30,7 @@ import com.brevy.core.shiro.dao.ApRefRoleAccessPermDao;
 import com.brevy.core.shiro.dao.ApRefRoleMenuDao;
 import com.brevy.core.shiro.dao.ApRefRoleOperPermDao;
 import com.brevy.core.shiro.dao.ApRefUserApplicationDao;
+import com.brevy.core.shiro.dao.ApRefUserGroupDao;
 import com.brevy.core.shiro.dao.ApRoleDao;
 import com.brevy.core.shiro.dao.ApRoleSingleDao;
 import com.brevy.core.shiro.dao.ApUserDao;
@@ -51,6 +52,8 @@ import com.brevy.core.shiro.model.ApRefRoleOperPerm;
 import com.brevy.core.shiro.model.ApRefRoleOperPermPK;
 import com.brevy.core.shiro.model.ApRefUserApp;
 import com.brevy.core.shiro.model.ApRefUserAppPK;
+import com.brevy.core.shiro.model.ApRefUserGroup;
+import com.brevy.core.shiro.model.ApRefUserGroupPK;
 import com.brevy.core.shiro.model.ApRole;
 import com.brevy.core.shiro.model.ApRoleSingle;
 import com.brevy.core.shiro.model.ApUser;
@@ -124,6 +127,9 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	private ApRefUserApplicationDao apRefUserAppDao;
 	
 	@Autowired
+	private ApRefUserGroupDao apRefUserGroupDao;
+	
+	@Autowired
 	private CadDictDetailDao cadDictDetailDao;
 	
 	@Autowired
@@ -137,7 +143,7 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 	@Override
 	public Collection<?> findChildren(final long appId, final long parentId, long roleId){
-		ApRole apRole = apRoleDao.findOne(roleId);
+		ApRole apRole = apRoleDao.findById(roleId);
 		if(apRole == null)return null;
 		Collection<?> c = CollectionUtils.select(apRole.getMenus(), new Predicate() {			
 			@Override
@@ -700,6 +706,56 @@ public class DefaultMaintenanceService implements MaintenanceService {
 		String[] arrayAppId = appIds.split("\\,");
 		for(String appId : arrayAppId){
 			delUserRefApp(userId, Long.parseLong(appId));
+		}
+	}
+
+	@Override
+	public Page<ApGroupSingle> findUserRefGroup(long userId, String keyword,
+			Pageable pageable) {
+		return apRefUserGroupDao.findUserRefGroup(userId, "%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Override
+	public Page<ApGroupSingle> findCandidateGroup(long userId, String keyword,
+			Pageable pageable) {
+		return apRefUserGroupDao.findCadidateUserRefGroup(userId, "%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Transactional
+	@Override
+	public void saveUserRefGroup(long userId, long groupId) {
+		ApRefUserGroup arug = new ApRefUserGroup();
+		ApRefUserGroupPK pk = new ApRefUserGroupPK();
+		pk.setUserId(userId);
+		pk.setGroupId(groupId);
+		arug.setId(pk);
+		apRefUserGroupDao.save(arug);
+	}
+
+	@Transactional
+	@Override
+	public void saveUserRefGroups(long userId, String groupIds) {
+		String[] arrayGroupId = groupIds.split("\\,");
+		for(String groupId : arrayGroupId){
+			delUserRefGroup(userId, Long.parseLong(groupId));
+		}
+	}
+
+	@Transactional
+	@Override
+	public void delUserRefGroup(long userId, long groupId) {
+		ApRefUserGroupPK pk = new ApRefUserGroupPK();
+		pk.setUserId(userId);
+		pk.setGroupId(groupId);
+		apRefUserGroupDao.delete(pk);
+	}
+
+	@Transactional
+	@Override
+	public void delUserRefGroups(long userId, String groupIds) {
+		String[] arrayGroupId = groupIds.split("\\,");
+		for(String groupId : arrayGroupId){
+			delUserRefGroup(userId, Long.parseLong(groupId));
 		}
 	}
 

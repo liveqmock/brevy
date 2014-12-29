@@ -28,6 +28,15 @@ public interface ApRoleDao extends CrudRepository<ApRole, Long> {
 	 */
 	List<ApRole> findByAppId(long appId);
 	
+	
+	/**
+	 * @description 通过角色编号查询角色
+	 * @param id
+	 * @return
+	 * @author caobin
+	 */
+	ApRole findById(long id);
+	
 
 	/**
 	 * @Description 通过角色代码查询角色

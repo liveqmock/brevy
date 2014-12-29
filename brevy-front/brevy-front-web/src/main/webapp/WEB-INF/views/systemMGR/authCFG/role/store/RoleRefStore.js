@@ -101,7 +101,7 @@ var roleRefAccessAuthCandidateDS = Ext.create("Ext.data.Store", {
     pageSize: 20,
     listeners : {
     	load : function(store, rs){
-    		if(rs.length == 0){
+    		if(rs.length == 0 && !store.filters.items[0]){
     			Ext.getCmp("RefAccessAuthCandidateGridID").hide();  
     		}else{
     			Ext.getCmp("RefAccessAuthCandidateGridID").show();  
@@ -155,7 +155,7 @@ var roleRefOperAuthCandidateDS = Ext.create("Ext.data.Store", {
     pageSize: 20,
     listeners : {
     	load : function(store, rs){
-    		if(rs.length == 0){
+    		if(rs.length == 0 && !store.filters.items[0]){
     			Ext.getCmp("RefOperAuthCandidateGridID").hide();  
     		}else{
     			Ext.getCmp("RefOperAuthCandidateGridID").show();  

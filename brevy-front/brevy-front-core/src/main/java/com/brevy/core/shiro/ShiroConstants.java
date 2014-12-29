@@ -59,7 +59,7 @@ public class ShiroConstants {
 	/**
 	 * 应用无效
 	 */
-	public final static String INVALID_APP = "无效的应用编号：[%s]";
+	public final static String INVALID_APP = "当前应用[%s]下的用户不存在";
 	
 	/**
 	 * 应用禁用
