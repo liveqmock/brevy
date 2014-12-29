@@ -906,5 +906,98 @@ public class MaintenanceController extends BaseController {
 		}
 		return this.successView();	
 	}
+	
+	
+	/**
+	 * @Description 获取用户关联的系统应用
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/getRefUserApp")
+	@ResponseBody
+	public Page<ApApplication> getRefUserApp(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		Page<ApApplication> pageList = maintenanceService.findUserRefApp(getLongValue(p, "userId"), keyword, pageable);	
+		return pageList;
+	}
+	
+	
+	/**
+	 * @Description 获取关联用户可选的应用系统
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/getCandidateApp")
+	@ResponseBody
+	public Page<ApApplication> getCandidateApp(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		Page<ApApplication> pageList =  maintenanceService.findCandidateApp(getLongValue(p, "userId"), keyword, pageable);	
+		return pageList;
+	}
+	
+	/**
+	 * @Description 添加用户和应用系统关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/addAppRefUser")
+	@ResponseBody
+	public ModelAndView addAppRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.saveUserRefApp(getLongValue(p, "userId"), getLongValue(p, "appId"));
+		return this.successView();
+	}
+	
+	/**
+	 * @Description 批量添加用户和应用系统关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/addAppsRefUser")
+	@ResponseBody
+	public ModelAndView addAppsRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.saveUserRefApps(getLongValue(p, "userId"), getString(p, "appIds"));
+		return this.successView();
+	}
+	
+	
+	/**
+	 * @Description 删除用户关联系统应用关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/delAppRefUser")
+	@ResponseBody
+	public ModelAndView delAppRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.delUserRefApp(getLongValue(p, "userId"), getLongValue(p, "appId"));
+		return this.successView();
+	}
+	
+	/**
+	 * @Description 批量删除用户关联系统应用关系
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/delAppsRefUser")
+	@ResponseBody
+	public ModelAndView delAppsRefUser(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		maintenanceService.delUserRefApps(getLongValue(p, "userId"), getString(p, "appIds"));
+		return this.successView();
+	}
 
 }

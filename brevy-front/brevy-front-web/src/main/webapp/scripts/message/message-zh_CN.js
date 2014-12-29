@@ -390,7 +390,7 @@ Ext.define("Msg", {
 		},
 		
 		"App.systemMGR.authCFG.user.UserUI" : {
-			currentRole: "当前用户：{0}-[{1}]"
+			currentUser: "当前用户：{0}-[{1}]"
 		},
 		
 		"App.systemMGR.authCFG.user.crud.UserRead" : {
@@ -405,22 +405,21 @@ Ext.define("Msg", {
 		},
 		
 		"App.systemMGR.authCFG.user.refApp.RefApp" : {
-			refAppTitle: "用户关联应用系统配置"/*,
-			refAccessAuthWestName: "角色已关联访问权限",
-			refAccessAuthWestText: "操作",
-			refAccessAuthWestTooltip: "撤销访问权限关联",
-			refAccessAuthEastIconTooltip: "添加访问权限关联",
-			refAccessAuthEastNameText: "可选访问权限名称",
-			refAccessAuthEastActionText: "操作",
-			refAccessAuthEastActionTooltip: "添加访问权限关联",
+			refAppTitle: "用户关联应用系统配置",
+			refAppWestName: "用户已关联应用系统",
+			refAppWestText: "操作",
+			refAppWestTooltip: "撤销应用系统关联",
+			refAppEastIconTooltip: "添加应用系统关联",
+			refAppEastNameText: "可选应用系统名称",
+			refAppEastActionText: "操作",
+			refAppEastActionTooltip: "添加应用系统关联",
 			keywordSearch: "关键字查询",
-			accessAuthName: "访问权限名称",
-			accessAuthCode: "访问权限代码",
-			accessAuthUrlPattern: "URL匹配模式",
-			cancelRefs: "撤销当页所有访问权限关联",
-			addRefs: "添加当页所有访问权限关联",
-			confirmCancelAllRefs: "确认撤销当页所有访问权限关联？",
-			confirmAddAllRefs: "确认添加当页所有访问权限关联？"*/
+			appName: "应用系统名称",
+			appCode: "应用系统代码",
+			cancelRefs: "撤销当页所有应用系统关联",
+			addRefs: "添加当页所有应用系统关联",
+			confirmCancelAllRefs: "确认撤销当页所有应用系统关联？",
+			confirmAddAllRefs: "确认添加当页所有应用系统关联？"
 			
 		},
 		

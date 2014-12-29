@@ -124,7 +124,7 @@ Ext.define("App.systemMGR.authCFG.user.UserUI", {
 			
 			activate: function(c){
 				var r = Ext.getCmp(gridID).getSelectionModel().getSelection()[0];
-				var newAppText = Ext.String.format(this.currentUser, r.get("name"), r.get("code"));
+				var newAppText = Ext.String.format(this.currentUser, r.get("chName"), r.get("username"));
 				Ext.getCmp("RefAppNorthPanelID").update(newAppText);
 				if(appText != newAppText){
 					userRefAppSelectedDS.getProxy().extraParams = {

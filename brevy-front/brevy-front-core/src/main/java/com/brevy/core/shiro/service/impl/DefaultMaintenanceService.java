@@ -49,6 +49,8 @@ import com.brevy.core.shiro.model.ApRefRoleMenu;
 import com.brevy.core.shiro.model.ApRefRoleMenuPK;
 import com.brevy.core.shiro.model.ApRefRoleOperPerm;
 import com.brevy.core.shiro.model.ApRefRoleOperPermPK;
+import com.brevy.core.shiro.model.ApRefUserApp;
+import com.brevy.core.shiro.model.ApRefUserAppPK;
 import com.brevy.core.shiro.model.ApRole;
 import com.brevy.core.shiro.model.ApRoleSingle;
 import com.brevy.core.shiro.model.ApUser;
@@ -117,6 +119,9 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 	@Autowired
 	private ApUserMapper apUserMapper;
+	
+	@Autowired
+	private ApRefUserApplicationDao apRefUserAppDao;
 	
 	@Autowired
 	private CadDictDetailDao cadDictDetailDao;
@@ -646,6 +651,56 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	@Override
 	public ApUserSingle findUser(long id) {
 		return apUserSingleDao.findOne(id);
+	}
+
+	@Override
+	public Page<ApApplication> findUserRefApp(long userId, String keyword,
+			Pageable pageable) {	
+		return apRefUserApplicationDao.findUserRefApplication(userId, "%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Override
+	public Page<ApApplication> findCandidateApp(long userId, String keyword,
+			Pageable pageable) {
+		return apRefUserApplicationDao.findCadidateUserRefApp(userId, "%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Transactional
+	@Override
+	public void saveUserRefApp(long userId, long appId) {
+		ApRefUserApp arua = new ApRefUserApp();
+		ApRefUserAppPK pk = new ApRefUserAppPK();
+		pk.setUserId(userId);
+		pk.setAppId(appId);
+		arua.setId(pk);
+		apRefUserAppDao.save(arua);
+	}
+
+	@Transactional
+	@Override
+	public void saveUserRefApps(long userId, String appIds) {
+		String[] arrayAppId = appIds.split("\\,");
+		for(String appId : arrayAppId){
+			saveUserRefApp(userId, Long.parseLong(appId));
+		}
+	}
+
+	@Transactional
+	@Override
+	public void delUserRefApp(long userId, long appId) {
+		ApRefUserAppPK pk = new ApRefUserAppPK();
+		pk.setUserId(userId);
+		pk.setAppId(appId);
+		apRefUserAppDao.delete(pk);
+	}
+
+	@Transactional
+	@Override
+	public void delUserRefApps(long userId, String appIds) {
+		String[] arrayAppId = appIds.split("\\,");
+		for(String appId : arrayAppId){
+			delUserRefApp(userId, Long.parseLong(appId));
+		}
 	}
 
 }

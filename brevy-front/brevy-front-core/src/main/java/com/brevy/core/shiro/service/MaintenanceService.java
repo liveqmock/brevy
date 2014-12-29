@@ -570,6 +570,62 @@ public interface MaintenanceService {
 	 * @author caobin
 	 */
 	void deleteApUser(Collection<Long> ids);
+	
+	
+	/**
+	 * @description 查询用户关联的系统应用
+	 * @param userId 用户ID
+	 * @param keyword 关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApApplication> findUserRefApp(long userId, String keyword, Pageable pageable);
+	
+	
+	/**
+	 * @description 通过用户ID查询候选应用
+	 * @param userId 用户ID
+	 * @param keyword 关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<ApApplication> findCandidateApp(long userId, String keyword, Pageable pageable);
+	
+	
+	/**
+	 * @Description 保存用户和应用系统的关系
+	 * @param userId 用户编号
+	 * @param appId 应用系统限编号
+	 * @author caobin
+	 */
+	void saveUserRefApp(long userId, long appId);
+	
+	/**
+	 * @Description 批量保存用户和应用系统的关系
+	 * @param userId 用户编号
+	 * @param appId 应用系统限编号
+	 * @author caobin
+	 */
+	void saveUserRefApps(long userId, String appIds);
+	
+	
+	/**
+	 * @Description 删除用户和应用系统的关系
+	 * @param userId 用户编号
+	 * @param appId 应用系统限编号
+	 * @author caobin
+	 */
+	void delUserRefApp(long userId, long appId);
+	
+	/**
+	 * @Description 批量删除用户和应用系统的关系
+	 * @param userId 用户编号
+	 * @param appIds 应用系统限编号
+	 * @author caobin
+	 */
+	void delUserRefApps(long userId, String appIds);
 
 }
 
