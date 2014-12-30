@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.biz.cads.appSettings.dictMgr.DictMgrUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>store/DictMgrStore.js</file>
+        	<file>ui/crud/DictMgrRead.js</file>
+        	<file>ui/DictMgrUI.js</file>
+        </js>
+    </files>
+</module>

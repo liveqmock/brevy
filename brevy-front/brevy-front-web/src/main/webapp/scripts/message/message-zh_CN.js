@@ -495,9 +495,13 @@ Ext.define("Msg", {
 			confirmNewPassword: "再输入一次新密码",
 			resetPasswordBasicInfo: "密码重置",
 			resetPasswordTitle: "密码重置"
+		},
+		
+		"App.biz.cads.appSettings.dictMgr.crud.DictMgrRead" : {
+			name: "字典类型名称", 
+			code: "字典类型代码",
+			desc: "字典类型描述"
 		}
-		
-		
 		
 	}
 });
