@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,6 +22,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
+import com.brevy.core.support.Msa;
 import com.brevy.core.support.exception.CoreException;
 import com.brevy.core.support.web.http.RequestHead;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -35,6 +37,24 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 public abstract class BaseController {
 
 	protected transient Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	/**
+	 * 起始页
+	 */
+	protected final static String PAGE = "page";
+	
+	/**
+	 * 起始记录
+	 */
+	protected final static String PAGE_START = "start";
+	
+	/**
+	 * 每页数量
+	 */
+	protected final static String PAGE_SIZE = "limit";
+	
+	@Autowired
+	protected Msa msa;
 	
 	/**
 	 * @Description 创建ModelAndView
@@ -247,18 +267,5 @@ public abstract class BaseController {
 		return null;
 	}
 	
-	/**
-	 * 起始页
-	 */
-	protected final static String PAGE = "page";
 	
-	/**
-	 * 起始记录
-	 */
-	protected final static String PAGE_START = "start";
-	
-	/**
-	 * 每页数量
-	 */
-	protected final static String PAGE_SIZE = "limit";
 }

@@ -33,7 +33,7 @@ public class CoreException extends Exception {
 	}
 	
 	public CoreException(MessageCode messageCode){
-		this();
+		super(messageCode.getCode());
 		this.messageCode = messageCode;
 	}
 	

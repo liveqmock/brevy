@@ -487,6 +487,14 @@ Ext.define("Msg", {
 			createUserTitle: "添加用户",
 			emptyPositionName : "请选择一个职位",
 			emptyDeptName : "请选择一个部门"
+		},
+		
+		"App.biz.cads.mySettings.resetPwd.ResetPasswordUI" : {
+			oldPassword: "输入旧密码",
+			newPassword: "输入新密码",
+			confirmNewPassword: "再输入一次新密码",
+			resetPasswordBasicInfo: "密码重置",
+			resetPasswordTitle: "密码重置"
 		}
 		
 		

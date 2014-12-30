@@ -19,7 +19,7 @@
 	<!-- *                                   Spring data JPA 配置                                                                                               	 * -->
 	<!-- ************************************************************************************************* -->
 	<!-- Spring Data Jpa -->
- 	<jpa:repositories base-package="com.brevy.core.shiro.dao"  entity-manager-factory-ref="entityManagerFactory"/>
+ 	<jpa:repositories base-package="com.brevy.core.shiro.dao,com.brevy.front.biz.cads.dao"  entity-manager-factory-ref="entityManagerFactory"/>
 
 	<!-- Jpa Entity Manager -->
 	<bean id="entityManagerFactory"

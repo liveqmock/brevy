@@ -32,7 +32,7 @@ public class CoreRuntimeException extends RuntimeException {
 	}
 	
 	public CoreRuntimeException(MessageCode messageCode){
-		this();
+		super(messageCode.getCode());
 		this.messageCode = messageCode;
 	}
 	

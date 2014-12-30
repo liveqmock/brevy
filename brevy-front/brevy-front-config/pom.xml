@@ -10,4 +10,39 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>Brevy Front Config :: JAR</name>
   <description>Brevy前端-配置</description>
+  
+  <build>
+  	<plugins>
+  		<!-- error-code -->
+			<plugin>
+				<groupId>com.brevy</groupId>
+				<artifactId>brevy-fw-plugin</artifactId>
+				<version>0.0.1</version>
+				<configuration>
+					<!-- goal为errorCodeGenerator的操作配置 -->
+					<goalErrorCodeGenerator>
+						<resourceFiles>
+							<resourceFile>messages/Errors</resourceFile>
+						</resourceFiles>
+						<targetJavaClass>com.brevy.front.biz.messages.Errors</targetJavaClass>
+					</goalErrorCodeGenerator>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generator-errorCode</id>
+						<phase>pre-clean</phase>
+						<goals>
+							<goal>errorCodeGenerator</goal>
+						</goals>
+						<configuration>
+							<resourceFiles>
+								<resourceFile>messages/Errors</resourceFile>
+							</resourceFiles>
+							<targetJavaClass>com.brevy.front.biz.messages.Errors</targetJavaClass>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+  	</plugins>
+  </build>
 </project>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.biz.cads.mySettings.resetPwd.ResetPasswordUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>ui/ResetPasswordUI.js</file>
+        </js>
+    </files>
+</module>
