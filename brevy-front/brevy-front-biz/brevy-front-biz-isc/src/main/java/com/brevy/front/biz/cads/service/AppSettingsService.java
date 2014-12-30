@@ -1,5 +1,7 @@
 package com.brevy.front.biz.cads.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,4 +22,20 @@ public interface AppSettingsService {
 	 * @author caobin
 	 */
 	Page<CadDict> findAllDicts(String keyword, Pageable pageable);
+	
+	
+	/**
+	 * @description  保存（更新）数据字典
+	 * @param cadDict
+	 * @author caobin
+	 */
+	void saveOrUpdateCadDict(CadDict cadDict);
+	
+	
+	/**
+	 * @description 删除数据字典
+	 * @param ids
+	 * @author caobin
+	 */
+	void deleteCadDict(List<Long> ids);
 }

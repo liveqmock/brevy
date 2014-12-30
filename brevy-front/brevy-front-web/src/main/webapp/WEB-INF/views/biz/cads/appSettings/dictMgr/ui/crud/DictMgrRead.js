@@ -58,6 +58,15 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrRead", {
 					});
 				}, null, null, true);
 			}},
+			"-",
+			{text: me.showDetail, iconCls: Ext.ux.Icons.book_link, handler:function(btn){
+				me.handleSelectedRecord("DictMgrReadMainGridID", function(p){
+					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/appSettings/dictMgr/ui/DictDetailMgrUI.js"), function(){
+						me.createInstance("App.biz.cads.appSettings.dictMgr.DictDetailMgrUI", me.showDetail, btn.iconCls, p.sm);
+					});
+				}, null, null, true);
+			}
+			},
 			"->",
 			{
 				fieldLabel: this.keywordSearch,

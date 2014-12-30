@@ -500,7 +500,22 @@ Ext.define("Msg", {
 		"App.biz.cads.appSettings.dictMgr.crud.DictMgrRead" : {
 			name: "字典类型名称", 
 			code: "字典类型代码",
-			desc: "字典类型描述"
+			desc: "字典类型描述",
+			showDetail: "字典明细"
+		},
+		
+		"App.biz.cads.appSettings.dictMgr.crud.DictMgrCreate" : {
+			name: "字典类型名称", 
+			code: "字典类型代码",
+			desc: "字典类型描述",
+			createDictMgrTitle: "添加字典类型"
+		},
+		
+		"App.biz.cads.appSettings.dictMgr.crud.DictMgrUpdate" : {
+			name: "字典类型名称", 
+			code: "字典类型代码",
+			desc: "字典类型描述",
+			editDictMgrTitle: "更新字典类型"
 		}
 		
 	}
