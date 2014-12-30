@@ -1,15 +1,21 @@
 /**
- * @module 字典添加操作
+ * @module 字典明细添加操作
  * @author caobin
  */
-Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrCreate", {
+Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictDetailMgrCreate", {
 	extend : "App.Module",
 	
 	formUrl: function(){
-		return this.getRequestRes("/biz/cads/appSettings/dictMgr/saveOrUpdate.json");
+		return this.getRequestRes("/biz/cads/appSettings/dictDetailMgr/saveOrUpdate.json");
 	},
 	
 	init : function(){
+		
+		var dictId = {
+			name: "dictId",
+			xtype: "hidden",
+			value: this.params
+		}
 		
 		var name = {
 			fieldLabel: this.required(this.name),
@@ -65,7 +71,7 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrCreate", {
 		return Ext.create("Ext.window.Window", {
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 250,
+		    height: 230,
 		    width: 660,
 		    layout: "fit",
 		    modal: true,
@@ -83,11 +89,11 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrCreate", {
 				xtype: "xform",
 				labelWidth: 100,
 				fieldSetConfig: {
-					title: this.dictBasicInfo,
+					title: this.dictDetailBasicInfo,
 					collapsible: false
 				},
 				items:[
-					name, code, desc
+					dictId, name, code, desc
 				],
 				buttonAlign: "center",
 				buttons: [createBtn, resetBtn]
@@ -104,11 +110,11 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrCreate", {
 	formSubmit : function(form, win) {
 		if (form.isValid()) {
 			form.submit({ 
-				waitTitle : this.createDictMgrTitle,
+				waitTitle : this.createDictDetailMgrTitle,
 				waitMsg : Msg.App.saving,
 				success : function(form, action) {
 					win.close();
-					dictMgrDS.reload();
+					dictDetailMgrDS.reload();
 					Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");
 				},
 				failure : function(form, action) {				

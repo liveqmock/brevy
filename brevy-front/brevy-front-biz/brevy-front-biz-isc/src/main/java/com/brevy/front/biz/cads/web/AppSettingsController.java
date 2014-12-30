@@ -1,6 +1,7 @@
 package com.brevy.front.biz.cads.web;
 
 import static org.apache.commons.collections.MapUtils.getIntValue;
+import static org.apache.commons.collections.MapUtils.getLongValue;
 import static org.apache.commons.collections.MapUtils.getString;
 
 import java.util.Arrays;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.brevy.core.shiro.model.CadDict;
+import com.brevy.core.shiro.model.CadDictDetail;
 import com.brevy.core.support.web.BaseController;
 import com.brevy.front.biz.cads.service.AppSettingsService;
 
@@ -52,7 +54,7 @@ public class AppSettingsController extends BaseController {
 	
 	/**
 	 * @Description 保存（更新）数据字典
-	 * @param apGroup
+	 * @param cadDict
 	 * @return
 	 * @author caobin
 	 */
@@ -83,6 +85,61 @@ public class AppSettingsController extends BaseController {
 				longs[i] = Long.parseLong(arrParams[i]);
 			}
 			appSettingsService.deleteCadDict(Arrays.asList(longs));
+		}
+		return this.successView();	
+	}
+	
+	
+	/**
+	 * @description 获取数据字典明细列表
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/dictDetailMgr/getDictDetailList")
+	@ResponseBody
+	public Page<CadDictDetail> getDictDetailList(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		return appSettingsService.findAllDictDetails(getLongValue(p, "dictId"), keyword, pageable);			
+	}
+	
+	
+	/**
+	 * @Description 保存（更新）数据字典明细
+	 * @param cadDictDetail
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/dictDetailMgr/saveOrUpdate")
+	@ResponseBody
+	public ModelAndView saveOrUpdateDictDetail(@RequestBody CadDictDetail cadDictDetail){
+		log.debug(">>>> cadDictDetail from request is : {}", new Object[]{cadDictDetail});
+		appSettingsService.saveOrUpdateCadDictDetail(cadDictDetail);
+		return this.successView();
+	}
+	
+	
+	/**
+	 * @description 删除数据字典明细
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/dictDetailMgr/delete")
+	@ResponseBody
+	public ModelAndView deleteDictDetails(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		String params = getString(p, "ids");	
+		if(StringUtils.isNotBlank(params)){
+			String[] arrParams = params.split("\\,");
+			Long[] longs = new Long[arrParams.length];
+			for(int i = 0; i< arrParams.length; i++){
+				longs[i] = Long.parseLong(arrParams[i]);
+			}
+			appSettingsService.deleteCadDictDetail(Arrays.asList(longs));
 		}
 		return this.successView();	
 	}

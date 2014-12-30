@@ -74,7 +74,7 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrUpdate", {
 		return Ext.create("Ext.window.Window", {
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 230,
+		    height: 250,
 		    width: 660,
 		    layout: "fit",
 		    modal: true,
@@ -92,7 +92,7 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrUpdate", {
 				xtype: "xform",
 				labelWidth: 100,
 				fieldSetConfig: {
-					title: this.userGroupBasicInfo,
+					title: this.dictBasicInfo,
 					collapsible: false
 				},
 				items:[
@@ -113,12 +113,13 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrUpdate", {
 	formSubmit : function(form, win) {
 		if (form.isValid()) {
 			form.submit({ 
-				waitTitle : this.editDictMgrTitle,
+				waitTitle : this.updateDictMgrTitle,
 				waitMsg :  Msg.App.updating,
 				success : function(form, action) {
 					win.close();
+					Ext.getCmp("DictMgrReadMainGridID").getSelectionModel().deselectAll();
 					dictMgrDS.reload();
-					Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");
+					Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.updateSuccess, "br");
 				},
 				failure : function(form, action) {				
 					Pub.MsgBox.showMsgBox(Pub.MsgBox.ERROR, action.result.RSP_HEAD.ERROR_MESSAGE);

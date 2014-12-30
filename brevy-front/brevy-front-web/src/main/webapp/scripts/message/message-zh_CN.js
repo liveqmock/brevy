@@ -501,21 +501,48 @@ Ext.define("Msg", {
 			name: "字典类型名称", 
 			code: "字典类型代码",
 			desc: "字典类型描述",
-			showDetail: "字典明细"
+			showDetail: "字典明细",
+			keywordSearch: "关键字查询",
+			dictDetailMgrTitle: "数据字典明细"
 		},
 		
 		"App.biz.cads.appSettings.dictMgr.crud.DictMgrCreate" : {
 			name: "字典类型名称", 
 			code: "字典类型代码",
 			desc: "字典类型描述",
-			createDictMgrTitle: "添加字典类型"
+			createDictMgrTitle: "添加字典类型",
+			dictBasicInfo: "字典类型信息"
 		},
 		
 		"App.biz.cads.appSettings.dictMgr.crud.DictMgrUpdate" : {
 			name: "字典类型名称", 
 			code: "字典类型代码",
 			desc: "字典类型描述",
-			editDictMgrTitle: "更新字典类型"
+			editDictMgrTitle: "更新字典类型",
+			dictBasicInfo: "字典类型信息"
+		},
+		
+		"App.biz.cads.appSettings.dictMgr.crud.DictDetailMgrRead" : {
+			name: "名称", 
+			code: "代码",
+			desc: "描述",
+			keywordSearch: "关键字查询"
+		},
+		
+		"App.biz.cads.appSettings.dictMgr.crud.DictDetailMgrCreate" : {
+			name: "名称", 
+			code: "代码",
+			desc: "描述",
+			createDictDetailMgrTitle: "添加字典明细",
+			dictDetailBasicInfo: "字典明细信息"
+		},
+		
+		"App.biz.cads.appSettings.dictMgr.crud.DictDetailMgrUpdate" : {
+			name: "名称", 
+			code: "代码",
+			desc: "描述",
+			editDictDetailMgrTitle: "更新字典明细",
+			dictDetailBasicInfo: "字典明细信息"
 		}
 		
 	}

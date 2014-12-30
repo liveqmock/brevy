@@ -1,5 +1,5 @@
 /**
- * @module 用户组读操作维护
+ * @module 字典读操作
  * @author caobin
  */
 Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrRead", {
@@ -24,7 +24,15 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrRead", {
 		        dock: "bottom",
 		        displayInfo: true,
 		        plugins : [Ext.create("Ext.ux.PagingToolbarResizer", {options : this.pageSizeOptions, width: 70})]
-		    }]
+		    }],
+		    listeners: {
+		    	itemdblclick : {
+			    	fn : function(grid, record, item, index){
+			    		this.createDictDetailUI(record);
+			    	},
+			    	scope: this
+		    	}
+		    }
 		});
 	},
 	
@@ -59,12 +67,10 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrRead", {
 				}, null, null, true);
 			}},
 			"-",
-			{text: me.showDetail, iconCls: Ext.ux.Icons.book_link, handler:function(btn){
+			{id: "DictMgrRead.showDetailBtn", text: me.showDetail, iconCls: Ext.ux.Icons.book_link, handler:function(btn){
 				me.handleSelectedRecord("DictMgrReadMainGridID", function(p){
-					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/appSettings/dictMgr/ui/DictDetailMgrUI.js"), function(){
-						me.createInstance("App.biz.cads.appSettings.dictMgr.DictDetailMgrUI", me.showDetail, btn.iconCls, p.sm);
-					});
-				}, null, null, true);
+					me.createDictDetailUI(p.sm[0]);
+				});
 			}
 			},
 			"->",
@@ -98,6 +104,25 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrRead", {
 			//allowDeselect: true,
 			mode: "MULTI"
 		});
+	},
+	
+	//创建数据字典明细窗口
+	createDictDetailUI : function(sm, event){
+		var me = this;
+		Pub.ResLoader.jsPack(
+			[
+				me.getExtRes("biz/cads/appSettings/dictMgr/store/DictDetailMgrStore.js"),
+				me.getExtRes("biz/cads/appSettings/dictMgr/ui/crud/DictDetailMgrRead.js")
+			], function(event){
+				var win = me.createInstance("App.biz.cads.appSettings.dictMgr.crud.DictDetailMgrRead", me.dictDetailMgrTitle, Ext.ux.Icons.book_link, sm);			
+				win.show(Ext.getCmp("DictMgrRead.showDetailBtn"));
+				dictDetailMgrDS.on("beforeload", function(store){
+					store.getProxy().setExtraParam("dictId", sm.get("id"))
+				}, this);
+				dictDetailMgrDS.load();
+			}
+		);
+		
 	}
 	
 });

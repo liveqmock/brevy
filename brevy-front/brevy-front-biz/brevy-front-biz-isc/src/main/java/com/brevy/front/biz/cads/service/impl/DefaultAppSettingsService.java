@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.brevy.core.shiro.dao.CadDictDao;
 import com.brevy.core.shiro.dao.CadDictDetailDao;
 import com.brevy.core.shiro.model.CadDict;
+import com.brevy.core.shiro.model.CadDictDetail;
 import com.brevy.front.biz.cads.service.AppSettingsService;
 
 /**
@@ -46,6 +47,24 @@ public class DefaultAppSettingsService implements AppSettingsService {
 		for(Long dictId : ids){
 			cadDictDetailDao.delete(cadDictDetailDao.findByDictId(dictId));
 		}	
+	}
+
+	@Override
+	public Page<CadDictDetail> findAllDictDetails(Long dictId, String keyword,
+			Pageable pageable) {
+		return cadDictDetailDao.searchByKeyword("%".concat(keyword).concat("%"), dictId, pageable);
+	}
+
+	@Transactional
+	@Override
+	public void saveOrUpdateCadDictDetail(CadDictDetail cadDictDetail) {
+		cadDictDetailDao.save(cadDictDetail);
+	}
+
+	@Transactional
+	@Override
+	public void deleteCadDictDetail(List<Long> ids) {
+		cadDictDetailDao.delete(cadDictDetailDao.findAll(ids));
 	}
 	
 	
