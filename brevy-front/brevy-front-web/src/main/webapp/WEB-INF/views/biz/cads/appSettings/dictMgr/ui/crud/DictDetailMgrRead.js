@@ -7,7 +7,7 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictDetailMgrRead", {
 	
 	init : function(){
 		return Ext.create("Ext.window.Window", {
-			title: this.moduleText,
+			title: Ext.String.format(this.moduleText, this.params.get("name"), this.params.get("code")),
 			iconCls: this.moduleIcon,
 			height: 400,
     		width: 900,

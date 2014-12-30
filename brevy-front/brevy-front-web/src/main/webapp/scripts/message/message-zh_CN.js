@@ -503,7 +503,7 @@ Ext.define("Msg", {
 			desc: "字典类型描述",
 			showDetail: "字典明细",
 			keywordSearch: "关键字查询",
-			dictDetailMgrTitle: "数据字典明细"
+			dictDetailMgrTitle: "数据字典明细-{0}[{1}]"
 		},
 		
 		"App.biz.cads.appSettings.dictMgr.crud.DictMgrCreate" : {

@@ -16,7 +16,7 @@ Ext.define("App.Module", {
     },
     afterInit : Ext.emptyFn,
     
-    pageSizeOptions : [20, 50, 100, 200, 500],
+    pageSizeOptions : [10, 20, 50, 100, 200, 500],
     
     /**
      * 创建对象

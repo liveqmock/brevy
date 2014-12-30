@@ -23,5 +23,5 @@ var dictDetailMgrDS = Ext.create("Ext.data.Store", {
             totalProperty: "totalElements"
         }
     },
-    pageSize: 20
+    pageSize: 10
 });
