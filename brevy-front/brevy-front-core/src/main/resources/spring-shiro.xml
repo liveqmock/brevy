@@ -49,7 +49,7 @@
 		问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT 等默认JSESSIONID,
 		当跳出SHIRO SERVLET时,如ERROR-PAGE容器会为JSESSIONID重新分配值导致登录会话丢失!
 	-->
-	<bean id="entsession" class="org.apache.shiro.web.servlet.SimpleCookie">
+	<bean id="entsession" class="com.brevy.core.shiro.support.cookie.EntCookie">
 	    <constructor-arg name="name" value="sid"/>
 	</bean>
 	

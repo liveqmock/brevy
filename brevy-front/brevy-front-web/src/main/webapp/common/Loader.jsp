@@ -12,6 +12,7 @@
 	</head>
 	<body> 
 		<script> 
+			Pub.httpOnlySession = "<%=request.getCookies()[request.getCookies().length - 1].getValue()%>";
 			Pub.ResLoader.loadModule("<%=module%>", function(c){
 				if("<%=moduleText%>"){c.moduleText = "<%=moduleText%>";}
 				if("<%=moduleIcon%>"){c.moduleIcon = "<%=moduleIcon%>";}

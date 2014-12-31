@@ -47,6 +47,8 @@
 	<src>/scripts/extjs/ux/PagingToolbarResizer.js</src>
 	<src>/scripts/extjs/ux/SearchField.js</src>
 	<src>/scripts/extjs/ux/CustomVTypes.js</src>
+	<src>/scripts/extjs/ux/swfupload/swfupload.js</src>
+	<src>/scripts/extjs/ux/swfupload/UploadPanel.js</src>
 	<!-- custom part -->	
 	<src>/scripts/extjs/base/module.js</src>
 	

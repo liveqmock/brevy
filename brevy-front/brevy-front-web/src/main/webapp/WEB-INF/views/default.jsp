@@ -79,7 +79,7 @@
 	
 	<shiro:authenticated>
 		<script>
-			Pub.ResLoader.loadModule(ExtRES + "entry/module.xml");	
+			Pub.ResLoader.loadModule(ExtRES + "entry/module.xml");		
 		</script>	
 	</shiro:authenticated>	
 	

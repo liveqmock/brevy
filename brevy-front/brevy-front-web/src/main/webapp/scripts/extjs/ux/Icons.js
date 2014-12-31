@@ -1006,6 +1006,8 @@ Ext.define("Ext.ux.Icons", {
 		fugue_plus_circle : "icon-fugue-plus_circle",
 		fugue_cross_circle : "icon-fugue-cross_circle",
 		fugue_plus_octagon : "icon-fugue-plus_octagon",
-		fugue_cross_octagon : "icon-fugue-cross_octagon"
+		fugue_cross_octagon : "icon-fugue-cross_octagon",
+		fugue_drive_upload : "icon-fugue-drive_upload",
+		fugue_bin_minus : "icon-fugue-bin_minus "
 	}
 });
