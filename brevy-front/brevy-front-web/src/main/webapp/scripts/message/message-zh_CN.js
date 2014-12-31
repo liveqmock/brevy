@@ -545,6 +545,35 @@ Ext.define("Msg", {
 			desc: "描述",
 			editDictDetailMgrTitle: "更新字典明细",
 			dictDetailBasicInfo: "字典明细信息"
+		},
+		
+		"App.biz.cads.myTasks.gd.crud.GDRead" : {
+			name: "工单名称/号",
+			recvDate: "接收日期",
+			execType: "主/协",
+			type: "类型",
+			briefName: "简称",
+			priority: "优先级",
+			requireFinishTime: "要求完成时间",
+			estimateJob: "预估工作量",
+			preCond: "前置条件",
+			implTeam: "对应团队",
+			pmName: "项目经理",
+			startDate: "开始时间",
+			ini: "INI",
+			rdp: "RDP",
+			ad: "A&D",
+			scp: "SCP",
+			sit: "SIT",
+			uat: "UAT",
+			pip: "PIP",
+			smp: "SMP",
+			progress: "进度",
+			finishDate: "结束时间",
+			usingResource: "所用资源",
+			usingTime: "所用工时",
+			attachType: "附件",
+			phases: "各阶段进阶"
 		}
 		
 	}

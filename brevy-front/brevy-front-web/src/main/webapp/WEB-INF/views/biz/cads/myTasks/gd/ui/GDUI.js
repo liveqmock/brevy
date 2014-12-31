@@ -7,7 +7,7 @@ Ext.define("App.biz.cads.myTasks.gd.GDUI", {
 	
 	gridID : "GDReadMainGridID",
 	init : function(){
-		return Ext.create('Ext.ux.uploadPanel.UploadPanel',{
+		/*return Ext.create('Ext.ux.uploadPanel.UploadPanel',{
 		   title : 'UploadPanel for extjs 4.0',
 		   addFileBtnText : '选择文件...',
 		   uploadBtnText : '上传',
@@ -17,13 +17,13 @@ Ext.define("App.biz.cads.myTasks.gd.GDUI", {
 		   upload_url :  this.getRequestRes('/biz/cads/myTasks/gd/fileUpload.json'),
 		   post_params : {sid: Pub.httpOnlySession},//防止非IE内核浏览器session丢失,
 		   file_types: "*.doc;*.docx;*.xls;*.xlsx;*.pdf;*.zip;*.rar"
-		});
-		/*return Ext.create("Ext.tab.Panel", {
+		});*/
+		return Ext.create("Ext.tab.Panel", {
 			items: [
 				this.createSimpleInstance("App.biz.cads.myTasks.gd.crud.GDRead", this)
 			]
 			
-		});*/
+		});
 		
 	}
 });

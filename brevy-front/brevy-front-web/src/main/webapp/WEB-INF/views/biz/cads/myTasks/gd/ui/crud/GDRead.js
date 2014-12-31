@@ -10,7 +10,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 			id: "GDReadMainGridID",
 		    title: this.moduleText,
 			iconCls: this.moduleIcon,
-			store: dictMgrDS,
+			store: GDDS,
 			tbar: this.createToolbar(),
 			viewConfig: {
 		        stripeRows: true,
@@ -64,7 +64,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 				labelWidth: Ext.isChrome ? 70 : 60,
 				xtype: "searchfield",
 				width: 260,
-				store: dictMgrDS
+				store: GDDS
 			}
 		];
 	},
@@ -74,12 +74,43 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 	createColumns : function(){
 		var me = this;
 		return [
-		 	{text: this.name, dataIndex: "name", flex: 3},  
-	    	{text: this.code, dataIndex: "code", flex: 3},
-	        {text: this.desc, dataIndex: "desc", flex: 8, renderer: function(value, metadata) {  
+		 	{text: this.name, dataIndex: "name", flex: 9.6, renderer: function(value, metadata) {  
                 metadata.tdAttr = 'data-qtip="' + value +'"';  
                 return value;  
-            }}
+            }},  
+	    	{text: this.recvDate, dataIndex: "recvDate", flex: 3.7},
+	    	{text: this.execType, dataIndex: "execType", flex: 1.8},
+	    	{text: this.type, dataIndex: "type", flex: 1.8},
+	    	{text: this.briefName, dataIndex: "briefName", flex: 5.2, renderer: function(value, metadata) {  
+                metadata.tdAttr = 'data-qtip="' + value +'"';  
+                return value;  
+            }},
+	    	{text: this.priority, dataIndex: "priority", flex: 2.5},
+	    	{text: this.requireFinishTime, dataIndex: "requireFinishTime", flex: 4.5},
+	    	{text: this.estimateJob, dataIndex: "estimateJob", flex: 3.8},
+	    	{text: this.preCond, dataIndex: "preCond", flex: 4, renderer: function(value, metadata) {  
+                metadata.tdAttr = 'data-qtip="' + value +'"';  
+                return value;  
+            }},
+	    	{text: this.implTeam, dataIndex: "implTeam", flex: 4, renderer: function(value, metadata) {  
+                metadata.tdAttr = 'data-qtip="' + value +'"';  
+                return value;  
+            }},
+	    	{text: this.pmName, dataIndex: "pmName", flex: 3.5},
+	    	{text: this.startDate, dataIndex: "startDate", flex: 3.2},
+	    	{text: this.ini, dataIndex: "ini", width: 30},
+	    	{text: this.rdp, dataIndex: "rdp", width: 30},
+	    	{text: this.ad, dataIndex: "ad", width: 30},
+	    	{text: this.scp, dataIndex: "scp", width: 30},
+	    	{text: this.sit, dataIndex: "sit", width: 30},
+	    	{text: this.uat, dataIndex: "uat", width: 30},
+	    	{text: this.pip, dataIndex: "pip", width: 30},
+	    	{text: this.smp, dataIndex: "smp", width: 30},
+	    	{text: this.progress, dataIndex: "progress", flex: 2},
+	    	{text: this.finishDate, dataIndex: "finishDate", flex: 3},
+	    	{text: this.usingResource, dataIndex: "usingResource", flex: 3},
+	    	{text: this.usingTime, dataIndex: "usingTime", flex: 3},
+	    	{text: this.attachType, dataIndex: "attachType", flex: 3}
 		];
 	},
 	
@@ -89,25 +120,6 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 			//allowDeselect: true,
 			mode: "MULTI"
 		});
-	},
-	
-	//创建数据字典明细窗口
-	createDictDetailUI : function(sm, event){
-		var me = this;
-		Pub.ResLoader.jsPack(
-			[
-				me.getExtRes("biz/cads/appSettings/dictMgr/store/DictDetailMgrStore.js"),
-				me.getExtRes("biz/cads/appSettings/dictMgr/ui/crud/DictDetailMgrRead.js")
-			], function(event){
-				var win = me.createInstance("App.biz.cads.appSettings.dictMgr.crud.DictDetailMgrRead", me.dictDetailMgrTitle, Ext.ux.Icons.book_link, sm);			
-				win.show(Ext.getCmp("DictMgrRead.showDetailBtn"));
-				dictDetailMgrDS.on("beforeload", function(store){
-					store.getProxy().setExtraParam("dictId", sm.get("id"))
-				}, this);
-				dictDetailMgrDS.load();
-			}
-		);
-		
 	}
 	
 });
