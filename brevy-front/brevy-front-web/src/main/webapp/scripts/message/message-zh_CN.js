@@ -85,7 +85,9 @@ Ext.define("Msg", {
 			
 			edit : "编辑",
 			
-			del: "删除"
+			del: "删除",
+			
+			archive: "归档"
 		},
 		
 		Constants : {

@@ -2,17 +2,17 @@
 Ext.define('Ext.ux.uploadPanel.UploadPanel',{
     extend : 'Ext.grid.Panel',
     alias : 'widget.uploadpanel',
-    width : 700,
-    height : 300,
+    width : "100%",
+    height : "100%",
     columns : [
         {xtype: 'rownumberer'},
-        {text: '文件名', width: 100,dataIndex: 'name'},
-        {text: '自定义文件名', width: 130,dataIndex: 'fileName',editor: {xtype: 'textfield'}},
-        {text: '类型', width: 70,dataIndex: 'type'},
-        {text: '大小', width: 70,dataIndex: 'size',renderer:function(v){
+        {text: '文件名', flex:8, dataIndex: 'name'},/*
+        {text: '自定义文件名', width: 130,dataIndex: 'fileName',editor: {xtype: 'textfield'}},*/
+        {text: '类型', flex:2, dataIndex: 'type'},
+        {text: '大小', flex:2,dataIndex: 'size',renderer:function(v){
             return Ext.util.Format.fileSize(v);
         }},
-        {text: '进度', width: 130,dataIndex: 'percent',renderer:function(v){         
+        {text: '进度', flex:4,dataIndex: 'percent',renderer:function(v){         
             var stml =
                 '<div>'+
                     '<div style="border:1px solid #008000;height:10px;width:115px;margin:2px 0px 1px 0px;float:left;">'+     
@@ -22,7 +22,7 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
             '</div>';
             return stml;
         }},
-        {text: '状态', width: 80,dataIndex: 'status',renderer:function(v){
+        {text: '状态', flex:3,dataIndex: 'status',renderer:function(v){
             var status;
             if(v==-1){
                 status = "等待上传";
@@ -39,7 +39,8 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
         }},
         {
             xtype:'actioncolumn',
-            width:50,
+            flex:1,
+            align: 'center',
             items: [{
                 iconCls: Ext.ux.Icons._delete,
                 tooltip: '移除',
@@ -277,7 +278,7 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
             name : file.name,
             fileName : file.name,
             size : file.size,
-            type : file.type,
+            type : file.type.replace(/^\./, "").toLowerCase(),
             status : file.filestatus,
             percent : 0
         });
