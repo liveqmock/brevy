@@ -572,8 +572,41 @@ Ext.define("Msg", {
 			finishDate: "结束时间",
 			usingResource: "所用资源",
 			usingTime: "所用工时",
-			attachType: "附件",
-			phases: "各阶段进阶"
+			attachType: "附件"			
+		},
+		
+		"App.biz.cads.myTasks.gd.crud.GDCreate" : {
+			name: "工单名称/号",
+			recvDate: "接收日期",
+			execType: "主/协",
+			type: "类型",
+			briefName: "简称",
+			priority: "优先级",
+			requireFinishTime: "要求完成时间",
+			estimateJob: "预估工作量",
+			preCond: "前置条件(多选)",
+			implTeam: "对应团队(多选)",
+			pmName: "项目经理(多选)",
+			startDate: "开始时间",
+			ini: "INI",
+			rdp: "RDP",
+			ad: "A&D",
+			scp: "SCP",
+			sit: "SIT",
+			uat: "UAT",
+			pip: "PIP",
+			smp: "SMP",
+			progress: "进度",
+			finishDate: "结束时间",
+			usingResource: "所用资源",
+			usingTime: "所用工时",
+			attachType: "附件",		
+			phases: "各阶段进阶",
+			assignToDepts: "分配到部门(多选)",
+			format: "Y年m月d日",
+			emptyExecTypeName: "请选择主/协类型",
+			emptyTypeName: "请选择类型",
+			emptyPriorityName: "请选择优先级"
 		}
 		
 	}

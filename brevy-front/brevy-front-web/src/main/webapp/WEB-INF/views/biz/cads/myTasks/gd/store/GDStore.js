@@ -37,7 +37,7 @@ var GDDS = Ext.create("Ext.data.Store", {
 	autoLoad: true,	
 	proxy: {
         type: "jsonpaging",
-        url: "../biz/cads/myTasks/gc/getGDList.json",
+        url: "../biz/cads/myTasks/gd/getGDList.json",
         reader: {
             type: "json",
             root: "content",
@@ -46,3 +46,31 @@ var GDDS = Ext.create("Ext.data.Store", {
     },
     pageSize: 20
 });
+
+
+Ext.define("dictModel", {
+	extend: "Ext.data.Model",
+   	fields: ["id", "name"]
+});
+
+
+var dictDSConfig = {
+	model: dictModel,
+	autoLoad: false,	
+	proxy: {
+	    type: "jsonajax",
+	    url: _ctxPath + "/maintenance/user/getDictStore.json",
+	    reader: {
+	        type: "json"
+	    }
+	}
+}
+
+dictDSConfig.proxy.extraParams = {"dictId": 13};
+var dictDS_13 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 14};
+var dictDS_14 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 15};
+var dictDS_15 = Ext.create("Ext.data.Store", dictDSConfig);

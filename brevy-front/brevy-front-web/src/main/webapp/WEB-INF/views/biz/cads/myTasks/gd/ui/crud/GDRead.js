@@ -34,25 +34,25 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 		return [
 			" ", 
 			{text: Msg.App.add, iconCls: Ext.ux.Icons.page_add, handler: function(btn){
-				Pub.ResLoader.jsPack(me.getExtRes("biz/cads/appSettings/dictMgr/ui/crud/DictMgrCreate.js"), function(){
-					me.createInstance("App.biz.cads.appSettings.dictMgr.crud.DictMgrCreate", Msg.App.add, btn.iconCls).show(btn);
+				Pub.ResLoader.jsPack(me.getExtRes("biz/cads/myTasks/gd/ui/crud/GDCreate.js"), function(){
+					me.createInstance("App.biz.cads.myTasks.gd.crud.GDCreate", Msg.App.add, btn.iconCls).show(btn);
 				});
 			}},
 			"-",
 			{text: Msg.App.edit, iconCls: Ext.ux.Icons.page_edit, handler:function(btn){
-				me.handleSelectedRecord("DictMgrReadMainGridID", function(p){
-					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/appSettings/dictMgr/ui/crud/DictMgrUpdate.js"), function(){
-						me.createInstance("App.biz.cads.appSettings.dictMgr.crud.DictMgrUpdate", Msg.App.edit, btn.iconCls, p.sm[0]).show(btn);
+				me.handleSelectedRecord("GDReadMainGridID", function(p){
+					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/myTasks/gd/ui/crud/GDUpdate.js"), function(){
+						me.createInstance("App.biz.cads.myTasks.gd.crud.GDUpdate", Msg.App.edit, btn.iconCls, p.sm[0]).show(btn);
 					});
 				});
 			}},
 			"-",
 			{text: Msg.App.archive, iconCls: Ext.ux.Icons.page_go, handler:function(btn){
-				me.handleSelectedRecord("DictMgrReadMainGridID", function(p){
-					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/appSettings/dictMgr/ui/crud/DictMgrDelete.js"), function(){
+				me.handleSelectedRecord("GDReadMainGridID", function(p){
+					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/myTasks/gd/ui/crud/GDArchive.js"), function(){
 						Pub.MsgBox.showMsgBox(Pub.MsgBox.CONFIRM, Msg.Prompt.confirmDelRec, null, function(r){
 							if(r == "yes"){
-								me.createInstance("App.biz.cads.appSettings.dictMgr.crud.DictMgrDelete", Msg.App.del, btn.iconCls, p.sm);
+								me.createInstance("App.biz.cads.myTasks.gd.crud.GDArchive", Msg.App.archive, btn.iconCls, p.sm);
 							}	
 						});		
 					});
