@@ -12,8 +12,6 @@ Ext.define("App.login.LoginUI", {
 	captchaUrl : "login/captcha.image",
 	
 	buttonWidth : 80,
-	
-	fieldIconRES : "resources/extjs/images/icons/",
 
 	
 	//初始化登录UI

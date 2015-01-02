@@ -529,6 +529,13 @@ public interface MaintenanceService {
 	 */
 	public PageList<ApUserSingle> findApUsers(PageBounds pageBounds); 
 	
+	/**
+	 * @description 查询用户列表
+	 * @return
+	 * @author caobin
+	 */
+	public List<ApUserSingle> findApUsers(); 
+	
 	
 	/**
 	 * @description 分页模糊查询用户

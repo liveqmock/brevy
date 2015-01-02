@@ -74,3 +74,31 @@ var dictDS_14 = Ext.create("Ext.data.Store", dictDSConfig);
 
 dictDSConfig.proxy.extraParams = {"dictId": 15};
 var dictDS_15 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 16};
+var dictDS_16 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 2};
+var dictDS_2 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 20};
+var dictDS_20 = Ext.create("Ext.data.Store", dictDSConfig);
+
+
+Ext.define("userModel", {
+	extend: "Ext.data.Model",
+   	fields: ["id", "chName"]
+});
+
+var userDS = Ext.create("Ext.data.Store", {
+	model: userModel,
+	autoLoad: false,	
+	proxy: {
+	    type: "jsonajax",
+	    url: _ctxPath + "/maintenance/user/getAllUsers.json",
+	    reader: {
+	        type: "json"
+	    }
+	}
+});
+

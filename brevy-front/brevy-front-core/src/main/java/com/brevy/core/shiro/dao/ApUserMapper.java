@@ -1,5 +1,7 @@
 package com.brevy.core.shiro.dao;
 
+import java.util.List;
+
 import com.brevy.core.shiro.model.ApUserSingle;
 import com.brevy.core.support.annotation.MyBatisRepository;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -30,4 +32,12 @@ public interface ApUserMapper {
 	 * @author caobin
 	 */
 	PageList<ApUserSingle> searchByKeyword(String keyword, PageBounds pageBounds);
+	
+	
+	/**
+	 * @description 查找有有效用户
+	 * @return
+	 * @author caobin
+	 */
+	List<ApUserSingle> findAllValidUsers();
 }

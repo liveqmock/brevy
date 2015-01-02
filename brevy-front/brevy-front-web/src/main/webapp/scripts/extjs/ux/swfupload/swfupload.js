@@ -25,7 +25,7 @@ if (SWFUpload == undefined) {
 	SWFUpload = function (settings) {
 		this.initSWFUpload(settings);
 	};
-}
+} 
 
 SWFUpload.prototype.initSWFUpload = function (userSettings) {
 	try {

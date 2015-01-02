@@ -840,6 +840,19 @@ public class MaintenanceController extends BaseController {
 							maintenanceService.searchApUsersByKeyword(keyword, pageBounds);
 		return this.toPage(pageList);
 	}
+	
+	/**
+	 * @description 获取用户列表
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/user/getAllUsers")
+	@ResponseBody
+	public List<ApUserSingle> getAllUsers(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		return maintenanceService.findApUsers();
+	}
 		
 	@RequestMapping("/user/getDictStore")
 	@ResponseBody

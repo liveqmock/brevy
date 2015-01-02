@@ -814,4 +814,9 @@ public class DefaultMaintenanceService implements MaintenanceService {
 		}
 	}
 
+	@Override
+	public List<ApUserSingle> findApUsers() {
+		return apUserMapper.findAllValidUsers();
+	}
+
 }

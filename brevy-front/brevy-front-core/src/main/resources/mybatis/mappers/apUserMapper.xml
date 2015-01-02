@@ -53,6 +53,16 @@
 			or 
 			lower(b.name) like lower(#{keyword})
 	</select>
+	
+	<select id="findAllValidUsers" resultMap="apUserResultMap">
+		select 
+		 	t.id, 
+			t.ch_name
+		from 
+			ap_user t 
+		where 
+			t.status='1'
+	</select>
 
 	
 </mapper>

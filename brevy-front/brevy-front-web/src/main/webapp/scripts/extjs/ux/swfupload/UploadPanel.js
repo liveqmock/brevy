@@ -6,8 +6,11 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
     height : "100%",
     columns : [
         {xtype: 'rownumberer'},
-        {text: '文件名', flex:8, dataIndex: 'name'},/*
-        {text: '自定义文件名', width: 130,dataIndex: 'fileName',editor: {xtype: 'textfield'}},*/
+        {text: '文件名', flex:8, dataIndex: 'name', renderer: function(value, metadata) {  
+                metadata.tdAttr = 'data-qtip="' + value +'"';  
+                return value;  
+            }},
+       /* {text: '自定义文件名', width: 130,dataIndex: 'fileName',editor: {xtype: 'textfield'}},*/
         {text: '类型', flex:2, dataIndex: 'type'},
         {text: '大小', flex:2,dataIndex: 'size',renderer:function(v){
             return Ext.util.Format.fileSize(v);
@@ -51,12 +54,13 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
             }]
         }
     ],
-    plugins: [
+   /* plugins: [
         Ext.create('Ext.grid.plugin.CellEditing', {
             clicksToEdit: 1
         })
-    ],   
-    store : Ext.create('Ext.data.JsonStore',{
+    ],  */
+
+   store : Ext.create('Ext.data.JsonStore',{
         autoLoad : false,
         fields : ['id','name','type','size','percent','status','fileName']
     }),
@@ -74,7 +78,7 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
     upload_url : 'test.do',
     flash_url : "../scripts/extjs/ux/swfupload/swfupload.swf",
     flash9_url : "../scripts/extjs/ux/swfupload/swfupload_fp9.swf",
-    initComponent : function(){    
+    initComponent : function(){  
         this.dockedItems = [{
             xtype: 'toolbar',
             dock: 'top',
@@ -98,7 +102,7 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
                     iconCls : Ext.ux.Icons.fugue_bin_minus,
                     text : this.removeBtnText,
                     scope : this,
-                    handler : this.onRemove
+                    handler : this._onRemove
                 },{ xtype: 'tbseparator' },{
                     xtype : 'button',
                     itemId : 'cancelBtn',
@@ -125,6 +129,7 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
             scope : this,
             buffer:300
         });
+        
     },
     getSWFConfig : function(btn){
         var me = this;
@@ -178,12 +183,12 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
     
     //add by caobin - add mask
     file_dialog_start_handler : function(){
-    	Ext.getBody().mask("正在加载文件，请稍候...");
+    	this.customSettings.scope_handler.getEl().mask("正在加载文件，请稍候...");
     },
     
     //add by caobin - remove mask
     file_dialog_complete_handler : function(){
-    	Ext.getBody().unmask();
+    	this.customSettings.scope_handler.getEl().unmask();
     },
     
     swfupload_preload_handler : function(){
@@ -200,13 +205,13 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
     },
     file_queue_error_handler : function(file, errorCode, message){
         switch(errorCode){
-            case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED : msg('上传文件列表数量超限,不能选择！');
+            case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED : msg('上传文件列表数量超限');
             break;
-            case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT : msg('文件大小超过限制, 不能选择！');
+            case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT : msg('文件大小限制: '+ this.settings.file_size_limit/1024 +'MB');
             break;
-            case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE : msg('该文件大小为0,不能选择！');
+            case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE : msg('该文件大小为0字节');
             break;
-            case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE : msg('该文件类型不允许上传！');
+            case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE : msg('该文件类型不允许上传');
             break;
         }
         function msg(info){
@@ -282,6 +287,7 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
             status : file.filestatus,
             percent : 0
         });
+        
     },
     onUpload : function(){
         if (this.swfupload&&this.store.getCount()>0) {
@@ -303,7 +309,20 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
             me.down('actioncolumn').hide();
         }      
     },
+
+    
     onRemove : function(){
+        var ds = this.store;
+        for(var i=0;i<ds.getCount();i++){
+            var record =ds.getAt(i);
+            var file_id = record.get('id');
+            this.swfupload.cancelUpload(file_id,false);        
+        }
+        ds.removeAll(true);//modify by caobin-Pass true to prevent the record bulkremove and clear events from being fired.
+        this.swfupload.uploadStopped = false;
+    },
+    
+    _onRemove : function(){
         var ds = this.store;
         for(var i=0;i<ds.getCount();i++){
             var record =ds.getAt(i);
@@ -313,6 +332,7 @@ Ext.define('Ext.ux.uploadPanel.UploadPanel',{
         ds.removeAll();
         this.swfupload.uploadStopped = false;
     },
+    
     onCancelUpload : function(){
         if (this.swfupload) {
             this.swfupload.uploadStopped = true;

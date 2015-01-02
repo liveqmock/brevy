@@ -1,3 +1,6 @@
+<%@page import="java.lang.reflect.Array"%>
+<%@page import="org.apache.commons.collections.iterators.ArrayIterator"%>
+<%@page import="org.apache.commons.lang3.ArrayUtils"%>
 <%@ include file="extjs.jsp" %>
 <%
   String module = request.getParameter("module");
@@ -12,7 +15,19 @@
 	</head>
 	<body> 
 		<script> 
-			Pub.httpOnlySession = "<%=request.getCookies()[request.getCookies().length - 1].getValue()%>";
+			<%!
+				
+				public String getSIDCookie(HttpServletRequest request){
+					for(Cookie cookie : request.getCookies()){
+						if(cookie.getName().equals("sid")){
+							return cookie.getValue();
+						}
+					}
+					return null;
+				}
+			
+			%>
+			Pub.httpOnlySession = "<%=getSIDCookie(request)%>";
 			Pub.ResLoader.loadModule("<%=module%>", function(c){
 				if("<%=moduleText%>"){c.moduleText = "<%=moduleText%>";}
 				if("<%=moduleIcon%>"){c.moduleIcon = "<%=moduleIcon%>";}

@@ -12,7 +12,11 @@ Ext.define("App.Module", {
     beforeInit : function(){
     	//apply message
     	Ext.applyIf(this, Msg[this.moduleName]);
-    	Ext.apply(this, {basePath: _ctxPath});
+    	Ext.apply(this, {
+    		basePath: _ctxPath, 
+    		fieldIconRES : _ctxPath + "/resources/extjs/images/icons/",
+    		fieldFugueIconRES : _ctxPath + "/resources/extjs/images/fugue-icons/"
+    	});
     },
     afterInit : Ext.emptyFn,
     

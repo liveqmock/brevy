@@ -25,10 +25,10 @@ Ext.define("Ext.ux.XFormPanel", {
     getItemsLayout: function(){
     	var o = [];
     	var row = [];
-    	Ext.each(this.items, function(item){	
+    	Ext.each(this.items, function(item){
     		item.maxWidth = item.maxWidth || 1280;
 		    if(item.newLine){
-		    	var fcCFG = this.getFieldContainer();
+		    	var fcCFG = this.getFieldContainer();    	    		
 		    	fcCFG.items = row;
 		    	o.push(fcCFG);
 		    	row = [];
