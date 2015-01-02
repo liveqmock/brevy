@@ -81,6 +81,9 @@ var dictDS_16 = Ext.create("Ext.data.Store", dictDSConfig);
 dictDSConfig.proxy.extraParams = {"dictId": 2};
 var dictDS_2 = Ext.create("Ext.data.Store", dictDSConfig);
 
+dictDSConfig.proxy.extraParams = {"dictId": 1};
+var dictDS_1 = Ext.create("Ext.data.Store", dictDSConfig);
+
 dictDSConfig.proxy.extraParams = {"dictId": 20};
 var dictDS_20 = Ext.create("Ext.data.Store", dictDSConfig);
 

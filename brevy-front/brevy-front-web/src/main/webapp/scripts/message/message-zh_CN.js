@@ -607,7 +607,7 @@ Ext.define("Msg", {
 			GDBasicInfo: "技术中心工单基本信息",
 			phases: "各阶段进阶",
 			resources: "进度与资源",
-			assignToDepts: "分配到部门(可多选)",
+			assignToDepts: "分配到部门",
 			format: "Y年m月d日",
 			emptyExecType: "请选择主/协类型",
 			emptyType: "请选择类型",
@@ -616,11 +616,13 @@ Ext.define("Msg", {
 			emptyImplTeam: "请选择对应团队(可多选)",
 			emptyPmName: "请选择项目经理(可多选)",
 			emptyPhase: "请选择进阶状态",
-			addFileBtnText: '选择文件',
+			emptyAssignToDeptsCond: "请选择工单需要分配到的部门(可多选)",
+			addFileBtnText: Ext.isIE ? '选择文件(双击)' : '选择文件',
 			uploadBtnText: '上传',
 			removeBtnText: '清空列表',
 			cancelBtnText: '中断上传',
-			addAttachments : "添加附件"
+			addAttachments: "添加附件",
+			confirmFinish: "确定完成"
 			
 		}
 		

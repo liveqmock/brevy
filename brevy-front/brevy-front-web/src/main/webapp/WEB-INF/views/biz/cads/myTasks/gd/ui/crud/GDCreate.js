@@ -345,6 +345,24 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			maxLength: 12
 		}
 		
+		var assignToDepts = {
+			id: "GDCreate.assignToDepts",
+			fieldLabel: this.required(this.assignToDepts),
+			name: "assignToDepts",
+			flex: 1.5,
+			allowBlank: true,
+			xtype: "combo",
+			multiSelect: true,
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			emptyText: this.emptyAssignToDeptsCond,
+			store: dictDS_2,
+			displayField: "name",
+			valueField: "id"
+			
+		}
+		
 		var createBtn = {
 			text: Msg.App.add,
 			width : 100,
@@ -361,10 +379,9 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			text: Msg.App.addAndAttach,
 			width : 100,
 			style : {marginRight: "30px;", marginBottom: "10px;"},
-			formBind : false,
+			formBind : true,
 			handler : function(b) {
-				this.createUploadPanelWin().show(Ext.getCmp("GDCreate.createAndAttachBtn"));
-				//this.formSubmit(b.up("form").getForm(), b.up("window"));
+				this.createUploadPanelWin(b).show(Ext.getCmp("GDCreate.createAndAttachBtn"));
 			},
 			scope: this
 		};
@@ -380,6 +397,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		
 		var me = this;	
 		return Ext.create("Ext.window.Window", {
+			id: "GDCreate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
 		    height: 500,
@@ -436,7 +454,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 							collapsible: false
 						},
 						items:[
-							progress, finishDate, usingResource, usingTime
+							progress, finishDate, usingResource, usingTime, assignToDepts
 						]
 					}
 				],
@@ -473,7 +491,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 	},
 	
 	//创建上传窗体
-	createUploadPanelWin : function(){
+	createUploadPanelWin : function(formBtn){
 		return Ext.create("Ext.window.Window", {
 		    title: this.addAttachments,
 		    height: 420,
@@ -481,6 +499,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		    resizable: false,
 		    iconCls: Ext.ux.Icons.page_attach,
 		  	layout: "fit",
+		  	closable : false,
 		    modal: true,
 		    items: {  
 		    	xtype: "uploadpanel",
@@ -493,7 +512,27 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			   	upload_url :  this.getRequestRes('/biz/cads/myTasks/gd/fileUpload.json'),
 			   	post_params : {sid: Pub.httpOnlySession},//防止非IE内核浏览器session丢失,
 			   	file_types: "*.doc;*.docx;*.xls;*.xlsx;*.pdf;*.zip;*.rar"
-		    }
+		    },
+		    dockedItems : [
+				{
+				    xtype: "toolbar",
+				    dock: "bottom",
+				    ui: "footer",
+				    height: 30,
+				    layout : {
+				    	pack : "center" 
+				    },
+				    items: [{
+						text : this.confirmFinish,			
+						width : 100,
+						handler : function(b) {
+							b.up("window").close();
+							this.formSubmit(formBtn.up("form").getForm(), formBtn.up("window"));			
+						},
+						scope : this
+					}]
+				}
+			]
 		});
 	}
 });

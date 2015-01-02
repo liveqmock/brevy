@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -24,7 +25,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 @Table(name="CAD_GD")
 public class CadGd implements Serializable {
 
-	private static final long serialVersionUID = -8716294316020612648L;
+	private static final long serialVersionUID = -1565777189398949646L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="CAD_GD_SEQ")
@@ -98,7 +99,7 @@ public class CadGd implements Serializable {
 	@Column(name="START_DATE")
 	private Timestamp startDate;
 
-	@Column(name="\"TYPE\"")
+	@Column(name="TYPE")
 	private String type;
 
 	private String uat;
@@ -113,6 +114,9 @@ public class CadGd implements Serializable {
 
 	@Column(name="USING_TIME")
 	private String usingTime;
+	
+	@Transient
+	private String assignToDept;
 
 	public CadGd() {
 	}
@@ -357,12 +361,22 @@ public class CadGd implements Serializable {
 		this.usingTime = usingTime;
 	}
 	
+	
+	
+	public String getAssignToDept() {
+		return assignToDept;
+	}
+
+	public void setAssignToDept(String assignToDept) {
+		this.assignToDept = assignToDept;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
+		return HashCodeBuilder.reflectionHashCode(this, new String[]{assignToDept});
 	}
 
 	/* (non-Javadoc)
@@ -370,7 +384,7 @@ public class CadGd implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
+		return EqualsBuilder.reflectionEquals(this, obj, new String[]{assignToDept});
 	}
 
 	/* (non-Javadoc)
@@ -378,7 +392,7 @@ public class CadGd implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return ReflectionToStringBuilder.toString(this);
+		return ReflectionToStringBuilder.toStringExclude(this, new String[]{assignToDept});
 	}
 
 }
