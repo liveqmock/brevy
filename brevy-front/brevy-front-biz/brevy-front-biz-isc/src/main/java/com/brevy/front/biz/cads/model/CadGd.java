@@ -126,7 +126,7 @@ public class CadGd implements Serializable {
 	private String usingTime;
 	
 	@Transient
-	private String assignToDept;
+	private long[] assignToDept;
 
 	public CadGd() {
 	}
@@ -373,13 +373,12 @@ public class CadGd implements Serializable {
 	
 	
 	
-	public String getAssignToDept() {
+	public long[] getAssignToDept() {
 		return assignToDept;
 	}
 
-	public void setAssignToDept(String[] assignToDept) {
-		//this.assignToDept = assignToDept;
-		this.assignToDept = ArrayUtils.toString(assignToDept);
+	public void setAssignToDept(long[] assignToDept) {
+		this.assignToDept = assignToDept;
 	}
 
 
@@ -415,7 +414,7 @@ public class CadGd implements Serializable {
 	 */
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this, new String[]{assignToDept});
+		return HashCodeBuilder.reflectionHashCode(this, new String[]{ArrayUtils.toString(assignToDept)});
 	}
 
 	/* (non-Javadoc)
@@ -423,7 +422,7 @@ public class CadGd implements Serializable {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj, new String[]{assignToDept});
+		return EqualsBuilder.reflectionEquals(this, obj, new String[]{ArrayUtils.toString(assignToDept)});
 	}
 
 	/* (non-Javadoc)
@@ -431,7 +430,7 @@ public class CadGd implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return ReflectionToStringBuilder.toStringExclude(this, new String[]{assignToDept});
+		return ReflectionToStringBuilder.toStringExclude(this, new String[]{ArrayUtils.toString(assignToDept)});
 	}
 
 }

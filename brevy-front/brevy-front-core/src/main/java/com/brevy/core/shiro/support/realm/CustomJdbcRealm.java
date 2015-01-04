@@ -97,6 +97,7 @@ public class CustomJdbcRealm extends AuthorizingRealm {
 			user.setGroups(ShiroUtils.getGroups(currentUser));
 			user.setRoles(ShiroUtils.getRoles(currentUser, true));
 			user.setMenus(ShiroUtils.getMenus(currentUser));	
+			user.setDeptId(currentUser.getDeptId());
 
 			
 			//构造认证信息

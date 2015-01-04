@@ -382,7 +382,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		var assignToDepts = {
 			id: "GDCreate.assignToDepts",
 			fieldLabel: this.required(this.assignToDepts),
-			name: "assignToDepts",
+			name: "assignToDept",
 			flex: 1.5,
 			allowBlank: true,
 			xtype: "combo",
