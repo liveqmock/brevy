@@ -1,11 +1,16 @@
 package com.brevy.front.biz.cads.web;
 
 import static org.apache.commons.collections.MapUtils.getIntValue;
+import static org.apache.commons.collections.MapUtils.getLongValue;
 import static org.apache.commons.collections.MapUtils.getString;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.brevy.core.support.exception.BizException;
 import com.brevy.core.support.web.BaseController;
 import com.brevy.front.biz.cads.model.CadGd;
+import com.brevy.front.biz.cads.model.CadGdAttach;
 import com.brevy.front.biz.cads.service.MyTasksService;
 
 /**
@@ -45,6 +52,17 @@ public class MyTasksController extends BaseController {
 	
 	@Value("${cads.upload.dir}")
 	private String uploadDir;
+	
+	private static Map<String, String> fileType = new HashMap<String, String>();
+	
+	static {
+		fileType.put("doc", "application/msword");
+		fileType.put("docx", "application/msword");
+		fileType.put("pdf", "application/pdf");
+		fileType.put("zip", "application/zip");
+		fileType.put("rar", "application/x-rar-compressed");
+		
+	}
 
 	/**
 	 * @description 工单附件上传
@@ -78,6 +96,35 @@ public class MyTasksController extends BaseController {
 			return this.failureView(new BizException("Empty file"));
 		}
 		return this.successView();
+	}
+	
+	/**
+	 * @description 工单附件下载
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 * @author caobin
+	 */
+	@RequestMapping("/gd/fileDownload")
+	public void gdFileDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		long attachId = ServletRequestUtils.getLongParameter(request, "attachId");
+		CadGdAttach cadGdAttach = myTasksService.findAttachment(attachId);
+
+        String downLoadPath = cadGdAttach.getPath();
+        File downloadFile = new File(downLoadPath);
+
+        InputStream is = new FileInputStream(downloadFile);
+            
+        //设置response头
+      	response.setContentType("text/html;charset=UTF-8");
+      	response.setContentType(fileType.get(FileUtils.getExtension(downloadFile.getName())));
+      	response.setHeader("Content-disposition", "attachment; filename=\"".concat(new String(downloadFile.getName().getBytes("utf-8"), "iso8859-1")).concat("\""));
+      	OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream(), "utf-8");
+      	IOUtils.copy(is, writer);
+      	writer.flush();
+      	response.flushBuffer();
+      	IOUtils.closeQuietly(writer);
 	}
 	
 	/**
@@ -125,5 +172,18 @@ public class MyTasksController extends BaseController {
 		log.info(">>> CadGd from request is: {}", new Object[]{cadGd});
 		CadGd savedCadGd = myTasksService.saveOrUpdateCadGd(cadGd);
 		return this.successView().addObject("id", savedCadGd.getId());
+	}
+	
+	
+	/**
+	 * @description 获取技术中心工单附件列表
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/gd/getGDAttachmentList")
+	@ResponseBody
+	public Iterable<CadGdAttach> getAllGDAttachmentList(@RequestBody Map<String, String> p){
+		return myTasksService.findAllGDAttachments(getLongValue(p, "gdId"));			
 	}
 }

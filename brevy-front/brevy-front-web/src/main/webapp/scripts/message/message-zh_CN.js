@@ -91,7 +91,9 @@ Ext.define("Msg", {
 			
 			archive: "归档",
 			
-			showAttachments: "查看附件"
+			showAttachments: "查看附件",
+			
+			download: "下载"
 		},
 		
 		Constants : {
@@ -626,6 +628,11 @@ Ext.define("Msg", {
 			cancelBtnText: '中断上传',
 			addAttachments: "添加附件",
 			confirmFinish: "确定完成"
+			
+		},
+		
+		"App.biz.cads.myTasks.gd.crud.GDAttachments" : {
+			path: "文件名"
 			
 		}
 		

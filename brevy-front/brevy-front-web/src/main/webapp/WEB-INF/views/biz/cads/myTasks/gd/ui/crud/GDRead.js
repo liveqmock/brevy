@@ -176,8 +176,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 	//创建选择框
 	createSelectionModel : function(){
 		return Ext.create("Ext.selection.CheckboxModel",{
-			//allowDeselect: true,
-			mode: "MULTI"
+			allowDeselect: true,
+			mode: "SINGLE"
 		});
 	}
 	

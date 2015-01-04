@@ -11,7 +11,6 @@ Ext.define("App.biz.cads.myTasks.gd.GDUI", {
 				this.createSimpleInstance("App.biz.cads.myTasks.gd.crud.GDRead", this)
 			]
 			
-		});
-		
+		});	
 	}
 });

@@ -1007,7 +1007,8 @@
 .icon-fugue-cross_octagon {background-image: url(resources/extjs/images/fugue-icons/cross-octagon.png) !important;}
 .icon-fugue-drive_upload {background-image: url(resources/extjs/images/fugue-icons/drive-upload.png) !important;}
 .icon-fugue-bin_minus {background-image: url(resources/extjs/images/fugue-icons/bin--minus.png) !important;}
-.icon-fugue-edit_percent {background-image: url(resources/extjs/images/fugue-icons/edit-percent.png) !important;}
+.icon-fugue-drive_download{background-image: url(resources/extjs/images/fugue-icons/drive-download.png) !important;}
+
 
 .icon-fugue-document_pdf_text {background-image: url(resources/extjs/images/fugue-icons/document-pdf-text.png) !important;}
 .icon-fugue-document_word_text {background-image: url(resources/extjs/images/fugue-icons/document-word-text.png) !important;}

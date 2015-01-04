@@ -90,5 +90,15 @@ public class DefaultMyTasksService implements MyTasksService {
 			} 
 			return targetAttachType;
 		}
+	}
+
+	@Override
+	public Iterable<CadGdAttach> findAllGDAttachments(long gdId) {
+		return cadGdAttachDao.findByGdId(gdId);
+	}
+
+	@Override
+	public CadGdAttach findAttachment(long attachId) {
+		return cadGdAttachDao.findOne(attachId);
 	}	
 }

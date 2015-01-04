@@ -11,4 +11,11 @@ import com.brevy.front.biz.cads.model.CadGdAttach;
  */
 public interface CadGdAttachDao extends CrudRepository<CadGdAttach, Long> {
 
+	/**
+	 * @description 通过工单编号查询附件
+	 * @param gdid 工单编号
+	 * @return
+	 * @author caobin
+	 */
+	Iterable<CadGdAttach> findByGdId(long gdid);
 }

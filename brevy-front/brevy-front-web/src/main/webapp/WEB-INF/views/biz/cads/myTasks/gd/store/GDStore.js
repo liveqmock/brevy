@@ -1,3 +1,25 @@
+Ext.define("GDAttachmentModel", {
+	extend: "Ext.data.Model",
+    fields: [
+    	{name: "id", mapping: "id"},
+	    {name: "gdId", mapping: "gdId"},  
+	    {name: "path", mapping: "path"}
+    ]
+});
+
+
+var GDAttachmentDS = Ext.create("Ext.data.Store", {
+	model: GDAttachmentModel,
+	autoLoad: false,	
+	proxy: {
+        type: "jsonajax",
+        url: "../biz/cads/myTasks/gd/getGDAttachmentList.json",
+        reader: {
+            type: "json"
+        }
+    }
+});
+
 //GD model
 Ext.define("GDModel", {
 	extend: "Ext.data.Model",

@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.brevy.front.biz.cads.model.CadGd;
+import com.brevy.front.biz.cads.model.CadGdAttach;
 
 /**
  * @description 我的任务Service
@@ -45,5 +46,23 @@ public interface MyTasksService {
 	 * @author caobin
 	 */
 	void addAttach(long cadGdId, String attachType, String attachPath);
+	
+	
+	/**
+	 * @description 查询指定工单号的附件
+	 * @param gdId 工单号
+	 * @return
+	 * @author caobin
+	 */
+	Iterable<CadGdAttach> findAllGDAttachments(long gdId);
+	
+	
+	/**
+	 * @description 查询指定附件编号的附件
+	 * @param attachId 附件编号
+	 * @return
+	 * @author caobin
+	 */
+	CadGdAttach findAttachment(long attachId);
 	
 }
