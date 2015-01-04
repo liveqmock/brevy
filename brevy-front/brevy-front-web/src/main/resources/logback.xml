@@ -1,5 +1,5 @@
 <configuration>
-	<property name="log.base" value="/var/logs/brevy/brevy-front" />
+	<property name="log.base" value="/home/logs/brevy/brevy-front" />
 	<property name="pattern"
 		value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{80} :%msg%n" />
 
