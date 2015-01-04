@@ -110,10 +110,50 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 	    	{text: this.finishDate, dataIndex: "finishDate", flex: 4, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.usingResource, dataIndex: "usingResource", flex: 3},
 	    	{text: this.usingTime, dataIndex: "usingTime", flex: 3},
-	    	{text: this.attachType, dataIndex: "attachType", flex: 3, renderer: function(value, metadata){
-	    		
-	    		
-	    	}}
+	    	/*{text: this.attachType, dataIndex: "attachType", flex: 3, renderer: function(value, metadata){
+	    		if(value){
+	    			var icons = "";
+	    			if(value.indexOf("doc") > -1 || value.indexOf("docx") > -1){
+	    				icons = "<span class='icon-fugue-document_word_text'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+	    			}
+	    			
+	    			if(value.indexOf("pdf") > -1){
+	    				icons += "<span class='icon-fugue-document_pdf_text'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+	    			}
+	    			
+	    			if(value.indexOf("zip") > -1 || value.indexOf("rar") > -1){
+	    				icons += "<span class='icon-fugue-folder_zipper'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";	
+	    			}
+	    			return icons;
+	    		}
+				return value;
+	    	}}*/
+	    	{text: this.attachType, dataIndex: "attachType", xtype:"actioncolumn", flex: 3, items:[
+	    		{
+	    			getClass: function(value, meta){
+	    				if(!value)return value;
+	    				if(value.indexOf("doc") > -1 || value.indexOf("docx") > -1){
+	    					return Ext.ux.Icons.fugue_document_word_text;
+	    				}
+	    			}
+	    		},
+	    		{
+	    			getClass: function(value, meta){
+	    				if(!value)return value;
+	    				if(value.indexOf("pdf") > -1){
+		    				return Ext.ux.Icons.fugue_document_pdf_text;
+		    			}
+	    			}
+	    		},
+	    		{
+	    			getClass: function(value, meta){
+	    				if(!value)return value;
+		    			if(value.indexOf("zip") > -1 || value.indexOf("rar") > -1){
+		    				return Ext.ux.Icons.fugue_folder_zipper;
+		    			}
+	    			}
+	    		}
+	    	]}
 		];
 	},
 	

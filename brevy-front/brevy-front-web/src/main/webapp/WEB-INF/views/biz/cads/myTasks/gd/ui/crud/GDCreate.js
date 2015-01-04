@@ -567,6 +567,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 						width : 100,
 						handler : function(b) {
 							b.up("window").close();
+							Ext.getCmp("GDCreate.addWin").close();
 							GDDS.reload();
 							Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");
 						},
