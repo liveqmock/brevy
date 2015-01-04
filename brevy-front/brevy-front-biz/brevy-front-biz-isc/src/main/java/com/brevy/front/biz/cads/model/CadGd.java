@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.ArrayUtils;
 
 
 /**
@@ -65,6 +66,9 @@ public class CadGd implements Serializable {
 
 	@Column(name="IMPL_TEAM")
 	private String implTeam;
+	
+	@Column(name="IMPL_TEAM_IDS")
+	private String implTeamIds;
 
 	private String ini;
 
@@ -74,9 +78,15 @@ public class CadGd implements Serializable {
 
 	@Column(name="PM_NAME")
 	private String pmName;
+	
+	@Column(name="PM_NAME_IDS")
+	private String pmNameIds;
 
 	@Column(name="PRE_COND")
 	private String preCond;
+	
+	@Column(name="PRE_COND_IDS")
+	private String preCondIds;
 
 	private String priority;
 
@@ -367,8 +377,37 @@ public class CadGd implements Serializable {
 		return assignToDept;
 	}
 
-	public void setAssignToDept(String assignToDept) {
-		this.assignToDept = assignToDept;
+	public void setAssignToDept(String[] assignToDept) {
+		//this.assignToDept = assignToDept;
+		this.assignToDept = ArrayUtils.toString(assignToDept);
+	}
+
+
+	public String getImplTeamIds() {
+		return implTeamIds;
+	}
+
+	public void setImplTeamIds(String[] implTeamIds) {
+		//this.implTeamIds = implTeamIds;
+		this.implTeamIds = ArrayUtils.toString(implTeamIds);
+	}
+
+	public String getPmNameIds() {
+		return pmNameIds;
+	}
+
+	public void setPmNameIds(String[] pmNameIds) {
+		//this.pmNameIds = pmNameIds;
+		this.pmNameIds = ArrayUtils.toString(pmNameIds);
+	}
+
+	public String getPreCondIds() {
+		return preCondIds;
+	}
+
+	public void setPreCondIds(String[] preCondIds) {
+		//this.preCondIds = preCondIds;
+		this.preCondIds = ArrayUtils.toString(preCondIds);
 	}
 
 	/* (non-Javadoc)

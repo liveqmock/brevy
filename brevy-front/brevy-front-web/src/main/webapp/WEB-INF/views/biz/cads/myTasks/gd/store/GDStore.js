@@ -105,3 +105,16 @@ var userDS = Ext.create("Ext.data.Store", {
 	}
 });
 
+
+
+
+
+var dictDetailMgrDS = null;
+Ext.Ajax.request({
+    url: "../biz/cads/appSettings/dictMgr/getAllDictDetailList.json",
+    async: false,
+    success: function(response){
+    	dictDetailMgrDS = eval("(" + response.responseText + ")")
+    }
+});
+

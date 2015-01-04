@@ -85,4 +85,17 @@ public class MyTasksController extends BaseController {
 		return myTasksService.findAllGDs(keyword, pageable);			
 	}
 
+	/**
+	 * @description 保存（更新）工单
+	 * @param cadGd
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/gd/saveOrUpdate")
+	@ResponseBody
+	public ModelAndView saveOrUpdate(@RequestBody CadGd cadGd){		
+		log.info(">>> CadGd from request is: {}", new Object[]{cadGd});
+		myTasksService.saveOrUpdateCadGd(cadGd);
+		return this.successView();
+	}
 }

@@ -575,7 +575,8 @@ Ext.define("Msg", {
 			usingResource: "所用资源",
 			usingTime: "所用工时",
 			attachType: "附件",
-			keywordSearch: "关键字查询"
+			keywordSearch: "关键字查询",
+			format: "Y-m-d"
 		},
 		
 		"App.biz.cads.myTasks.gd.crud.GDCreate" : {

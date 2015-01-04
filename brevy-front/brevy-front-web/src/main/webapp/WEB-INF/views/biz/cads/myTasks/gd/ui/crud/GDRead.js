@@ -78,15 +78,15 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
                 metadata.tdAttr = 'data-qtip="' + value +'"';  
                 return value;  
             }},  
-	    	{text: this.recvDate, dataIndex: "recvDate", flex: 3.7},
-	    	{text: this.execType, dataIndex: "execType", flex: 1.8},
-	    	{text: this.type, dataIndex: "type", flex: 1.8},
+	    	{text: this.recvDate, dataIndex: "recvDate", flex: 4, renderer: function(v){return me.formatDate(v);}},
+	    	{text: this.execType, dataIndex: "execType", flex: 1.8, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.type, dataIndex: "type", flex: 1.8, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.briefName, dataIndex: "briefName", flex: 5.2, renderer: function(value, metadata) {  
                 metadata.tdAttr = 'data-qtip="' + value +'"';  
                 return value;  
             }},
-	    	{text: this.priority, dataIndex: "priority", flex: 2.5},
-	    	{text: this.requireFinishTime, dataIndex: "requireFinishTime", flex: 4.5},
+	    	{text: this.priority, dataIndex: "priority", flex: 2.5, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.requireFinishTime, dataIndex: "requireFinishTime", flex: 4.5, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.estimateJob, dataIndex: "estimateJob", flex: 3.8},
 	    	{text: this.preCond, dataIndex: "preCond", flex: 4, renderer: function(value, metadata) {  
                 metadata.tdAttr = 'data-qtip="' + value +'"';  
@@ -97,21 +97,37 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
                 return value;  
             }},
 	    	{text: this.pmName, dataIndex: "pmName", flex: 3.5},
-	    	{text: this.startDate, dataIndex: "startDate", flex: 3.2},
-	    	{text: this.ini, dataIndex: "ini", width: 30},
-	    	{text: this.rdp, dataIndex: "rdp", width: 30},
-	    	{text: this.ad, dataIndex: "ad", width: 30},
-	    	{text: this.scp, dataIndex: "scp", width: 30},
-	    	{text: this.sit, dataIndex: "sit", width: 30},
-	    	{text: this.uat, dataIndex: "uat", width: 30},
-	    	{text: this.pip, dataIndex: "pip", width: 30},
-	    	{text: this.smp, dataIndex: "smp", width: 30},
-	    	{text: this.progress, dataIndex: "progress", flex: 2},
-	    	{text: this.finishDate, dataIndex: "finishDate", flex: 3},
+	    	{text: this.startDate, dataIndex: "startDate", flex: 4, renderer: function(v){return me.formatDate(v);}},
+	    	{text: this.ini, dataIndex: "ini", width: 30, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.rdp, dataIndex: "rdp", width: 30, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.ad, dataIndex: "ad", width: 30, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.scp, dataIndex: "scp", width: 30, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.sit, dataIndex: "sit", width: 30, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.uat, dataIndex: "uat", width: 30, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.pip, dataIndex: "pip", width: 30, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.smp, dataIndex: "smp", width: 30, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.progress, dataIndex: "progress", flex: 2, renderer: function(v){if(!v)return v;return v + "%";}},
+	    	{text: this.finishDate, dataIndex: "finishDate", flex: 4, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.usingResource, dataIndex: "usingResource", flex: 3},
 	    	{text: this.usingTime, dataIndex: "usingTime", flex: 3},
 	    	{text: this.attachType, dataIndex: "attachType", flex: 3}
 		];
+	},
+	
+	//日期格式化
+	formatDate: function(value){
+		if(!value)return value;
+	   	return Ext.Date.format(new Date(value), this.format)
+	},
+	
+	//数据字典映射
+	dictMapping: function(value){
+	    if(!value)return value;
+	    var o = Ext.Array.findBy(dictDetailMgrDS, function(item){
+	    	return item.id == value;    
+	    });
+	    return o.name;
+	   // return dictDetailMgrDS.findRecord("id", value).get("name")
 	},
 	
 	//创建选择框

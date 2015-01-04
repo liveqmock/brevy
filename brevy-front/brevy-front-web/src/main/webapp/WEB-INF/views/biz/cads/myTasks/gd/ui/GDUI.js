@@ -3,8 +3,7 @@
  * @author caobin
  */
 Ext.define("App.biz.cads.myTasks.gd.GDUI", {
-	extend : "App.Module",
-	
+	extend : "App.Module",	
 	gridID : "GDReadMainGridID",
 	init : function(){
 		return Ext.create("Ext.tab.Panel", {

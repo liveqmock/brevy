@@ -76,7 +76,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		
 		var priority = {
 			fieldLabel: this.required(this.priority),
-			name: "type",
+			name: "priority",
 			flex: 1,
 			allowBlank: false,
 			xtype: "combo",
@@ -111,7 +111,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		
 		var preCond = {
 			fieldLabel: this.preCond,
-			name: "preCond",
+			name: "preCondIds",
 			flex: 1,
 			newLine: 1,
 			allowBlank: true,
@@ -124,12 +124,23 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			store: dictDS_16,
 			displayField: "name",
 			valueField: "id",
-			plugins: ["clearbutton"]
+			plugins: ["clearbutton"],
+			listeners: {
+				change: function(c){
+					Ext.getCmp(preCondText.id).setValue(c.getRawValue());
+				}
+			}
+		}
+		
+		var preCondText = {
+			id: Ext.id(),
+			xtype: "hidden",
+			name: "preCond"
 		}
 		
 		var implTeam = {
 			fieldLabel: this.required(this.implTeam),
-			name: "implTeam",
+			name: "implTeamIds",
 			flex: 1,
 			allowBlank: false,
 			xtype: "combo",
@@ -141,13 +152,25 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			store: dictDS_2,
 			displayField: "name",
 			valueField: "id",
-			plugins: ["clearbutton"]
+			plugins: ["clearbutton"],
+			listeners: {
+				change: function(c){
+					Ext.getCmp(implTeamText.id).setValue(c.getRawValue());
+				}
+			}
+			
+		}
+		
+		var implTeamText = {
+			id: Ext.id(),
+			xtype: "hidden",
+			name: "implTeam"
 		}
 		
 		
 		var pmName = {
 			fieldLabel: this.pmName,
-			name: "pmName",
+			name: "pmNameIds",
 			flex: 1,
 			newLine: 1,
 			allowBlank: true,
@@ -160,7 +183,18 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			store: userDS,
 			displayField: "chName",
 			valueField: "id",
-			plugins: ["clearbutton"]
+			plugins: ["clearbutton"],
+			listeners: {
+				change: function(c){
+					Ext.getCmp(pmNameText.id).setValue(c.getRawValue());
+				}
+			}
+		}
+		
+		var pmNameText = {
+			id: Ext.id(),
+			xtype: "hidden",
+			name: "pmName"
 		}
 		
 		var startDate = {
@@ -428,7 +462,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 						},
 						items:[
 							name, briefName, recvDate, execType, type, priority, requireFinishTime,
-							estimateJob, preCond, implTeam, pmName, startDate
+							estimateJob, preCond, preCondText, implTeam, implTeamText, pmName, pmNameText, 
+							startDate
 						]
 					},
 					{

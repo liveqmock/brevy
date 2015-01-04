@@ -35,6 +35,8 @@ public class AppSettingsController extends BaseController {
 	@Autowired
 	private AppSettingsService appSettingsService;
 	
+	
+	
 	/**
 	 * @description 获取数据字典列表
 	 * @param p
@@ -89,6 +91,16 @@ public class AppSettingsController extends BaseController {
 		return this.successView();	
 	}
 	
+	/**
+	 * @description 获取所有数据字典明细列表
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/dictMgr/getAllDictDetailList")
+	@ResponseBody
+	public Iterable<CadDictDetail> getAllDictList(){
+		return appSettingsService.findAllDictDetails();			
+	}
 	
 	/**
 	 * @description 获取数据字典明细列表

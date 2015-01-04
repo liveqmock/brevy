@@ -26,6 +26,14 @@ public interface AppSettingsService {
 	
 	
 	/**
+	 * @description 查询所有数据字典明细列表
+	 * @return
+	 * @author caobin
+	 */
+	Iterable<CadDictDetail> findAllDictDetails();
+	
+	
+	/**
 	 * @description  保存（更新）数据字典
 	 * @param cadDict
 	 * @author caobin

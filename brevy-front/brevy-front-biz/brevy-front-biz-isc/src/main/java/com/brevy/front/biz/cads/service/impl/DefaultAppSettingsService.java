@@ -66,6 +66,11 @@ public class DefaultAppSettingsService implements AppSettingsService {
 	public void deleteCadDictDetail(List<Long> ids) {
 		cadDictDetailDao.delete(cadDictDetailDao.findAll(ids));
 	}
+
+	@Override
+	public Iterable<CadDictDetail> findAllDictDetails() {
+		return cadDictDetailDao.findAll();
+	}
 	
 	
 

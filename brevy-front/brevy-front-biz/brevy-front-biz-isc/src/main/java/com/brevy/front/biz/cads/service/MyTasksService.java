@@ -19,4 +19,11 @@ public interface MyTasksService {
 	 * @author caobin
 	 */
 	Page<CadGd> findAllGDs(String keyword, Pageable pageable);
+	
+	/**
+	 * @description 保存（更新）工单
+	 * @param cadGd
+	 * @author caobin
+	 */
+	void saveOrUpdateCadGd(CadGd cadGd);
 }
