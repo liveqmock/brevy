@@ -35,5 +35,15 @@ public interface MyTasksService {
 	 * @param cadGd
 	 * @author caobin
 	 */
-	void saveOrUpdateCadGd(CadGd cadGd);
+	CadGd saveOrUpdateCadGd(CadGd cadGd);
+	
+	/**
+	 * @description 添加附件
+	 * @param cadGdId 工单ID
+	 * @param attachType 附件类型
+	 * @param attachPath 附件路径
+	 * @author caobin
+	 */
+	void addAttach(long cadGdId, String attachType, String attachPath);
+	
 }

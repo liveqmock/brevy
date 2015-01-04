@@ -6,6 +6,9 @@
 
 	<description>SpringMVC公共配置</description>
 
+	<!-- env加载 -->
+	<import resource="classpath:/spring-env.xml"/>
+
 	<context:component-scan base-package="com.brevy" use-default-filters="false">
 		<!-- 扫描符合@Controller的类 -->
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />

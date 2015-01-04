@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.codehaus.plexus.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.brevy.core.support.exception.BizException;
 import com.brevy.core.support.web.BaseController;
 import com.brevy.front.biz.cads.model.CadGd;
 import com.brevy.front.biz.cads.service.MyTasksService;
@@ -39,6 +42,9 @@ public class MyTasksController extends BaseController {
 	
 	@Autowired
 	private MyTasksService myTasksService;
+	
+	@Value("${cads.upload.dir}")
+	private String uploadDir;
 
 	/**
 	 * @description 工单附件上传
@@ -48,23 +54,28 @@ public class MyTasksController extends BaseController {
 	 * @throws Exception
 	 * @author caobin
 	 */
+	
 	@RequestMapping("/gd/fileUpload")
 	public ModelAndView gdFileUpload(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		MultipartFile file = ((MultipartHttpServletRequest) request).getFileMap().values().iterator().next();
+		MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) request;
+		MultipartFile file = mhsr.getFileMap().values().iterator().next();
 		if (!file.isEmpty()) {
+			long id = Long.parseLong(mhsr.getParameter("id"));
+			log.debug(">>>>ID: {}", new Object[]{id});
+			
+			File target = new File(uploadDir.concat(String.valueOf(id)).concat("/").concat(file.getOriginalFilename()));
+			target.getParentFile().mkdirs();
 			byte[] bytes = file.getBytes();
-			log.debug(">>>>>>>>>>>FILE LENGTH: {}", new Object[] { bytes.length });
-
-			//String fileName = file.getOriginalFilename();
-			//File tmpFile = new File("D:/upload/".concat(fileName));
-			File tmpFile = File.createTempFile("cads_", null);
-			log.info(">>>>>>>>>>>>TEMP FILE PATH: {}", new Object[] { tmpFile.getAbsolutePath() });
-			OutputStream os = new FileOutputStream(tmpFile);
+			OutputStream os = new FileOutputStream(target);
 			IOUtils.write(bytes, os);
 			IOUtils.closeQuietly(os);
+			
+			//uploadDir
+			myTasksService.addAttach(id, FileUtils.getExtension(file.getOriginalFilename()), target.getAbsolutePath());		
 		} else {
 			log.debug(">>>>>>>>>>>EMPTY FILE");
+			return this.failureView(new BizException("Empty file"));
 		}
 		return this.successView();
 	}
@@ -112,7 +123,7 @@ public class MyTasksController extends BaseController {
 	@ResponseBody
 	public ModelAndView saveOrUpdate(@RequestBody CadGd cadGd){		
 		log.info(">>> CadGd from request is: {}", new Object[]{cadGd});
-		myTasksService.saveOrUpdateCadGd(cadGd);
-		return this.successView();
+		CadGd savedCadGd = myTasksService.saveOrUpdateCadGd(cadGd);
+		return this.successView().addObject("id", savedCadGd.getId());
 	}
 }

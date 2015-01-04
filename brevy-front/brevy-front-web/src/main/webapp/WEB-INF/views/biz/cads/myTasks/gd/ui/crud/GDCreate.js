@@ -415,7 +415,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			style : {marginRight: "30px;", marginBottom: "10px;"},
 			formBind : true,
 			handler : function(b) {
-				this.createUploadPanelWin(b).show(Ext.getCmp("GDCreate.createAndAttachBtn"));
+				this.formSubmit(b.up("form").getForm());
 			},
 			scope: this
 		};
@@ -513,9 +513,14 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 				waitTitle : this.createGDTitle,
 				waitMsg : Msg.App.saving,
 				success : function(form, action) {
-					win.close();
-					GDDS.reload();
-					Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");
+					if(win){
+						win.close();
+						GDDS.reload();
+						Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");
+					}else{
+						var b = Ext.getCmp("GDCreate.createAndAttachBtn");
+						me.createUploadPanelWin(b, action.result.RSP_BODY.id).show(b);
+					}		
 				},
 				failure : function(form, action) {				
 					Pub.MsgBox.showMsgBox(Pub.MsgBox.ERROR, action.result.RSP_HEAD.ERROR_MESSAGE);
@@ -526,7 +531,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 	},
 	
 	//创建上传窗体
-	createUploadPanelWin : function(formBtn){
+	createUploadPanelWin : function(formBtn, rid){
 		return Ext.create("Ext.window.Window", {
 		    title: this.addAttachments,
 		    height: 420,
@@ -545,8 +550,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			   	cancelBtnText : this.cancelBtnText,
 			   	file_size_limit : 30,//MB
 			   	upload_url :  this.getRequestRes('/biz/cads/myTasks/gd/fileUpload.json'),
-			   	post_params : {sid: Pub.httpOnlySession},//防止非IE内核浏览器session丢失,
-			   	file_types: "*.doc;*.docx;*.xls;*.xlsx;*.pdf;*.zip;*.rar"
+			   	post_params : {sid: Pub.httpOnlySession, id: rid},//防止非IE内核浏览器session丢失,
+			   	file_types: "*.doc;*.docx;*.pdf;*.zip;*.rar"
 		    },
 		    dockedItems : [
 				{
@@ -562,7 +567,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 						width : 100,
 						handler : function(b) {
 							b.up("window").close();
-							this.formSubmit(formBtn.up("form").getForm(), formBtn.up("window"));			
+							GDDS.reload();
+							Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");
 						},
 						scope : this
 					}]

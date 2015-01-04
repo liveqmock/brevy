@@ -39,10 +39,10 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 				});
 			}},
 			"-",
-			{text: Msg.App.edit, iconCls: Ext.ux.Icons.page_edit, handler:function(btn){
+			{text: Msg.App.showAttachments, iconCls: Ext.ux.Icons.page_attach, handler:function(btn){
 				me.handleSelectedRecord("GDReadMainGridID", function(p){
-					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/myTasks/gd/ui/crud/GDUpdate.js"), function(){
-						me.createInstance("App.biz.cads.myTasks.gd.crud.GDUpdate", Msg.App.edit, btn.iconCls, p.sm[0]).show(btn);
+					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/myTasks/gd/ui/crud/GDAttachments.js"), function(){
+						me.createInstance("App.biz.cads.myTasks.gd.crud.GDAttachments", Msg.App.showAttachments, btn.iconCls, p.sm[0]).show(btn);
 					});
 				});
 			}},
@@ -110,7 +110,10 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 	    	{text: this.finishDate, dataIndex: "finishDate", flex: 4, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.usingResource, dataIndex: "usingResource", flex: 3},
 	    	{text: this.usingTime, dataIndex: "usingTime", flex: 3},
-	    	{text: this.attachType, dataIndex: "attachType", flex: 3}
+	    	{text: this.attachType, dataIndex: "attachType", flex: 3, renderer: function(value, metadata){
+	    		
+	    		
+	    	}}
 		];
 	},
 	

@@ -89,7 +89,9 @@ Ext.define("Msg", {
 			
 			del: "删除",
 			
-			archive: "归档"
+			archive: "归档",
+			
+			showAttachments: "查看附件"
 		},
 		
 		Constants : {

@@ -36,7 +36,7 @@ public class CadGdAttach implements Serializable {
 	private long id;
 
 	@Column(name="GD_ID")
-	private BigDecimal gdId;
+	private long gdId;
 
 	@Column(name="PATH")
 	private String path;
@@ -52,11 +52,11 @@ public class CadGdAttach implements Serializable {
 		this.id = id;
 	}
 
-	public BigDecimal getGdId() {
+	public long getGdId() {
 		return this.gdId;
 	}
 
-	public void setGdId(BigDecimal gdId) {
+	public void setGdId(long gdId) {
 		this.gdId = gdId;
 	}
 
