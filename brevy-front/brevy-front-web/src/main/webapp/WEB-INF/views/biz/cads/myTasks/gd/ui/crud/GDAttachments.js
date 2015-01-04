@@ -14,8 +14,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDAttachments", {
 		return Ext.create("Ext.window.Window", {
 			title: Ext.String.format(this.moduleText, this.params.get("name"), this.params.get("code")),
 			iconCls: this.moduleIcon,
-			height: 400,
-    		width: 300,
+			height: 310,
+    		width: 420,
     		layout: "fit",
     		modal: true,
     		items: { 

@@ -113,18 +113,15 @@ public class MyTasksController extends BaseController {
 
         String downLoadPath = cadGdAttach.getPath();
         File downloadFile = new File(downLoadPath);
-
-        InputStream is = new FileInputStream(downloadFile);
-            
         //设置response头
       	response.setContentType("text/html;charset=UTF-8");
       	response.setContentType(fileType.get(FileUtils.getExtension(downloadFile.getName())));
       	response.setHeader("Content-disposition", "attachment; filename=\"".concat(new String(downloadFile.getName().getBytes("utf-8"), "iso8859-1")).concat("\""));
-      	OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream(), "utf-8");
-      	IOUtils.copy(is, writer);
-      	writer.flush();
+      	OutputStream os = response.getOutputStream();
+      	org.apache.commons.io.FileUtils.copyFile(downloadFile, os);
+      	os.flush();
       	response.flushBuffer();
-      	IOUtils.closeQuietly(writer);
+      	IOUtils.closeQuietly(os);
 	}
 	
 	/**
