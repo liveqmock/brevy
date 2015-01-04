@@ -5,13 +5,10 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -24,27 +21,16 @@ import com.brevy.core.shiro.util.ShiroUtils;
 
 
 /**
- * The persistent class for the CAD_GD database table.
+ * The persistent class for the CAD_GD_HIS database table.
  * 
  */
 @Entity
-@Table(name="CAD_GD")
-public class CadGd implements Serializable {
+@Table(name="CAD_GD_HIS")
+public class CadGdHis implements Serializable {
 
-	private static final long serialVersionUID = -1565777189398949646L;
+	private static final long serialVersionUID = -1819377366833251936L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE, generator="CAD_GD_SEQ")
-	@TableGenerator(
-			name="CAD_GD_SEQ",
-			table="AP_SEQ",
-			pkColumnName="SEQ_NAME",
-			valueColumnName="SEQ_VALUE",
-			pkColumnValue="CAD_GD_SEQ",
-			initialValue=1,
-			allocationSize=1
-			
-	)
 	private long id;
 
 	private String ad;
@@ -133,8 +119,6 @@ public class CadGd implements Serializable {
 	@Transient
 	private long[] assignToDept;
 
-	public CadGd() {
-	}
 
 	public long getId() {
 		return this.id;

@@ -5,11 +5,8 @@ import static org.apache.commons.collections.MapUtils.getLongValue;
 import static org.apache.commons.collections.MapUtils.getString;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -182,5 +179,18 @@ public class MyTasksController extends BaseController {
 	@ResponseBody
 	public Iterable<CadGdAttach> getAllGDAttachmentList(@RequestBody Map<String, String> p){
 		return myTasksService.findAllGDAttachments(getLongValue(p, "gdId"));			
+	}
+	
+	/**
+	 * @description 工单归档
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/gd/archive")
+	@ResponseBody
+	public ModelAndView archive(@RequestBody Map<String, String> p){
+		myTasksService.archive(getLongValue(p, "gdId"));
+		return this.successView();
 	}
 }

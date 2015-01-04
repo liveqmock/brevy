@@ -1,6 +1,7 @@
 package com.brevy.front.biz.cads.service.impl;
 
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,9 +12,11 @@ import org.springframework.util.StringUtils;
 import com.brevy.core.shiro.util.ShiroUtils;
 import com.brevy.front.biz.cads.dao.CadGdAttachDao;
 import com.brevy.front.biz.cads.dao.CadGdDao;
+import com.brevy.front.biz.cads.dao.CadGdHisDao;
 import com.brevy.front.biz.cads.dao.CadRefDeptGdDao;
 import com.brevy.front.biz.cads.model.CadGd;
 import com.brevy.front.biz.cads.model.CadGdAttach;
+import com.brevy.front.biz.cads.model.CadGdHis;
 import com.brevy.front.biz.cads.model.CadRefDeptGd;
 import com.brevy.front.biz.cads.model.CadRefDeptGdPK;
 import com.brevy.front.biz.cads.service.MyTasksService;
@@ -29,6 +32,9 @@ public class DefaultMyTasksService implements MyTasksService {
 	
 	@Autowired
 	private CadGdAttachDao cadGdAttachDao;
+	
+	@Autowired
+	private CadGdHisDao cadGdHisDao;
 
 	@Override
 	public Page<CadGd> findGDsRefDept(String keyword, Pageable pageable) {
@@ -100,5 +106,20 @@ public class DefaultMyTasksService implements MyTasksService {
 	@Override
 	public CadGdAttach findAttachment(long attachId) {
 		return cadGdAttachDao.findOne(attachId);
+	}
+
+	@Transactional
+	@Override
+	public void archive(long gdId) {
+		//将主表记录移至归档表
+		CadGd cadGd = cadGdDao.findOne(gdId);
+		CadGdHis cadGdHis = new CadGdHis();
+		BeanUtils.copyProperties(cadGd, cadGdHis);
+		cadGdHisDao.save(cadGdHis);		
+		
+		//删除主表记录及其关联关系的记录
+		cadGdDao.delete(cadGd);
+		cadGdAttachDao.deleteByGdId(gdId);
+		cadRefDeptGdDao.deleteByGdId(gdId);
 	}	
 }

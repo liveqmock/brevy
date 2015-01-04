@@ -65,4 +65,11 @@ public interface MyTasksService {
 	 */
 	CadGdAttach findAttachment(long attachId);
 	
+	/**
+	 * @description 工单归档
+	 * @param gdId
+	 * @author caobin
+	 */
+	void archive(long gdId);
+	
 }

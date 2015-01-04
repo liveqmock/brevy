@@ -50,7 +50,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 			{text: Msg.App.archive, iconCls: Ext.ux.Icons.page_go, handler:function(btn){
 				me.handleSelectedRecord("GDReadMainGridID", function(p){
 					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/myTasks/gd/ui/crud/GDArchive.js"), function(){
-						Pub.MsgBox.showMsgBox(Pub.MsgBox.CONFIRM, Msg.Prompt.confirmDelRec, null, function(r){
+						Pub.MsgBox.showMsgBox(Pub.MsgBox.CONFIRM, Msg.Prompt.confirmArchiveRec, null, function(r){
 							if(r == "yes"){
 								me.createInstance("App.biz.cads.myTasks.gd.crud.GDArchive", Msg.App.archive, btn.iconCls, p.sm);
 							}	
