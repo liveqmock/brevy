@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.biz.cads.myTasks.demand.DemandUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>store/DemandStore.js</file>
+        	<file>ui/crud/DemandRead.js</file>
+        	<file>ui/DemandUI.js</file>
+        </js>
+    </files>
+</module>
