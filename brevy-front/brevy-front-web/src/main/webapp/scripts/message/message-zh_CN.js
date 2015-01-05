@@ -636,6 +636,58 @@ Ext.define("Msg", {
 		"App.biz.cads.myTasks.gd.crud.GDAttachments" : {
 			path: "文件名"
 			
+		},
+	
+		"App.biz.cads.myTasks.demand.crud.DemandRead" : {
+			prjName: "项目名称",
+			recvDate: "接收日期",
+			priority: "优先级",
+			requireFinishTime: "要求完成时间",
+			estimateDev: "预估开发量",
+			estimateTest: "预估测试量",
+			preCond: "前置条件",
+			implTeam: "对应团队",
+			startDate: "开始时间",
+			progress: "进度",
+			attachType: "附件",
+			status: "当前状态",
+			remark: "备注",
+			keywordSearch: "关键字查询",
+			format: "Y-m-d"
+		},
+		
+		"App.biz.cads.myTasks.demand.crud.DemandCreate" : {
+			prjName: "项目名称",
+			recvDate: "接收日期",
+			priority: "优先级",
+			requireFinishTime: "要求完成时间",
+			estimateDev: "预估开发量",
+			estimateTest: "预估测试量",
+			preCond: "前置条件",
+			implTeam: "对应团队",
+			startDate: "开始时间",
+			progress: "进度",
+			attachType: "附件",
+			status: "当前状态",
+			remark: "备注",
+			DemandBasicInfo: "技术中心需求评估基本信息",
+			assignToDepts: "分配到部门",
+			format: "Y年m月d日",
+			emptyPriority: "请选择优先级",
+			emptyPreCond: "请选择前置条件(可多选)",
+			emptyImplTeam: "请选择对应团队(可多选)",
+			emptyAssignToDeptsCond: "请选择需求评估单需要分配到的部门(可多选)",
+			addFileBtnText: Ext.isIE ? '选择文件(双击)' : '选择文件',
+			uploadBtnText: '上传',
+			removeBtnText: '清空列表',
+			cancelBtnText: '中断上传',
+			addAttachments: "添加附件",
+			confirmFinish: "确定完成"
+			
+		},
+		
+		"App.biz.cads.myTasks.demand.crud.DemandAttachments" : {
+			path: "文件名"		
 		}
 		
 	}
