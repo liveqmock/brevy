@@ -19,6 +19,17 @@ public class CadDemandAttach implements Serializable {
 
 	private static final long serialVersionUID = 7932023234463394984L;
 
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="CAD_DEMAND_ATTACH_SEQ")
+	@TableGenerator(
+			name="CAD_DEMAND_ATTACH_SEQ",
+			table="AP_SEQ",
+			pkColumnName="SEQ_NAME",
+			valueColumnName="SEQ_VALUE",
+			pkColumnValue="CAD_DEMAND_ATTACH_SEQ",
+			initialValue=1,
+			allocationSize=1
+			
+	)
 	@Id
 	private long id;
 

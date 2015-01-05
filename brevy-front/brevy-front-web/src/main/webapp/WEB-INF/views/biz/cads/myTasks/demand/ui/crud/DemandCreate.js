@@ -24,6 +24,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			fieldLabel: this.required(this.recvDate),
 			name: "recvDate",
 			flex: 1,
+			newLine: 1,
 			allowBlank: false,
 			xtype: "datefield",
 			editable: false,
@@ -70,6 +71,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			fieldLabel: this.estimateTest,
 			name: "estimateTest",
 			flex: 1,
+			newLine: 1,
 			allowBlank: true,
 			xtype: "textfield",
 			maxLength: 12
@@ -79,7 +81,6 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			fieldLabel: this.preCond,
 			name: "preCondIds",
 			flex: 1,
-			newLine: 1,
 			allowBlank: true,
 			xtype: "combo",
 			multiSelect: true,
@@ -108,6 +109,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			fieldLabel: this.required(this.implTeam),
 			name: "implTeamIds",
 			flex: 1,
+			newLine: 1,
 			allowBlank: false,
 			xtype: "combo",
 			multiSelect: true,
@@ -147,18 +149,33 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			fieldLabel: this.required(this.status),
 			name: "status",
 			flex: 1,
+			newLine: 1,
 			allowBlank: false,
-			xtype: "textfield",
-			maxLength: 32
+			xtype: "combo",
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			emptyText: this.emptyStatus,
+			store: dictDS_21,
+			displayField: "name",
+			valueField: "id"
 		}
 		
-	
+		var remark = {
+			fieldLabel: this.remark,
+			name: "remark",
+			flex: 1,
+			newLine: 1,
+			allowBlank: true,
+			xtype: "textareafield",
+			maxLength: 32
+		}
 		
 		var assignToDepts = {
 			id: "DemandCreate.assignToDepts",
 			fieldLabel: this.required(this.assignToDepts),
 			name: "assignToDept",
-			flex: 1.5,
+			flex: 1,
 			allowBlank: true,
 			xtype: "combo",
 			multiSelect: true,
@@ -171,6 +188,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			valueField: "id"
 			
 		}
+		
 		
 		var createBtn = {
 			text: Msg.App.add,
@@ -209,7 +227,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			id: "DemandCreate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 500,
+		    height: 390,
 		    width: 830,
 		    layout: "fit",
 		    modal: true,
@@ -233,7 +251,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 				items:[
 					prjName, recvDate, priority, requireFinishTime,
 					estimateDev, estimateTest, preCond, preCondText, implTeam, implTeamText, 
-					startDate, status
+					startDate, status, assignToDepts, remark
 				],
 				buttonAlign: "center",
 				buttons: [createBtn, createAndAttachBtn, resetBtn]

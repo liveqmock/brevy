@@ -508,6 +508,7 @@ Ext.define("Msg", {
 		},
 		
 		"App.biz.cads.appSettings.dictMgr.crud.DictMgrRead" : {
+			id: "字典编号",
 			name: "字典类型名称", 
 			code: "字典类型代码",
 			desc: "字典类型描述",
@@ -533,6 +534,7 @@ Ext.define("Msg", {
 		},
 		
 		"App.biz.cads.appSettings.dictMgr.crud.DictDetailMgrRead" : {
+			id: "明细编号",
 			name: "名称", 
 			code: "代码",
 			desc: "描述",
@@ -677,6 +679,7 @@ Ext.define("Msg", {
 			emptyPreCond: "请选择前置条件(可多选)",
 			emptyImplTeam: "请选择对应团队(可多选)",
 			emptyAssignToDeptsCond: "请选择需求评估单需要分配到的部门(可多选)",
+			emptyStatus: "请选择状态",
 			addFileBtnText: Ext.isIE ? '选择文件(双击)' : '选择文件',
 			uploadBtnText: '上传',
 			removeBtnText: '清空列表',

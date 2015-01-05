@@ -89,6 +89,7 @@ Ext.define("App.biz.cads.appSettings.dictMgr.crud.DictMgrRead", {
 	createColumns : function(){
 		var me = this;
 		return [
+			{text: this.id, dataIndex: "id", flex: 1, hidden: true},
 		 	{text: this.name, dataIndex: "name", flex: 3},  
 	    	{text: this.code, dataIndex: "code", flex: 3},
 	        {text: this.desc, dataIndex: "desc", flex: 8, renderer: function(value, metadata) {  

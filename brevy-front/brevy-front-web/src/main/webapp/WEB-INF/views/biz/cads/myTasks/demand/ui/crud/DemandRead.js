@@ -93,7 +93,11 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandRead", {
             }},
 	    	{text: this.startDate, dataIndex: "startDate", flex: 4, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.status, dataIndex: "status", flex: 4},
-	    	{text: this.attachType, dataIndex: "attachType", xtype:"actioncolumn", flex: 3, items:[
+	    	{text: this.remark, dataIndex: "remark", flex: 6, renderer: function(value, metadata) {  
+                metadata.tdAttr = 'data-qtip="' + value +'"';  
+                return value;  
+            }},
+	    	{text: this.attachType, dataIndex: "attachType", xtype:"actioncolumn", flex: 4, items:[
 	    		{
 	    			getClass: function(value, meta){
 	    				if(!value)return value;

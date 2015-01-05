@@ -35,7 +35,8 @@ Ext.define("DemandModel", {
 	    {name: "implTeam", mapping: "implTeam"},
 	    {name: "startDate", mapping: "startDate"},
 	    {name: "attachType", mapping: "attachType"},
-	    {name: "status", mapping: "status"}
+	    {name: "status", mapping: "status"},
+	    {name: "remark", mapping: "remark"}
     ]
 });
 
@@ -74,8 +75,17 @@ var dictDSConfig = {
 	}
 }
 
-dictDSConfig.proxy.extraParams = {"dictId": 13};
-var dictDS_13 = Ext.create("Ext.data.Store", dictDSConfig);
+dictDSConfig.proxy.extraParams = {"dictId": 21};
+var dictDS_21 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 15};
+var dictDS_15 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 16};
+var dictDS_16 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 2};
+var dictDS_2 = Ext.create("Ext.data.Store", dictDSConfig);
 
 
 var dictDetailMgrDS = null;
