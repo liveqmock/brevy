@@ -87,7 +87,7 @@ public class MyTasksController extends BaseController {
 			IOUtils.closeQuietly(os);
 			
 			//uploadDir
-			myTasksService.addAttach(id, FileUtils.getExtension(file.getOriginalFilename()), target.getAbsolutePath());		
+			myTasksService.addGdAttach(id, FileUtils.getExtension(file.getOriginalFilename()), target.getAbsolutePath());		
 		} else {
 			log.debug(">>>>>>>>>>>EMPTY FILE");
 			return this.failureView(new BizException("Empty file"));
@@ -106,7 +106,7 @@ public class MyTasksController extends BaseController {
 	@RequestMapping("/gd/fileDownload")
 	public void gdFileDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		long attachId = ServletRequestUtils.getLongParameter(request, "attachId");
-		CadGdAttach cadGdAttach = myTasksService.findAttachment(attachId);
+		CadGdAttach cadGdAttach = myTasksService.findGdAttachment(attachId);
 
         String downLoadPath = cadGdAttach.getPath();
         File downloadFile = new File(downLoadPath);
@@ -190,7 +190,7 @@ public class MyTasksController extends BaseController {
 	@RequestMapping("/gd/archive")
 	@ResponseBody
 	public ModelAndView archive(@RequestBody Map<String, String> p){
-		myTasksService.archive(getLongValue(p, "gdId"));
+		myTasksService.gdArchive(getLongValue(p, "gdId"));
 		return this.successView();
 	}
 }

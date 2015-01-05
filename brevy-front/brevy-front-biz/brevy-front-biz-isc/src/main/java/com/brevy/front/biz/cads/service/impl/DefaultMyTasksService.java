@@ -10,13 +10,22 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.brevy.core.shiro.util.ShiroUtils;
+import com.brevy.front.biz.cads.dao.CadDemandAttachDao;
+import com.brevy.front.biz.cads.dao.CadDemandDao;
+import com.brevy.front.biz.cads.dao.CadDemandHisDao;
 import com.brevy.front.biz.cads.dao.CadGdAttachDao;
 import com.brevy.front.biz.cads.dao.CadGdDao;
 import com.brevy.front.biz.cads.dao.CadGdHisDao;
+import com.brevy.front.biz.cads.dao.CadRefDeptDemandDao;
 import com.brevy.front.biz.cads.dao.CadRefDeptGdDao;
+import com.brevy.front.biz.cads.model.CadDemand;
+import com.brevy.front.biz.cads.model.CadDemandAttach;
+import com.brevy.front.biz.cads.model.CadDemandHis;
 import com.brevy.front.biz.cads.model.CadGd;
 import com.brevy.front.biz.cads.model.CadGdAttach;
 import com.brevy.front.biz.cads.model.CadGdHis;
+import com.brevy.front.biz.cads.model.CadRefDeptDemand;
+import com.brevy.front.biz.cads.model.CadRefDeptDemandPK;
 import com.brevy.front.biz.cads.model.CadRefDeptGd;
 import com.brevy.front.biz.cads.model.CadRefDeptGdPK;
 import com.brevy.front.biz.cads.service.MyTasksService;
@@ -35,6 +44,18 @@ public class DefaultMyTasksService implements MyTasksService {
 	
 	@Autowired
 	private CadGdHisDao cadGdHisDao;
+	
+	@Autowired
+	private CadDemandDao cadDemandDao;
+	
+	@Autowired
+	private CadRefDeptDemandDao cadRefDeptDemandDao;
+	
+	@Autowired
+	private CadDemandAttachDao cadDemandAttachDao;
+	
+	@Autowired
+	private CadDemandHisDao cadDemandHisDao;
 
 	@Override
 	public Page<CadGd> findGDsRefDept(String keyword, Pageable pageable) {
@@ -66,7 +87,7 @@ public class DefaultMyTasksService implements MyTasksService {
 
 	@Transactional
 	@Override
-	public void addAttach(long cadGdId, String attachType, String attachPath) {
+	public void addGdAttach(long cadGdId, String attachType, String attachPath) {
 		//获取工单对象
 		CadGd cadGd = cadGdDao.findOne(cadGdId);
 		if(cadGd != null){
@@ -104,13 +125,13 @@ public class DefaultMyTasksService implements MyTasksService {
 	}
 
 	@Override
-	public CadGdAttach findAttachment(long attachId) {
+	public CadGdAttach findGdAttachment(long attachId) {
 		return cadGdAttachDao.findOne(attachId);
 	}
 
 	@Transactional
 	@Override
-	public void archive(long gdId) {
+	public void gdArchive(long gdId) {
 		//将主表记录移至归档表
 		CadGd cadGd = cadGdDao.findOne(gdId);
 		CadGdHis cadGdHis = new CadGdHis();
@@ -121,5 +142,75 @@ public class DefaultMyTasksService implements MyTasksService {
 		cadGdDao.delete(cadGd);
 		cadGdAttachDao.deleteByGdId(gdId);
 		cadRefDeptGdDao.deleteByGdId(gdId);
+	}	
+
+	@Override
+	public Page<CadDemand> findDemandsRefDept(String keyword, Pageable pageable) {
+		return cadDemandDao.searchByKeyword(ShiroUtils.getCurrentUser().getDeptId(),"%".concat(keyword).concat("%"), pageable);
+	}
+	
+	@Override
+	public Page<CadDemand> findAllDemands(String keyword, Pageable pageable) {
+		return cadDemandDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
+	}
+
+
+	@Transactional
+	@Override
+	public CadDemand saveOrUpdateCadDemand(CadDemand cadDemand) {	
+		CadDemand savedDemand = cadDemandDao.save(cadDemand);
+		//部门分配
+		long[] assignedDepts = savedDemand.getAssignToDept();
+		for(long assignedDept : assignedDepts){
+			CadRefDeptDemandPK pk = new CadRefDeptDemandPK();
+			pk.setDemandId(savedDemand.getId());
+			pk.setDeptId(assignedDept);
+			CadRefDeptDemand cadRefDeptDemand = new CadRefDeptDemand();
+			cadRefDeptDemand.setId(pk);
+			cadRefDeptDemandDao.save(cadRefDeptDemand);
+		}	
+		return savedDemand;
+	}
+
+	@Transactional
+	@Override
+	public void addCadDemandAttach(long cadDemandId, String attachType, String attachPath) {
+		//获取需求评估单对象
+		CadDemand cadDemand = cadDemandDao.findOne(cadDemandId);
+		if(cadDemand != null){
+			cadDemand.setAttachType(handleAttachType(cadDemand.getAttachType(), attachType));			
+			cadDemandDao.save(cadDemand);
+		}
+		//保存需求评估单路径
+		CadDemandAttach cadDemandAttach = new CadDemandAttach();
+		cadDemandAttach.setDemandId(cadDemandId);
+		cadDemandAttach.setPath(attachPath);
+		cadDemandAttachDao.save(cadDemandAttach);
+	}
+
+
+	@Override
+	public Iterable<CadDemandAttach> findAllDemandAttachments(long demandId) {
+		return cadDemandAttachDao.findByDemandId(demandId);
+	}
+
+	@Override
+	public CadDemandAttach findDemandAttachment(long attachId) {
+		return cadDemandAttachDao.findOne(attachId);
+	}
+
+	@Transactional
+	@Override
+	public void demandArchive(long demandId) {
+		//将主表记录移至归档表
+		CadDemand cadDemand = cadDemandDao.findOne(demandId);
+		CadDemandHis cadDemandHis = new CadDemandHis();
+		BeanUtils.copyProperties(cadDemand, cadDemandHis);
+		cadDemandHisDao.save(cadDemandHis);		
+		
+		//删除主表记录及其关联关系的记录
+		cadDemandDao.delete(cadDemand);
+		cadDemandAttachDao.deleteByDemandId(demandId);
+		cadRefDeptDemandDao.deleteByDemandId(demandId);
 	}	
 }
