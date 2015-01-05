@@ -51,10 +51,10 @@ Ext.define("Msg", {
 		//应用常规
 		App : {
 			/** HEADER **/
-			header : "<div class=default-title-pos><span class=default-title-font>BREVY FRONT FRAMEWORK</span><span class=default-subtitle>version:1.0.0</span></div>",
+			header : "<div class=default-title-pos><span class=default-title-font>综合管理平台</span></div>",
 		
 			/** FOOTER **/
-			footer : "<div class=default-footer><span>Copyright 2013 - 201X G.Z. All Rights Reserved</span></div>",
+			footer : "<div class=default-footer><span>Copyright 2013 - 2015 IPS All Rights Reserved</span></div>",
 		
 			/** LOADING MESSAGE **/
 			menuLoading : "正在加载菜单项...",

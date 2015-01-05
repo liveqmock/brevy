@@ -183,6 +183,11 @@
 		<location>/errors/404.html</location>
 	</error-page>
 	
+	<!-- session timeout 60min -->
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+	
 	<!-- welcome file -->
 	<welcome-file-list>
 		<welcome-file>index</welcome-file>

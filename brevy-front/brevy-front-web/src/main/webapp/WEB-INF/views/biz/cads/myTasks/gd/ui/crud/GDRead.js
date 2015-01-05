@@ -96,7 +96,10 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
                 metadata.tdAttr = 'data-qtip="' + value +'"';  
                 return value;  
             }},
-	    	{text: this.pmName, dataIndex: "pmName", flex: 3.5},
+	    	{text: this.pmName, dataIndex: "pmName", flex: 3.5, renderer: function(value, metadata) {  
+                metadata.tdAttr = 'data-qtip="' + value +'"';  
+                return value;  
+            }},
 	    	{text: this.startDate, dataIndex: "startDate", flex: 4, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.ini, dataIndex: "ini", width: 30, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.rdp, dataIndex: "rdp", width: 30, renderer: function(v){return me.dictMapping(v);}},

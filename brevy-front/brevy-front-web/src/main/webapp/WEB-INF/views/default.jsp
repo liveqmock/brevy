@@ -58,7 +58,7 @@
 	}
 
 </style>
-<title>BREVY FRONT FRAMEWORK</title>
+<title>综合管理平台</title>
 
 
 </head>
@@ -68,7 +68,7 @@
 			<img src="resources/extjs/images/extanim/extanim64.gif"
 				width="64"
 				style="margin-right: 8px; float: left; vertical-align: top;" />
-			BREVY FRONT <br /> <span class="loading-msg">正在加载资源，请稍候...</span>
+			综合管理平台 <br /> <span class="loading-msg">正在加载资源，请稍候...</span>
 			<%@ include file="/common/extjs.jsp"%>
 		</div>
 	</div>
