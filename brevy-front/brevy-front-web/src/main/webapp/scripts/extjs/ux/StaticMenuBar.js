@@ -58,7 +58,10 @@ Ext.define("Ext.ux.StaticMenuBar", {
 					    		this.insert(0, {
 					    			 xtype : "splitbutton",
 					   				 text : n.get("name"),
-					   				 iconCls: n.get("icon"), 
+					   				 iconCls: n.get("icon"),
+					   				 handler: function(b){
+					   				 	this.showMenu();
+					   				 },
 					   				 menu : this._buildMenu(n.get("apMenus"))
 					    		});
 							}, this, true);
