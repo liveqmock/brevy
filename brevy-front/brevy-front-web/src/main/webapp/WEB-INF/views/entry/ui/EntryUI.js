@@ -34,16 +34,36 @@ Ext.define("App.entry.EntryUI", {
 	 */
 	createHeaderPanel : function(){
 		return {
-			region : "north",
-			xtype : "panel",
-			height : 48,
-			bodyStyle : {
-				backgroundImage : "url('resources/extjs/ext-theme-gray/images/panel-header/panel-header-default-top-bg.gif')",
-				backgroundRepeat: "repeat-x"
-			},
-			html : Msg.App.header
+			region: "north",
+			xtype: "container",
+			layout: {
+		        type: "hbox",
+		        align: "middle"
+		    },
+			align: "middle",
+			cls: "app-header",
+			height : 45,
+			items: [{
+				xtype: "component",
+				
+				//border: false,
+	            html: Msg.App.header,
+	            flex: 1
+	            
+	           // app-header
+			
+			}]
+			/*bodyStyle : {
+				backgroundImage : "url('resources/extjs/images/background/panel-header-top-gray.png')",
+				backgroundRepeat: "repeat-x repeat-y"
+			},*/
+			//html : '<div class="x-component x-box-item x-component-default" style="right: auto; left: 0px; margin: 0px; width: 1155px; top: 1px;">Ext JS Kitchen Sink</div>'
+			//Msg.App.header
+			//html: Msg.App.header
 		}
 	},
+	
+	//
 	
 	/**
 	 * @description  默认整体框架模块(中部)

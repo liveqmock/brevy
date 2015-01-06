@@ -49,9 +49,16 @@ Ext.define("Msg", {
 
 		/** 模块信息定义 **/
 		//应用常规
-		App : {
+		App : {//<img src='resources/extjs/images/logo/icon_ips.png'><span class=default-title-font style='position:fixed;'>&nbsp;综合管理平台</span>" +
 			/** HEADER **/
-			header : "<div class=default-title-pos><span class=default-title-font>综合管理平台</span></div>",
+			header : "<div>" +
+					"<table border=0 >" +
+					"<tr>" +
+					"<td><img src='resources/extjs/images/logo/icon_ips.png'></td>" +
+					"<td><span class=default-title-font '>&nbsp;综合管理平台</span></td>" +
+					"</tr>" +
+					"</table>"+
+					"</div>",
 		
 			/** FOOTER **/
 			footer : "<div class=default-footer><span>Copyright 2013 - 2015 IPS All Rights Reserved</span></div>",
@@ -584,7 +591,8 @@ Ext.define("Msg", {
 			usingTime: "所用工时",
 			attachType: "附件",
 			keywordSearch: "关键字查询",
-			format: "Y-m-d"
+			format: "Y-m-d",
+			edit: "进度更新"
 		},
 		
 		"App.biz.cads.myTasks.gd.crud.GDCreate" : {
@@ -632,7 +640,27 @@ Ext.define("Msg", {
 			cancelBtnText: '中断上传',
 			addAttachments: "添加附件",
 			confirmFinish: "确定完成"
-			
+		},
+		
+		"App.biz.cads.myTasks.gd.crud.GDUpdate" : {
+			ini: "INI",
+			rdp: "RDP",
+			ad: "A&D",
+			scp: "SCP",
+			sit: "SIT",
+			uat: "UAT",
+			pip: "PIP",
+			smp: "SMP",
+			progress: "进度",
+			finishDate: "结束时间",
+			usingResource: "所用资源",
+			usingTime: "所用工时",
+			attachType: "附件",	
+			GDBasicInfo: "技术中心工单基本信息",
+			phases: "各阶段进阶",
+			resources: "进度与资源",
+			format: "Y年m月d日",
+			emptyPhase: "请选择进阶状态"
 		},
 		
 		"App.biz.cads.myTasks.gd.crud.GDAttachments" : {

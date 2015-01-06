@@ -51,7 +51,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandAttachments", {
 	createColumns : function(){
 		var me = this;
 		return [
-		 	{text: this.name, dataIndex: "path", flex: 1, renderer: function(v){
+		 	{text: this.path, dataIndex: "path", flex: 1, renderer: function(v){
 		 		if(!v)return v;
 		 		return v.replace(/^(.*)[/\\]([^/\\]*)$/, "$2");
 		 		

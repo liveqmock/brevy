@@ -5,6 +5,7 @@
 </script>
 
 <pack:style src="/resources/extjs/ext-theme-gray/ext-theme-gray-all.css" />
+<pack:style src="/resources/extjs/css/public.css" />
 
 <!-- fixed position of menuitem for left blank -->
 <style>
