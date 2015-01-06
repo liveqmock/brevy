@@ -8,16 +8,27 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 	formUrl: function(){
 		return this.getRequestRes("/biz/cads/myTasks/gd/saveOrUpdate.json");
 	},
+
 	
-	init : function(){
-		
+	beforeInit: function(){
+		this.callParent();			
+	},
+	
+	getPhasesStore: function(){	
+		Ext.apply(dictDSConfig, {autoLoad: true});
+		Ext.apply(dictDSConfig.proxy.extraParams, {"dictId": 20});
+		return Ext.create("Ext.data.Store", dictDSConfig);
+	},
+	
+	init : function(){	
 		var id = {
 			name: "id",
 			xtype: "hidden",
 			value: this.params.get("id")
 		}
-		
+
 		var ini = {
+			id: Ext.id(),
 			fieldLabel: this.ini,
 			name: "ini",
 			flex: 1,
@@ -27,11 +38,22 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
+			queryMode: "local",
 			plugins: ["clearbutton"],
-			value: this.params.get("ini")
+			listeners: {
+				boxready: {
+					fn: function(c){
+						c.getStore().on("load", function(store){
+							c.setValue(this.params.get("ini")-0);
+						}, this);
+						c.fireEvent("select");
+					},
+					scope: this
+				}
+			}
 		}
 		
 		var rdp = {
@@ -44,11 +66,21 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"],
-			value: this.params.get("rdp")
+			listeners: {
+				boxready: {
+					fn: function(c){
+						c.getStore().on("load", function(store){
+							c.setValue(this.params.get("rdp")-0);
+						}, this);
+						c.fireEvent("select");
+					},
+					scope: this
+				}
+			}
 		}
 		
 		var ad = {
@@ -61,11 +93,21 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"],
-			value: this.params.get("ad")
+			listeners: {
+				boxready: {
+					fn: function(c){
+						c.getStore().on("load", function(store){
+							c.setValue(this.params.get("ad")-0);
+						}, this);
+						c.fireEvent("select");
+					},
+					scope: this
+				}
+			}
 		}
 		
 		var scp = {
@@ -78,11 +120,21 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"],
-			value: this.params.get("scp")
+			listeners: {
+				boxready: {
+					fn: function(c){
+						c.getStore().on("load", function(store){
+							c.setValue(this.params.get("scp")-0);
+						}, this);
+						c.fireEvent("select");
+					},
+					scope: this
+				}
+			}
 		}
 		
 		var sit = {
@@ -96,11 +148,21 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"],
-			value: this.params.get("sit")
+			listeners: {
+				boxready: {
+					fn: function(c){
+						c.getStore().on("load", function(store){
+							c.setValue(this.params.get("sit")-0);
+						}, this);
+						c.fireEvent("select");
+					},
+					scope: this
+				}
+			}
 		}
 		
 		var uat = {
@@ -113,11 +175,21 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"],
-			value: this.params.get("uat")
+			listeners: {
+				boxready: {
+					fn: function(c){
+						c.getStore().on("load", function(store){
+							c.setValue(this.params.get("uat")-0);
+						}, this);
+						c.fireEvent("select");
+					},
+					scope: this
+				}
+			}
 		}
 		
 		var pip = {
@@ -130,11 +202,21 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"],
-			value: this.params.get("pip")
+			listeners: {
+				boxready: {
+					fn: function(c){
+						c.getStore().on("load", function(store){
+							c.setValue(this.params.get("pip")-0);
+						}, this);
+						c.fireEvent("select");
+					},
+					scope: this
+				}
+			}
 		}
 		
 		
@@ -148,11 +230,21 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"],
-			value: this.params.get("smp")
+			listeners: {
+				boxready: {
+					fn: function(c){
+						c.getStore().on("load", function(store){
+							c.setValue(this.params.get("smp")-0);
+						}, this);
+						c.fireEvent("select");
+					},
+					scope: this
+				}
+			}
 		}
 		
 		var progress = {
@@ -177,7 +269,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			xtype: "datefield",
 			editable: false,
 			format: this.format,
-			value: this.params.get("finishDate")
+			value: this.params.get("finishDate") ? new Date(this.params.get("finishDate")) : null
 		}
 		
 		var usingResource = {
@@ -203,7 +295,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 		
 		
 		var updateBtn = {
-			text: Msg.App.edit,
+			text: Msg.App.update,
 			width : 100,
 			style : {marginRight: "30px;", marginBottom: "10px;"},
 			formBind : true,
@@ -221,13 +313,14 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			},
 			scope : this
 		}
+
 		
 		var me = this;	
 		return Ext.create("Ext.window.Window", {
 			id: "GDUpdate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 500,
+		    height: 290,
 		    width: 830,
 		    layout: "fit",
 		    modal: true,
@@ -255,7 +348,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 							collapsible: false
 						},
 						items:[
-							ini, rdp, ad, scp, sit, uat, pip, smp
+							id, ini, rdp, ad, scp, sit, uat, pip, smp
 						]
 					},
 					{
@@ -272,11 +365,11 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 						]
 					}
 				],
-	
 				buttonAlign: "center",
-				buttons: [updateBtn, resetBtn]
+				buttons: [updateBtn, resetBtn]				
 		    }
 		});
+
 	},
 	
 	/**
@@ -293,6 +386,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 				waitMsg : Msg.App.updating,
 				success : function(form, action) {
 					win.close();
+					Ext.getCmp("GDReadMainGridID").getSelectionModel().deselectAll();
 					GDDS.reload();
 					Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.updateSuccess, "br");
 							

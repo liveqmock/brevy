@@ -70,18 +70,32 @@ public class DefaultMyTasksService implements MyTasksService {
 
 	@Transactional
 	@Override
-	public CadGd saveOrUpdateCadGd(CadGd cadGd) {	
-		CadGd savedGd = cadGdDao.save(cadGd);
-		//部门分配
-		long[] assignedDepts = savedGd.getAssignToDept();
-		for(long assignedDept : assignedDepts){
-			CadRefDeptGdPK pk = new CadRefDeptGdPK();
-			pk.setGdId(savedGd.getId());
-			pk.setDeptId(assignedDept);
-			CadRefDeptGd cadRefDeptGd = new CadRefDeptGd();
-			cadRefDeptGd.setId(pk);
-			cadRefDeptGdDao.save(cadRefDeptGd);
-		}	
+	public CadGd saveOrUpdateCadGd(CadGd cadGd) {
+		CadGd savedGd = null;
+		if(cadGd.getId() > 0){//update part of GD
+			savedGd = cadGdDao.findOne(cadGd.getId());
+			BeanUtils.copyProperties(cadGd, savedGd, new String[]{
+				"id", "attachType","briefName","estimateJob","execType",
+				"implTeam", "implTeamIds", "name", "pmName", "pmNameIds",
+				"preCond","preCondIds","priority","recvDate","requireFinishTime",
+				"startDate", "type", "assignToDept"		
+			});
+			cadGdDao.save(savedGd);
+		}else{
+			savedGd = cadGdDao.save(cadGd);
+			//部门分配
+			long[] assignedDepts = savedGd.getAssignToDept();
+			for(long assignedDept : assignedDepts){
+				CadRefDeptGdPK pk = new CadRefDeptGdPK();
+				pk.setGdId(savedGd.getId());
+				pk.setDeptId(assignedDept);
+				CadRefDeptGd cadRefDeptGd = new CadRefDeptGd();
+				cadRefDeptGd.setId(pk);
+				cadRefDeptGdDao.save(cadRefDeptGd);
+			}	
+			
+		}
+		
 		return savedGd;
 	}
 
