@@ -683,7 +683,8 @@ Ext.define("Msg", {
 			status: "当前状态",
 			remark: "备注",
 			keywordSearch: "关键字查询",
-			format: "Y-m-d"
+			format: "Y-m-d",			
+			edit: "进度更新"
 		},
 		
 		"App.biz.cads.myTasks.demand.crud.DemandCreate" : {
@@ -715,6 +716,14 @@ Ext.define("Msg", {
 			addAttachments: "添加附件",
 			confirmFinish: "确定完成"
 			
+		},
+		
+		"App.biz.cads.myTasks.demand.crud.DemandUpdate" : {
+			status: "当前状态",
+			remark: "备注",
+			DemandBasicInfo: "进度与资源",
+			format: "Y年m月d日",
+			emptyStatus: "请选择状态"
 		},
 		
 		"App.biz.cads.myTasks.demand.crud.DemandAttachments" : {

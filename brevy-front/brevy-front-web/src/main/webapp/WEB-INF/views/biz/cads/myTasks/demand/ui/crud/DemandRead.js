@@ -39,6 +39,14 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandRead", {
 				});
 			}},
 			"-",
+			{text: me.edit, iconCls: Ext.ux.Icons.page_edit, handler:function(btn){
+				me.handleSelectedRecord("DemandReadMainGridID", function(p){
+					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/myTasks/demand/ui/crud/DemandUpdate.js"), function(){
+						me.createInstance("App.biz.cads.myTasks.demand.crud.DemandUpdate", me.edit, btn.iconCls, p.sm[0]).show(btn);
+					});
+				});
+			}},
+			"-",
 			{text: Msg.App.showAttachments, iconCls: Ext.ux.Icons.page_attach, handler:function(btn){
 				me.handleSelectedRecord("DemandReadMainGridID", function(p){
 					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/myTasks/demand/ui/crud/DemandAttachments.js"), function(){
@@ -92,7 +100,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandRead", {
                 return value;  
             }},
 	    	{text: this.startDate, dataIndex: "startDate", flex: 4, renderer: function(v){return me.formatDate(v);}},
-	    	{text: this.status, dataIndex: "status", flex: 4},
+	    	{text: this.status, dataIndex: "status", flex: 4, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.remark, dataIndex: "remark", flex: 6, renderer: function(value, metadata) {  
                 metadata.tdAttr = 'data-qtip="' + value +'"';  
                 return value;  

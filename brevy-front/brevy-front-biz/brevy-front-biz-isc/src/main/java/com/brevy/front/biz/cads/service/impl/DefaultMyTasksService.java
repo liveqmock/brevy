@@ -172,17 +172,28 @@ public class DefaultMyTasksService implements MyTasksService {
 	@Transactional
 	@Override
 	public CadDemand saveOrUpdateCadDemand(CadDemand cadDemand) {	
-		CadDemand savedDemand = cadDemandDao.save(cadDemand);
-		//部门分配
-		long[] assignedDepts = savedDemand.getAssignToDept();
-		for(long assignedDept : assignedDepts){
-			CadRefDeptDemandPK pk = new CadRefDeptDemandPK();
-			pk.setDemandId(savedDemand.getId());
-			pk.setDeptId(assignedDept);
-			CadRefDeptDemand cadRefDeptDemand = new CadRefDeptDemand();
-			cadRefDeptDemand.setId(pk);
-			cadRefDeptDemandDao.save(cadRefDeptDemand);
-		}	
+		CadDemand savedDemand = null;
+		if(cadDemand.getId() > 0){//update part of Demand
+			savedDemand = cadDemandDao.findOne(cadDemand.getId());
+			BeanUtils.copyProperties(cadDemand, savedDemand, new String[]{
+				"id", "attachType", "assignToDept", "estimateDev","estimateTest",
+				"implTeam","implTeamIds","preCond","preCondIds","priority","prjName",
+				"recvDate","requireFinishTime","startDate"
+			});
+			cadDemandDao.save(savedDemand);
+		}else{
+			savedDemand = cadDemandDao.save(cadDemand);
+			//部门分配
+			long[] assignedDepts = savedDemand.getAssignToDept();
+			for(long assignedDept : assignedDepts){
+				CadRefDeptDemandPK pk = new CadRefDeptDemandPK();
+				pk.setDemandId(savedDemand.getId());
+				pk.setDeptId(assignedDept);
+				CadRefDeptDemand cadRefDeptDemand = new CadRefDeptDemand();
+				cadRefDeptDemand.setId(pk);
+				cadRefDeptDemandDao.save(cadRefDeptDemand);
+			}				
+		}		
 		return savedDemand;
 	}
 

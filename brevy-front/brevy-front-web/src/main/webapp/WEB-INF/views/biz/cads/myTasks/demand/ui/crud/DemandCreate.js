@@ -168,7 +168,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			newLine: 1,
 			allowBlank: true,
 			xtype: "textareafield",
-			maxLength: 32
+			maxLength: 256
 		}
 		
 		var assignToDepts = {
