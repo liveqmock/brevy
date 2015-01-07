@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,8 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.brevy.core.shiro.model.CadDict;
 import com.brevy.core.shiro.model.CadDictDetail;
+import com.brevy.core.support.exception.BizException;
+import com.brevy.core.support.exception.MessageCode;
 import com.brevy.core.support.web.BaseController;
 import com.brevy.front.biz.cads.service.AppSettingsService;
+import com.brevy.front.biz.messages.Errors;
 
 /**
  * @description 应用设置Controller
@@ -34,6 +38,9 @@ public class AppSettingsController extends BaseController {
 	
 	@Autowired
 	private AppSettingsService appSettingsService;
+	
+	@Value("${cads.permission.resetTables}")
+	private String permittedResetTablesPattern;
 	
 	
 	
@@ -155,4 +162,26 @@ public class AppSettingsController extends BaseController {
 		}
 		return this.successView();	
 	}
+	
+	
+	/**
+	 * @description 表重置
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/maintenance/resetTables")
+	@ResponseBody
+	public ModelAndView resetTables(@RequestBody Map<String, String> p){
+		String[] patterns = permittedResetTablesPattern.split("\\,");
+		for(String table : getString(p, "tables").split("\\,")){
+			for(String pattern : patterns){
+				if(table.matches(pattern)){
+					appSettingsService.deleteTable(table);
+				}
+			}
+		}
+		return this.successView();
+	}
+	
 }

@@ -5,8 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.brevy.core.shiro.dao.CadDictDao;
 import com.brevy.core.shiro.dao.CadDictDetailDao;
@@ -27,6 +31,12 @@ public class DefaultAppSettingsService implements AppSettingsService {
 	
 	@Autowired
 	private CadDictDetailDao cadDictDetailDao;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private TransactionTemplate txTemplate;
 
 	@Override
 	public Page<CadDict> findAllDicts(String keyword, Pageable pageable) {	
@@ -71,7 +81,16 @@ public class DefaultAppSettingsService implements AppSettingsService {
 	public Iterable<CadDictDetail> findAllDictDetails() {
 		return cadDictDetailDao.findAll();
 	}
-	
-	
 
+
+	@Override
+	public void deleteTable(final String tableName) {
+		txTemplate.execute(new TransactionCallback<Object>() {
+			@Override
+			public Object doInTransaction(TransactionStatus status) {
+				jdbcTemplate.execute(String.format("delete from %s", tableName));
+				return null;
+			}		
+		});
+	}
 }

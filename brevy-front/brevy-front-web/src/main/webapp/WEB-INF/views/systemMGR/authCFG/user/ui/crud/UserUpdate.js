@@ -40,6 +40,22 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserUpdate", {
 			value: this.params.get("chName")
 		}
 		
+		var gender = {
+			fieldLabel: this.required(this.gender),
+			name: "gender",
+			flex: 1,
+			newLine: 1,
+			allowBlank: false,
+			xtype: "combo",
+			forceSelection: true,
+			editable: false,
+			store: genderDS,
+    		queryMode: "local",
+   			displayField: "text",
+    		valueField: "name",
+			value: this.params.get("gender")
+		}
+		
 		var username = {
 			fieldLabel: this.required(this.username),
 			name: "username",
@@ -162,7 +178,7 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserUpdate", {
 		return Ext.create("Ext.window.Window", {
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 330,
+		    height: 360,
 		    width: 480,
 		    layout: "fit",
 		    modal: true,
@@ -184,7 +200,7 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserUpdate", {
 					collapsible: false
 				},
 				items:[
-					id, chName, username, password, confirmPassword, position, dept, status
+					id, chName, gender, username, password, confirmPassword, position, dept, status
 				],
 				buttonAlign: "center",
 				buttons: [updateBtn, resetBtn]

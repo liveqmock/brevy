@@ -122,9 +122,15 @@ Ext.define("App.entry.EntryUI", {
 							    url: "auth/getCurrentUser.json",
 							    method: "POST",
 							    success: function(response){
+							    	var user = Ext.JSON.decode(response.responseText);
 							    	Ext.getCmp("_infoBar").clearStatus();
-							    	me.setIconCls(Ext.ux.Icons.user_gray);
-							     	me.setText(Ext.JSON.decode(response.responseText));     	
+							    	if(user.gender == "F"){
+							    		me.setIconCls(Ext.ux.Icons.user_female);
+							    	}else{
+							    		me.setIconCls(Ext.ux.Icons.user);
+							    	}
+							    	
+							     	me.setText(user.chName);     	
 							    }
 							});
 						}

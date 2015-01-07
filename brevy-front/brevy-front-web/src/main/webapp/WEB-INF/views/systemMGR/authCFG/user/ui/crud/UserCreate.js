@@ -20,6 +20,22 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserCreate", {
 			maxLength: 32
 		}
 		
+		var gender = {
+			fieldLabel: this.required(this.gender),
+			name: "gender",
+			flex: 1,
+			newLine: 1,
+			allowBlank: false,
+			xtype: "combo",
+			forceSelection: true,
+			editable: false,
+			store: genderDS,
+    		queryMode: "local",
+   			displayField: "text",
+    		valueField: "name",
+			value: "M"
+		}
+		
 		var username = {
 			fieldLabel: this.required(this.username),
 			name: "username",
@@ -130,7 +146,7 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserCreate", {
 		return Ext.create("Ext.window.Window", {
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 330,
+		    height: 360,
 		    width: 480,
 		    layout: "fit",
 		    modal: true,
@@ -152,7 +168,7 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserCreate", {
 					collapsible: false
 				},
 				items:[
-					chName, username, password, confirmPassword, position, dept, status
+					chName, gender, username, password, confirmPassword, position, dept, status
 				],
 				buttonAlign: "center",
 				buttons: [createBtn, resetBtn]

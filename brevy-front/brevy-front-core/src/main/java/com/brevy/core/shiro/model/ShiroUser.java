@@ -16,7 +16,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
  */
 public class ShiroUser implements Serializable{
 
-	private static final long serialVersionUID = 2353460137050135016L;
+	private static final long serialVersionUID = -2762656247870332965L;
 
 	/**
 	 * 应用ID
@@ -32,6 +32,17 @@ public class ShiroUser implements Serializable{
 	 * 用户名
 	 */
 	private String username;
+	
+	/**
+	 * 中文名
+	 */
+	private String chName;
+	
+	
+	/**
+	 * 性别
+	 */
+	private String gender;
 	
 	
 	/**
@@ -105,6 +116,26 @@ public class ShiroUser implements Serializable{
 
 	public void setDeptId(long deptId) {
 		this.deptId = deptId;
+	}
+	
+	
+
+	public String getChName() {
+		return chName;
+	}
+
+	public void setChName(String chName) {
+		this.chName = chName;
+	}
+	
+	
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	/**

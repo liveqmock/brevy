@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.biz.cads.appSettings.maintenance.TableResetUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>store/TableResetStore.js</file>
+        	<file>ui/crud/TableResetRead.js</file>
+        	<file>ui/TableResetUI.js</file>
+        </js>
+    </files>
+</module>

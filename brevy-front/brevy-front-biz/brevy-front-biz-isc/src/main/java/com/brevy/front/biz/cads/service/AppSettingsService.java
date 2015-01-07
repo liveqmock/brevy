@@ -73,4 +73,11 @@ public interface AppSettingsService {
 	 * @author caobin
 	 */
 	void deleteCadDictDetail(List<Long> ids);
+	
+	/**
+	 * @description 表删除操作
+	 * @param tableName
+	 * @author caobin
+	 */
+	void deleteTable(String tableName);
 }

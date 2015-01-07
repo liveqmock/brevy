@@ -38,6 +38,7 @@ Ext.define("Msg", {
 			moduleLoadFailed: "模块加载失败<p>-&nbsp;错误信息: {0}</p>",
 			confirmTitle : "确认",
 			confirmDelRec: "您确认删除当前选中记录吗？",
+			confirmEmptyTable: "您确认清空当前选中表吗？",
 			confirmArchiveRec: "您确认归档当前选中记录吗？",
 			confirmDelNode: "您确认删除当前选中节点{0}吗？",
 			confirmDelNodeCascade: "您确认删除当前选中节点{0}及其所有子节点吗？",
@@ -116,8 +117,9 @@ Ext.define("Msg", {
 			relMenu : "已关联菜单列表",
 			anonFilter : "匿名过滤器",
 			authenFilter : "身份认证过滤器",
-			authorFilter : "角色鉴权过滤器"
-			
+			authorFilter : "角色鉴权过滤器",
+			male: "男",
+			female: "女"
 		},
 
 
@@ -480,6 +482,7 @@ Ext.define("Msg", {
 		
 		"App.systemMGR.authCFG.user.crud.UserCreate" : {
 			chName: "姓名",
+			gender: "性别",
 			username: "用户名",
 			password: "密码",
 			confirmPassword: "确认密码",
@@ -494,6 +497,7 @@ Ext.define("Msg", {
 		
 		"App.systemMGR.authCFG.user.crud.UserUpdate" : {
 			chName: "姓名",
+			gender: "性别",
 			username: "用户名",
 			password: "密码",
 			confirmPassword: "确认密码",
@@ -728,6 +732,12 @@ Ext.define("Msg", {
 		
 		"App.biz.cads.myTasks.demand.crud.DemandAttachments" : {
 			path: "文件名"		
+		},
+		
+		"App.biz.cads.appSettings.maintenance.crud.TableResetRead" : {
+			name: "描述",
+			code: "表名",
+			del: "清空表"
 		}
 		
 	}

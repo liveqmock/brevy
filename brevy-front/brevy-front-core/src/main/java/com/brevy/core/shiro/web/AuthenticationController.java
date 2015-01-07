@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.brevy.core.shiro.ShiroConstants;
 import com.brevy.core.shiro.model.ApMenu;
+import com.brevy.core.shiro.model.ApUserSingle;
 import com.brevy.core.shiro.model.LoginInfo;
 import com.brevy.core.shiro.model.ShiroUser;
 import com.brevy.core.shiro.support.token.CustomLoginToken;
@@ -96,14 +98,17 @@ public class AuthenticationController extends BaseController {
 	}
 	
 	/**
-	 * @Description 获取当前登录用户的用户名
+	 * @Description 获取当前登录用户的中文名
 	 * @return
 	 * @author caobin
 	 */
 	@RequestMapping("/getCurrentUser")
 	@ResponseBody
-	public String getCurrentUser(){
-		return ShiroUtils.getCurrentUser().getUsername();
+	public ApUserSingle getCurrentUser(){
+		ShiroUser user = ShiroUtils.getCurrentUser();
+		ApUserSingle apUserSingle = new ApUserSingle();
+		BeanUtils.copyProperties(user, apUserSingle);
+		return apUserSingle;
 	}
 	
 	/**

@@ -4,6 +4,7 @@ Ext.define("userModel", {
     fields: [
     	{name: "id", mapping: "id"},
 	    {name: "username", mapping: "username"},  
+	    {name: "gender", mapping: "gender"},  
 	    {name: "password", mapping: "password"},  
 	    {name: "chName", mapping: "chName"},  
 	    {name: "deptId", mapping: "deptId"},
@@ -46,7 +47,13 @@ var statusDS = Ext.create("Ext.data.Store", {
 });
 
 
-
+var genderDS = Ext.create("Ext.data.Store", {
+    fields: ["name", "text"],
+    data : [
+        {"name":"M", "text":Msg.Constants.male},
+        {"name":"F", "text":Msg.Constants.female}
+    ]
+});
 
 var userDictPositionDS = Ext.create("Ext.data.Store", {
 	model: userDictModel,
