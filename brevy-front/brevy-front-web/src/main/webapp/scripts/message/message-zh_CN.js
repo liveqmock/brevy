@@ -738,6 +738,54 @@ Ext.define("Msg", {
 			name: "描述",
 			code: "表名",
 			del: "清空表"
+		},
+		
+		"App.biz.cads.myTasks.archive.gd.crud.ArchivedGDRead" : {
+			name: "工单名称/号",
+			recvDate: "接收日期",
+			execType: "主/协",
+			type: "类型",
+			briefName: "简称",
+			priority: "优先级",
+			requireFinishTime: "要求完成时间",
+			estimateJob: "预估工作量",
+			preCond: "前置条件",
+			implTeam: "对应团队",
+			pmName: "项目经理",
+			startDate: "开始时间",
+			ini: "INI",
+			rdp: "RDP",
+			ad: "A&D",
+			scp: "SCP",
+			sit: "SIT",
+			uat: "UAT",
+			pip: "PIP",
+			smp: "SMP",
+			progress: "进度",
+			finishDate: "结束时间",
+			usingResource: "所用资源",
+			usingTime: "所用工时",
+			attachType: "附件",
+			keywordSearch: "关键字查询",
+			format: "Y-m-d"		
+		},
+		
+		"App.biz.cads.myTasks.archive.demand.crud.ArchivedDemandRead" : {
+			prjName: "项目名称",
+			recvDate: "接收日期",
+			priority: "优先级",
+			requireFinishTime: "要求完成时间",
+			estimateDev: "预估开发量",
+			estimateTest: "预估测试量",
+			preCond: "前置条件",
+			implTeam: "对应团队",
+			startDate: "开始时间",
+			progress: "进度",
+			attachType: "附件",
+			status: "当前状态",
+			remark: "备注",
+			keywordSearch: "关键字查询",
+			format: "Y-m-d"
 		}
 		
 	}

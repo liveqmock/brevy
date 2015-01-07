@@ -5,8 +5,10 @@ import org.springframework.data.domain.Pageable;
 
 import com.brevy.front.biz.cads.model.CadDemand;
 import com.brevy.front.biz.cads.model.CadDemandAttach;
+import com.brevy.front.biz.cads.model.CadDemandHis;
 import com.brevy.front.biz.cads.model.CadGd;
 import com.brevy.front.biz.cads.model.CadGdAttach;
+import com.brevy.front.biz.cads.model.CadGdHis;
 
 /**
  * @description 我的任务Service
@@ -134,5 +136,24 @@ public interface MyTasksService {
 	 * @author caobin
 	 */
 	void demandArchive(long demandId);
+	
+	
+	/**
+	 * @description 查询已归档工单列表
+	 * @param keyword 查询关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<CadGdHis> findAllArchivedGDs(String keyword, Pageable pageable);
+	
+	/**
+	 * @description 查询已归档需求评估单列表
+	 * @param keyword 查询关键字
+	 * @param pageable
+	 * @return
+	 * @author caobin
+	 */
+	Page<CadDemandHis> findAllArchivedDemands(String keyword, Pageable pageable);
 	
 }

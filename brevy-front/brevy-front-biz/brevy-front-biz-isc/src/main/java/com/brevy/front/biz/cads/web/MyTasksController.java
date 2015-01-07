@@ -33,8 +33,10 @@ import com.brevy.core.support.exception.BizException;
 import com.brevy.core.support.web.BaseController;
 import com.brevy.front.biz.cads.model.CadDemand;
 import com.brevy.front.biz.cads.model.CadDemandAttach;
+import com.brevy.front.biz.cads.model.CadDemandHis;
 import com.brevy.front.biz.cads.model.CadGd;
 import com.brevy.front.biz.cads.model.CadGdAttach;
+import com.brevy.front.biz.cads.model.CadGdHis;
 import com.brevy.front.biz.cads.service.MyTasksService;
 
 /**
@@ -326,5 +328,38 @@ public class MyTasksController extends BaseController {
 	public ModelAndView demandArchive(@RequestBody Map<String, String> p){
 		myTasksService.demandArchive(getLongValue(p, "demandId"));
 		return this.successView();
+	}
+	
+	
+	/**
+	 * @description 获取技术中心已归档工单列表
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/archive/getGDHisList")
+	@ResponseBody
+	public Page<CadGdHis> getGDHisList(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		return myTasksService.findAllArchivedGDs(keyword, pageable);			
+	}
+	
+	/**
+	 * @description 获取技术中心已归档需求评估单列表
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	@RequestMapping("/archive/getDemandHisList")
+	@ResponseBody
+	public Page<CadDemandHis> getDemandHisList(@RequestBody Map<String, String> p){
+		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+		//获取查询参数
+		String keyword = getString(p, "query", "");
+		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
+		return myTasksService.findAllArchivedDemands(keyword, pageable);			
 	}
 }

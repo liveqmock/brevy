@@ -237,5 +237,16 @@ public class DefaultMyTasksService implements MyTasksService {
 		cadDemandDao.delete(cadDemand);
 		cadDemandAttachDao.deleteByDemandId(demandId);
 		cadRefDeptDemandDao.deleteByDemandId(demandId);
+	}
+
+	@Override
+	public Page<CadGdHis> findAllArchivedGDs(String keyword, Pageable pageable) {
+		return cadGdHisDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Override
+	public Page<CadDemandHis> findAllArchivedDemands(String keyword,
+			Pageable pageable) {
+		return cadDemandHisDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
 	}	
 }
