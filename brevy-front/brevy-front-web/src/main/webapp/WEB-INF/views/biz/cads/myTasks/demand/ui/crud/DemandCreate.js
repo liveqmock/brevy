@@ -176,7 +176,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			fieldLabel: this.required(this.assignToDepts),
 			name: "assignToDept",
 			flex: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "combo",
 			multiSelect: true,
 			triggerAction: "all",

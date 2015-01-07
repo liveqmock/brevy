@@ -384,7 +384,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			fieldLabel: this.required(this.assignToDepts),
 			name: "assignToDept",
 			flex: 1.5,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "combo",
 			multiSelect: true,
 			triggerAction: "all",

@@ -300,7 +300,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			newLine: 1,
 			allowBlank: true,
 			xtype: "textareafield",
-			maxLength: 256
+			maxLength: 256,
+			value: this.params.get("remark")
 		}
 		
 		
