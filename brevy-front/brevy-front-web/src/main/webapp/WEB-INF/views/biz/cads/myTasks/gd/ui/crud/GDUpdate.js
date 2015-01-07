@@ -293,6 +293,16 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			value: this.params.get("usingTime")
 		}
 		
+		var remark = {
+			fieldLabel: this.remark,
+			name: "remark",
+			flex: 1,
+			newLine: 1,
+			allowBlank: true,
+			xtype: "textareafield",
+			maxLength: 256
+		}
+		
 		
 		var updateBtn = {
 			text: Msg.App.update,
@@ -320,7 +330,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			id: "GDUpdate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 290,
+		    height: 380,
 		    width: 830,
 		    layout: "fit",
 		    modal: true,
@@ -361,7 +371,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 							collapsible: false
 						},
 						items:[
-							progress, finishDate, usingResource, usingTime
+							progress, finishDate, usingResource, usingTime, remark
 						]
 					}
 				],

@@ -27,7 +27,8 @@ Ext.define("ArchivedGDModel", {
 	    {name: "finishDate", mapping: "finishDate"},
 	    {name: "usingResource", mapping: "usingResource"},
 	    {name: "usingTime", mapping: "usingTime"},
-	    {name: "attachType", mapping: "attachType"}
+	    {name: "attachType", mapping: "attachType"},
+	    {name: "remark", mapping: "remark"}
     ]
 });
 

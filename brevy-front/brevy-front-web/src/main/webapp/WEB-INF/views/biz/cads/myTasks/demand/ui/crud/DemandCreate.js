@@ -301,6 +301,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 		  	closable : false,
 		    modal: true,
 		    items: {  
+		    	id: "DemandCreate.Upload",
 		    	xtype: "uploadpanel",
 		    	border: false,
 		    	addFileBtnText : this.addFileBtnText,
@@ -325,10 +326,30 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 						text : this.confirmFinish,			
 						width : 100,
 						handler : function(b) {
-							b.up("window").close();
-							Ext.getCmp("DemandCreate.addWin").close();
-							DemandDS.reload();
-							Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");
+							var complete = true;
+							Ext.getCmp("DemandCreate.Upload").getStore().each(function(r){
+								if(r.get("status") - 0 == -1){
+									complete = false;
+								}
+							});
+							if(!complete){
+								Pub.MsgBox.showMsgBox(Pub.MsgBox.CONFIRM, Msg.Prompt.confirmUpload, null, function(r){
+									if(r == "yes"){
+										b.up("window").close();
+										Ext.getCmp("DemandCreate.addWin").close();
+										DemandDS.reload();
+										Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");	
+									}
+								});
+							}else{
+								b.up("window").close();
+								Ext.getCmp("DemandCreate.addWin").close();
+								DemandDS.reload();
+								Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");
+							}
+							
+							
+							
 						},
 						scope : this
 					}]

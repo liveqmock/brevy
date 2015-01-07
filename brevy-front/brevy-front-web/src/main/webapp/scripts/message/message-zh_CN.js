@@ -42,6 +42,7 @@ Ext.define("Msg", {
 			confirmArchiveRec: "您确认归档当前选中记录吗？",
 			confirmDelNode: "您确认删除当前选中节点{0}吗？",
 			confirmDelNodeCascade: "您确认删除当前选中节点{0}及其所有子节点吗？",
+			confirmUpload: "您还有未上传的记录，确定完成？",
 			blankText : "{0}不能为空",
 			requiredText : "{0}必填",
 			SC_403 : "403 - 拒绝访问"
@@ -56,7 +57,7 @@ Ext.define("Msg", {
 					"<table border=0 >" +
 					"<tr>" +
 					"<td><img src='resources/extjs/images/logo/icon_ips.png'></td>" +
-					"<td><span class=default-title-font '>&nbsp;综合管理平台</span></td>" +
+					"<td><span class=default-title-font '>&nbsp;技术中心综合管理平台</span></td>" +
 					"</tr>" +
 					"</table>"+
 					"</div>",
@@ -594,6 +595,7 @@ Ext.define("Msg", {
 			usingResource: "所用资源",
 			usingTime: "所用工时",
 			attachType: "附件",
+			remark: "备注",
 			keywordSearch: "关键字查询",
 			format: "Y-m-d",
 			edit: "进度更新"
@@ -660,6 +662,7 @@ Ext.define("Msg", {
 			usingResource: "所用资源",
 			usingTime: "所用工时",
 			attachType: "附件",	
+			remark: "备注",
 			GDBasicInfo: "技术中心工单基本信息",
 			phases: "各阶段进阶",
 			resources: "进度与资源",
@@ -723,6 +726,10 @@ Ext.define("Msg", {
 		},
 		
 		"App.biz.cads.myTasks.demand.crud.DemandUpdate" : {
+			estimateDev: "预估开发量",
+			estimateTest: "预估测试量",
+			startDate: "开始时间",
+			attachType: "附件",
 			status: "当前状态",
 			remark: "备注",
 			DemandBasicInfo: "进度与资源",
@@ -766,6 +773,7 @@ Ext.define("Msg", {
 			usingResource: "所用资源",
 			usingTime: "所用工时",
 			attachType: "附件",
+			remark: "备注",
 			keywordSearch: "关键字查询",
 			format: "Y-m-d"		
 		},

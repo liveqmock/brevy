@@ -176,9 +176,9 @@ public class DefaultMyTasksService implements MyTasksService {
 		if(cadDemand.getId() > 0){//update part of Demand
 			savedDemand = cadDemandDao.findOne(cadDemand.getId());
 			BeanUtils.copyProperties(cadDemand, savedDemand, new String[]{
-				"id", "attachType", "assignToDept", "estimateDev","estimateTest",
-				"implTeam","implTeamIds","preCond","preCondIds","priority","prjName",
-				"recvDate","requireFinishTime","startDate"
+				"id", "attachType", "assignToDept","implTeam","implTeamIds",
+				"preCond","preCondIds","priority","prjName",
+				"recvDate","requireFinishTime"
 			});
 			cadDemandDao.save(savedDemand);
 		}else{

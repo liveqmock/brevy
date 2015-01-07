@@ -27,8 +27,7 @@ import com.brevy.core.shiro.util.ShiroUtils;
 @Entity
 @Table(name="CAD_GD_HIS")
 public class CadGdHis implements Serializable {
-
-	private static final long serialVersionUID = -1819377366833251936L;
+	private static final long serialVersionUID = 5283250880780801906L;
 
 	@Id
 	private long id;
@@ -115,6 +114,8 @@ public class CadGdHis implements Serializable {
 
 	@Column(name="USING_TIME")
 	private String usingTime;
+	
+	private String remark;
 	
 	@Transient
 	private long[] assignToDept;
@@ -373,6 +374,16 @@ public class CadGdHis implements Serializable {
 
 	public String getImplTeamIds() {
 		return implTeamIds;
+	}
+	
+	
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	public void setImplTeamIds(String[] implTeamIds) {

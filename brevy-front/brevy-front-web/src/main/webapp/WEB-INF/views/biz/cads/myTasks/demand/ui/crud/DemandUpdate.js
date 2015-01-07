@@ -22,6 +22,38 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 			xtype: "hidden",
 			value: this.params.get("id")
 		}
+		
+		var estimateDev = {
+			fieldLabel: this.estimateDev,
+			name: "estimateDev",
+			flex: 1,
+			allowBlank: true,
+			xtype: "textfield",
+			maxLength: 12,
+			value: this.params.get("estimateDev")
+		}
+		
+		var estimateTest = {
+			fieldLabel: this.estimateTest,
+			name: "estimateTest",
+			flex: 1,
+			allowBlank: true,
+			xtype: "textfield",
+			maxLength: 12,
+			value: this.params.get("estimateTest")
+		}
+		
+		var startDate = {
+			fieldLabel: this.startDate,
+			name: "startDate",
+			flex: 1,
+			newLine: 1,
+			allowBlank: true,
+			xtype: "datefield",
+			editable: false,
+			format: this.format,
+			value: this.params.get("startDate") ? new Date(this.params.get("startDate")) : null
+		}
 
 		var status = {
 			fieldLabel: this.required(this.status),
@@ -88,7 +120,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 			id: "DemandUpdate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 240,
+		    height: 300,
 		    width: 830,
 		    layout: "fit",
 		    modal: true,
@@ -110,7 +142,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 					collapsible: false
 				},
 				items:[
-					id, status, remark
+					id, estimateDev, estimateTest, startDate, status, remark
 				],
 				buttonAlign: "center",
 				buttons: [updateBtn, resetBtn]				
