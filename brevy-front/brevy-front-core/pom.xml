@@ -422,7 +422,12 @@
 			<groupId>org.mvel</groupId>
 			<artifactId>mvel2</artifactId>
 		</dependency>
-
+		
+		<!-- mail -->
+		<dependency>
+		  <groupId>javax.mail</groupId>
+		  <artifactId>mail</artifactId>
+		</dependency>
 
 		<!-- TestNG -->
 		<dependency>

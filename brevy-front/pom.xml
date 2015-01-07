@@ -75,6 +75,7 @@
 		<yahoo.yui.version>2.4.7</yahoo.yui.version>
 		<mvel.version>2.1.5.Final</mvel.version>
 		<testng.version>6.8.1</testng.version>
+		<mail.version>1.4.7</mail.version>
 		<!-- Plugins -->
 		<compiler.plugin.version>3.1</compiler.plugin.version>
 		<resource.plugin.version>2.6</resource.plugin.version>
@@ -480,6 +481,13 @@
 				<scope>provided</scope>
 			</dependency>
 
+			<!-- java mail -->
+			<dependency>
+			  <groupId>javax.mail</groupId>
+			  <artifactId>mail</artifactId>
+			  <version>${mail.version}</version>
+			</dependency>
+			
 			<!-- apache httpcomponents -->
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
