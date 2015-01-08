@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import javax.mail.BodyPart;
 import javax.mail.FetchProfile;
+import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -30,10 +31,10 @@ public class MainTest {
 		}
 		Properties props = new Properties();
 		props.setProperty("mail.store.protocol", "pop3");
-		props.setProperty("mail.pop3.host", "pop3.qiye.163.com");
+		props.setProperty("mail.pop3.host", "pop3.163.com");
 		Session session = Session.getDefaultInstance(props);
 		Store store = session.getStore("pop3");
-		store.connect("username", "password");
+		store.connect("manticorecao", "j3bdGA.");
 		POP3Folder folder = (POP3Folder) store.getFolder("INBOX");
 		folder.open(Folder.READ_WRITE);
 		FetchProfile profile = new FetchProfile();
@@ -63,16 +64,17 @@ public class MainTest {
 			if (seen) {
 				System.out.println("已读邮件");
 				System.out.println("主题：" + message.getSubject());
-				System.out.println("内容：" + message.getContent());
+				/*System.out.println("内容：" + message.getContent());
 				Object content = message.getContent();
 			
 				if (content instanceof MimeMultipart) { 
 					MimeMultipart multipart =(MimeMultipart) content; parseMultipart(multipart); 
-				}
+				}*/
 
 			} else {
 				System.out.println("未读邮件");
 				System.out.println("主题：" + message.getSubject());
+				//message.setFlag(Flag.DELETED, true);
 			}
 
 			// 删除邮件
