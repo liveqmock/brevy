@@ -40,9 +40,10 @@ public class CadGdHis implements Serializable {
 	@Column(name="BRIEF_NAME")
 	private String briefName;
 
-	@Column(name="CREATE_TIME")
+	@Column(name="CREATE_TIME", updatable=false)
 	private Timestamp createTime;
 
+	@Column(updatable=false)
 	private String creator;
 
 	@Column(name="ESTIMATE_JOB")

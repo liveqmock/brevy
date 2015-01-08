@@ -54,9 +54,10 @@ public class ApUserSingle implements Serializable {
 	@Column(name="CH_SPELL_NAME")
 	private String chSpellName;
 
-	@Column(name="CREATE_TIME")
+	@Column(name="CREATE_TIME", updatable=false)
 	private Timestamp createTime;
-
+	
+	@Column(updatable=false)
 	private String creator;
 
 	@Column(name="FIRST_NAME")

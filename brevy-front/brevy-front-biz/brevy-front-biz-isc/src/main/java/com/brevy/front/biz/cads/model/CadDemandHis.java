@@ -27,9 +27,10 @@ public class CadDemandHis implements Serializable {
 	@Column(name="ATTACH_TYPE")
 	private String attachType;
 
-	@Column(name="CREATE_TIME")
+	@Column(name="CREATE_TIME", updatable=false)
 	private Timestamp createTime;
 
+	@Column(updatable=false)
 	private String creator;
 
 	@Column(name="ESTIMATE_DEV")

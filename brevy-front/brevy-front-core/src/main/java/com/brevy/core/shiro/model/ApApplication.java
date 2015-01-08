@@ -57,9 +57,10 @@ public class ApApplication implements Serializable {
 
 	private String updator;
 	
-	@Column(name="CREATE_TIME")
+	@Column(name="CREATE_TIME", updatable=false)
 	private Timestamp createTime;
 
+	@Column(updatable=false)
 	private String creator;
 	
 

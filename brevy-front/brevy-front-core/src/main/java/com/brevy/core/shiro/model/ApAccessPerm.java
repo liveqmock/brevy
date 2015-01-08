@@ -62,9 +62,10 @@ public class ApAccessPerm implements Serializable {
 
 	private String code;
 
-	@Column(name="CREATE_TIME")
+	@Column(name="CREATE_TIME", updatable=false)
 	private Timestamp createTime;
 
+	@Column(updatable=false)
 	private String creator;
 
 	private String name;

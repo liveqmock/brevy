@@ -52,9 +52,10 @@ public class ApGroupSingle implements Serializable {
 
 	private String code;
 
-	@Column(name="CREATE_TIME")
+	@Column(name="CREATE_TIME", updatable=false)
 	private Timestamp createTime;
 
+	@Column(updatable=false)
 	private String creator;
 
 	@Column(name="DESC_")

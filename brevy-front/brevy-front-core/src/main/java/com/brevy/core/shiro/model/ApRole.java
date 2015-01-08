@@ -74,9 +74,10 @@ public class ApRole implements Serializable {
 	@Column(name="UPDATE_TIME")
 	private Timestamp updateTime;
 
-	@Column(name="CREATE_TIME")
+	@Column(name="CREATE_TIME", updatable=false)
 	private Timestamp createTime;
 
+	@Column(updatable=false)
 	private String creator;
 	
 	/**

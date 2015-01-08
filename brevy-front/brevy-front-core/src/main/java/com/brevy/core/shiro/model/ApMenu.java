@@ -81,10 +81,9 @@ public class ApMenu implements Serializable {
 	@Column(name="CREATE_TIME", updatable=false)
 	private Timestamp createTime;
 	
-	@Column(insertable=false)
 	private String updator;
 	
-	@Column(name="UPDATE_TIME", insertable=false)
+	@Column(name="UPDATE_TIME")
 	private Timestamp updateTime;
 	
 	@Transient

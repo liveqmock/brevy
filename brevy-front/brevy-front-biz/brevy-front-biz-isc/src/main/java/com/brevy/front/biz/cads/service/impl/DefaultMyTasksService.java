@@ -78,7 +78,7 @@ public class DefaultMyTasksService implements MyTasksService {
 				"id", "attachType","briefName","estimateJob","execType",
 				"implTeam", "implTeamIds", "name", "pmName", "pmNameIds",
 				"preCond","preCondIds","priority","recvDate","requireFinishTime",
-				"startDate", "type", "assignToDept"		
+				"startDate", "type", "assignToDept"
 			});
 			cadGdDao.save(savedGd);
 		}else{
