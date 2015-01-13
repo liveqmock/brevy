@@ -22,7 +22,7 @@ public interface CadGdDao extends CrudRepository<CadGd, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from CadGd a, CadRefDeptGd b where a.id=b.id.gdId and b.id.deptId=:deptId and (lower(a.name) like lower(:kw) or lower(a.briefName) like lower(:kw) or lower(a.implTeam) like lower(:kw) or lower(a.pmName) like lower(:kw)) order by a.recvDate")
+	@Query("select a from CadGd a, CadRefDeptGd b where a.id=b.id.gdId and b.id.deptId=:deptId and (lower(a.name) like lower(:kw) or lower(a.briefName) like lower(:kw) or lower(a.implTeam) like lower(:kw) or lower(a.pmName) like lower(:kw)) order by a.id")
 	Page<CadGd> searchByKeyword(@Param("deptId")long deptId, @Param("kw")String keyword, Pageable pageable);
 	
 	
@@ -33,6 +33,6 @@ public interface CadGdDao extends CrudRepository<CadGd, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from CadGd a where lower(a.name) like lower(:kw) or lower(a.briefName) like lower(:kw) or lower(a.implTeam) like lower(:kw) or lower(a.pmName) like lower(:kw) order by a.recvDate")
+	@Query("select a from CadGd a where lower(a.name) like lower(:kw) or lower(a.briefName) like lower(:kw) or lower(a.implTeam) like lower(:kw) or lower(a.pmName) like lower(:kw) order by a.id")
 	Page<CadGd> searchByKeyword(@Param("kw")String keyword, Pageable pageable);
 }

@@ -61,7 +61,6 @@ Ext.define("Pub.Data", {
  */
 Ext.define("Pub.Utils", {
 	statics : {
-
 		/**
 		 * @description 获取(替换占位符后)消息
 		 * @param {string} msg 原始消息 (如："Hello, {0}. Hello, {1}")
@@ -132,6 +131,7 @@ Ext.define("Pub.Utils", {
 		 * @description Grid单元格提示
 		 * @param v 值
 		 * @param p 单元格
+		 * @return
 		 * @static
 		 * @author caobin
 		 */
@@ -190,6 +190,26 @@ Ext.define("Pub.Notification", {
 				slideBackAnimation: "easeIn"
 			}).show();
 		}
+	}
+});
+
+/**
+ * @description 支持类
+ * @author caobin
+ */
+Ext.define("Pub.Support", {
+
+	statics: {
+		 /**
+		 * @description date类型转换
+		 * @param {timestamp} v 日期的timestamp 
+		 * @static
+		 * @author caobin
+		 */
+		dateConvert: function(v){
+	    	if(!v)return v;
+	    	return new Date(v);
+	    }
 	}
 });
 
@@ -791,4 +811,19 @@ Ext.override(Ext.data.Connection, {
 		}	
 		this.callParent(arguments);
 	}
+});
+
+Ext.form.field.ComboBox.override({
+    setValue: function(v) {
+        if(!this.store.isLoaded && this.queryMode == 'remote') {
+        	this.callOverridden(arguments);
+            this.store.addListener('load', function() {
+                this.store.isLoaded = true;
+                this.setValue(v);
+            }, this);
+           this.store.load();         
+        } else {
+            this.callOverridden(arguments);
+        }
+    }
 });

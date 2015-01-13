@@ -105,7 +105,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandRead", {
                 metadata.tdAttr = 'data-qtip="' + value +'"';  
                 return value;  
             }},
-	    	{text: this.attachType, dataIndex: "attachType", xtype:"actioncolumn", flex: 4, items:[
+	    	{text: this.attachType, dataIndex: "attachType", xtype:"actioncolumn", flex: 4,  menuText: this.attachType, items:[
 	    		{
 	    			getClass: function(value, meta){
 	    				if(!value)return value;

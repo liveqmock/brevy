@@ -30,6 +30,38 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			maxLength: 32
 		}
 		
+		var gdType = {
+			fieldLabel: this.gdType,
+			name: "gdType",
+			flex: 1,
+			newLine: 1,
+			allowBlank: true,
+			xtype: "combo",
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			emptyText: this.emptyStatus,
+			store: dictDS_22,
+			displayField: "name",
+			valueField: "id",
+			plugins: ["clearbutton"]
+		}
+		
+		var prjType = {
+			fieldLabel: this.prjType,
+			name: "prjType",
+			flex: 1,
+			allowBlank: true,
+			xtype: "combo",
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			emptyText: this.emptyStatus,
+			store: dictDS_23,
+			displayField: "name",
+			valueField: "id",
+			plugins: ["clearbutton"]
+		}
 		
 		var recvDate = {
 			fieldLabel: this.required(this.recvDate),
@@ -217,7 +249,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: getDictDS_20(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -233,7 +265,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: getDictDS_20(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -249,7 +281,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: getDictDS_20(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -265,7 +297,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: getDictDS_20(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -282,7 +314,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: getDictDS_20(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -298,7 +330,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: getDictDS_20(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -314,7 +346,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: getDictDS_20(),
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -331,7 +363,54 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: dictDS_20,
+			store: getDictDS_20(),
+			displayField: "name",
+			valueField: "id",
+			plugins: ["clearbutton"]
+		}
+		
+		
+		var devFinishDate = {
+			fieldLabel: this.devFinishDate,
+			name: "devFinishDate",
+			flex: 1,
+			allowBlank: true,
+			xtype: "datefield",
+			editable: false,
+			format: this.format
+		}
+		
+		var sitWorkload = {
+			fieldLabel: this.sitWorkload,
+			name: "sitWorkload",
+			flex: 1,
+			allowBlank: true,
+			xtype: "textfield",
+			maxLength: 12
+		}
+		
+		var sitFinishDate = {
+			fieldLabel: this.sitFinishDate,
+			name: "sitFinishDate",
+			flex: 1,
+			newLine: 1,
+			allowBlank: true,
+			xtype: "datefield",
+			editable: false,
+			format: this.format
+		}
+		
+		var status = {
+			fieldLabel: this.status,
+			name: "status",
+			flex: 1,
+			allowBlank: true,
+			xtype: "combo",
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			emptyText: this.emptyStatus,
+			store: dictDS_24,
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -341,7 +420,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			fieldLabel: this.progress,
 			fieldStyle: Pub.Style.fieldIcon(this.fieldFugueIconRES + "edit-percent.png", "right"),
 			name: "progress",
-			flex: 1.5,
+			flex: 1,
 			allowBlank: true,
 			xtype: "numberfield",
 			hideTrigger: true,
@@ -353,7 +432,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		var finishDate = {
 			fieldLabel: this.finishDate,
 			name: "finishDate",
-			flex: 2,
+			flex: 1,
 			allowBlank: true,
 			xtype: "datefield",
 			editable: false,
@@ -363,7 +442,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		var usingResource = {
 			fieldLabel: this.usingResource,
 			name: "usingResource",
-			flex: 2,
+			flex: 1,
+			newLine: 1,
 			allowBlank: true,
 			xtype: "textfield",
 			maxLength: 12
@@ -373,7 +453,6 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			fieldLabel: this.usingTime,
 			name: "usingTime",
 			flex: 1,
-			newLine: 1,
 			allowBlank: true,
 			xtype: "textfield",
 			maxLength: 12
@@ -383,7 +462,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			id: "GDCreate.assignToDepts",
 			fieldLabel: this.required(this.assignToDepts),
 			name: "assignToDept",
-			flex: 1.5,
+			flex: 1,
 			allowBlank: false,
 			xtype: "combo",
 			multiSelect: true,
@@ -434,7 +513,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			id: "GDCreate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 500,
+		    height: 550,
 		    width: 830,
 		    layout: "fit",
 		    modal: true,
@@ -461,9 +540,9 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 							collapsible: false
 						},
 						items:[
-							name, briefName, recvDate, execType, type, priority, requireFinishTime,
-							estimateJob, preCond, preCondText, implTeam, implTeamText, pmName, pmNameText, 
-							startDate
+							name, briefName, gdType, prjType, recvDate, execType, type, priority, 
+							requireFinishTime, estimateJob, preCond, preCondText, implTeam, 
+							implTeamText, pmName, pmNameText, startDate
 						]
 					},
 					{
@@ -489,7 +568,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 							collapsible: false
 						},
 						items:[
-							progress, finishDate, usingResource, usingTime, assignToDepts
+							progress, devFinishDate, sitWorkload, sitFinishDate, status, 
+							finishDate, usingResource, usingTime, assignToDepts
 						]
 					}
 				],

@@ -8,21 +8,21 @@ Ext.define("App.systemMGR.authCFG.user.crud.UserUpdate", {
 	formUrl: function(){
 		return this.getRequestRes("/maintenance/user/saveOrUpdate.json");
 	},
+
 	
-	initStore: function(){
-		userDictPositionDS.load();
+	beforeInit: function(){
+		this.callParent();
 		userDictPositionDS.on("load", function(){
 			Ext.getCmp("user.positionId").setValue(this.params.get("positionId"));
 		}, this);
-		userDictDeptDS.load();
+		userDictPositionDS.load();		
 		userDictDeptDS.on("load", function(){
 			Ext.getCmp("user.deptId").setValue(this.params.get("deptId"));
 		}, this);
+		userDictDeptDS.load();
 	},
 
 	init: function(){
-	
-		this.initStore();
 		
 		var id = {
 			name: "id",

@@ -26,31 +26,37 @@ Ext.define("GDModel", {
     fields: [
     	{name: "id", mapping: "id"},
 	    {name: "name", mapping: "name"},  
-	    {name: "recvDate", mapping: "recvDate"},
-	    {name: "execType", mapping: "execType"},
-	    {name: "type", mapping: "type"},
+	    {name: "recvDate", mapping: "recvDate", convert: Pub.Support.dateConvert},
+	    {name: "execType", mapping: "execType", type: "int"},
+	    {name: "type", mapping: "type", type: "int"},
 	    {name: "briefName", mapping: "briefName"},
-	    {name: "priority", mapping: "priority"},
+	    {name: "priority", mapping: "priority", type: "int"},
 	    {name: "requireFinishTime", mapping: "requireFinishTime"},
 	    {name: "estimateJob", mapping: "estimateJob"},
 	    {name: "preCond", mapping: "preCond"},
 	    {name: "implTeam", mapping: "implTeam"},
 	    {name: "pmName", mapping: "pmName"},
-	    {name: "startDate", mapping: "startDate"},
-	    {name: "ini", mapping: "ini"},
-	    {name: "rdp", mapping: "rdp"},
-	    {name: "ad", mapping: "ad"},
-	    {name: "scp", mapping: "scp"},
-	    {name: "sit", mapping: "sit"},
-	    {name: "uat", mapping: "uat"},
-	    {name: "pip", mapping: "pip"},
-	    {name: "smp", mapping: "smp"},
+	    {name: "startDate", mapping: "startDate", convert: Pub.Support.dateConvert},
+	    {name: "ini", mapping: "ini", type: "int"},
+	    {name: "rdp", mapping: "rdp", type: "int"},
+	    {name: "ad", mapping: "ad", type: "int"},
+	    {name: "scp", mapping: "scp", type: "int"},
+	    {name: "sit", mapping: "sit", type: "int"},
+	    {name: "uat", mapping: "uat", type: "int"},
+	    {name: "pip", mapping: "pip", type: "int"},
+	    {name: "smp", mapping: "smp", type: "int"},
 	    {name: "progress", mapping: "progress"},
-	    {name: "finishDate", mapping: "finishDate"},
+	    {name: "finishDate", mapping: "finishDate", convert: Pub.Support.dateConvert},
 	    {name: "usingResource", mapping: "usingResource"},
 	    {name: "usingTime", mapping: "usingTime"},
 	    {name: "attachType", mapping: "attachType"},
-	    {name: "remark", mapping: "remark"}
+	    {name: "remark", mapping: "remark"},
+	    {name: "devFinishDate", mapping: "devFinishDate", convert: Pub.Support.dateConvert},
+	    {name: "sitWorkload", mapping: "sitWorkload"},
+	    {name: "sitFinishDate", mapping: "sitFinishDate", convert: Pub.Support.dateConvert},
+	    {name: "status", mapping: "status", type: "int"},
+	    {name: "gdType", mapping: "gdType", type: "int"},
+	    {name: "prjType", mapping: "prjType", type: "int"}
     ]
 });
 
@@ -107,8 +113,20 @@ var dictDS_2 = Ext.create("Ext.data.Store", dictDSConfig);
 dictDSConfig.proxy.extraParams = {"dictId": 1};
 var dictDS_1 = Ext.create("Ext.data.Store", dictDSConfig);
 
-dictDSConfig.proxy.extraParams = {"dictId": 20};
-var dictDS_20 = Ext.create("Ext.data.Store", dictDSConfig);
+
+var getDictDS_20 = function(){
+	dictDSConfig.proxy.extraParams = {"dictId": 20};
+	return Ext.create("Ext.data.Store", dictDSConfig);
+}
+	
+dictDSConfig.proxy.extraParams = {"dictId": 22};
+var dictDS_22 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 23};
+var dictDS_23 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 24};
+var dictDS_24 = Ext.create("Ext.data.Store", dictDSConfig);
 
 
 Ext.define("userModel", {

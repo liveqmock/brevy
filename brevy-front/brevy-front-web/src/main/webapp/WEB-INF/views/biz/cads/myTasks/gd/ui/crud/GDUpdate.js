@@ -9,26 +9,19 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 		return this.getRequestRes("/biz/cads/myTasks/gd/saveOrUpdate.json");
 	},
 
-	
-	beforeInit: function(){
-		this.callParent();			
-	},
+
 	
 	getPhasesStore: function(){	
-		Ext.apply(dictDSConfig, {autoLoad: true});
-		Ext.apply(dictDSConfig.proxy.extraParams, {"dictId": 20});
-		return Ext.create("Ext.data.Store", dictDSConfig);
+		return getDictDS_20();
 	},
 	
 	init : function(){	
 		var id = {
 			name: "id",
-			xtype: "hidden",
-			value: this.params.get("id")
+			xtype: "hidden"
 		}
 
 		var ini = {
-			id: Ext.id(),
 			fieldLabel: this.ini,
 			name: "ini",
 			flex: 1,
@@ -41,19 +34,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
-			queryMode: "local",
-			plugins: ["clearbutton"],
-			listeners: {
-				boxready: {
-					fn: function(c){
-						c.getStore().on("load", function(store){
-							c.setValue(this.params.get("ini")-0);
-						}, this);
-						c.fireEvent("select");
-					},
-					scope: this
-				}
-			}
+			plugins: ["clearbutton"]
 		}
 		
 		var rdp = {
@@ -69,18 +50,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
-			plugins: ["clearbutton"],
-			listeners: {
-				boxready: {
-					fn: function(c){
-						c.getStore().on("load", function(store){
-							c.setValue(this.params.get("rdp")-0);
-						}, this);
-						c.fireEvent("select");
-					},
-					scope: this
-				}
-			}
+			plugins: ["clearbutton"]
 		}
 		
 		var ad = {
@@ -96,18 +66,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
-			plugins: ["clearbutton"],
-			listeners: {
-				boxready: {
-					fn: function(c){
-						c.getStore().on("load", function(store){
-							c.setValue(this.params.get("ad")-0);
-						}, this);
-						c.fireEvent("select");
-					},
-					scope: this
-				}
-			}
+			plugins: ["clearbutton"]
 		}
 		
 		var scp = {
@@ -123,18 +82,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
-			plugins: ["clearbutton"],
-			listeners: {
-				boxready: {
-					fn: function(c){
-						c.getStore().on("load", function(store){
-							c.setValue(this.params.get("scp")-0);
-						}, this);
-						c.fireEvent("select");
-					},
-					scope: this
-				}
-			}
+			plugins: ["clearbutton"]
 		}
 		
 		var sit = {
@@ -151,18 +99,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
-			plugins: ["clearbutton"],
-			listeners: {
-				boxready: {
-					fn: function(c){
-						c.getStore().on("load", function(store){
-							c.setValue(this.params.get("sit")-0);
-						}, this);
-						c.fireEvent("select");
-					},
-					scope: this
-				}
-			}
+			plugins: ["clearbutton"]
 		}
 		
 		var uat = {
@@ -178,18 +115,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
-			plugins: ["clearbutton"],
-			listeners: {
-				boxready: {
-					fn: function(c){
-						c.getStore().on("load", function(store){
-							c.setValue(this.params.get("uat")-0);
-						}, this);
-						c.fireEvent("select");
-					},
-					scope: this
-				}
-			}
+			plugins: ["clearbutton"]
 		}
 		
 		var pip = {
@@ -205,18 +131,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
-			plugins: ["clearbutton"],
-			listeners: {
-				boxready: {
-					fn: function(c){
-						c.getStore().on("load", function(store){
-							c.setValue(this.params.get("pip")-0);
-						}, this);
-						c.fireEvent("select");
-					},
-					scope: this
-				}
-			}
+			plugins: ["clearbutton"]
 		}
 		
 		
@@ -233,64 +148,96 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			store: this.getPhasesStore(),
 			displayField: "name",
 			valueField: "id",
-			plugins: ["clearbutton"],
-			listeners: {
-				boxready: {
-					fn: function(c){
-						c.getStore().on("load", function(store){
-							c.setValue(this.params.get("smp")-0);
-						}, this);
-						c.fireEvent("select");
-					},
-					scope: this
-				}
-			}
+			plugins: ["clearbutton"]
+		}
+		
+		var devFinishDate = {
+			fieldLabel: this.devFinishDate,
+			name: "devFinishDate",
+			flex: 1,
+			allowBlank: true,
+			xtype: "datefield",
+			editable: false,
+			format: this.format
+		}
+		
+		var sitWorkload = {
+			fieldLabel: this.sitWorkload,
+			name: "sitWorkload",
+			flex: 1,
+			newLine: 1,
+			allowBlank: true,
+			xtype: "textfield",
+			maxLength: 12
+		}
+		
+		var sitFinishDate = {
+			fieldLabel: this.sitFinishDate,
+			name: "sitFinishDate",
+			flex: 1,
+			allowBlank: true,
+			xtype: "datefield",
+			editable: false,
+			format: this.format
+		}
+		
+		var status = {
+			fieldLabel: this.status,
+			name: "status",
+			flex: 1,		
+			newLine: 1,
+			allowBlank: true,
+			xtype: "combo",
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			emptyText: this.emptyStatus,
+			store: dictDS_24,
+			displayField: "name",
+			valueField: "id",
+			plugins: ["clearbutton"]
 		}
 		
 		var progress = {
 			fieldLabel: this.progress,
 			fieldStyle: Pub.Style.fieldIcon(this.fieldFugueIconRES + "edit-percent.png", "right"),
 			name: "progress",
-			flex: 1.5,
+			flex: 1,
 			allowBlank: true,
 			xtype: "numberfield",
 			hideTrigger: true,
 			value: 0,
 	        maxValue: 100,
-	        minValue: 0,
-			value: this.params.get("progress")
+	        minValue: 0
 		}
 		
 		var finishDate = {
 			fieldLabel: this.finishDate,
 			name: "finishDate",
-			flex: 2,
+			flex: 1,
 			allowBlank: true,
 			xtype: "datefield",
 			editable: false,
-			format: this.format,
-			value: this.params.get("finishDate") ? new Date(this.params.get("finishDate")) : null
+			format: this.format
 		}
 		
 		var usingResource = {
 			fieldLabel: this.usingResource,
 			name: "usingResource",
-			flex: 2,
+			flex: 1,
+			newLine: 1,
 			allowBlank: true,
 			xtype: "textfield",
-			maxLength: 12,
-			value: this.params.get("usingResource")
+			maxLength: 12
 		}
 		
 		var usingTime = {
 			fieldLabel: this.usingTime,
 			name: "usingTime",
 			flex: 1,
-			newLine: 1,
 			allowBlank: true,
 			xtype: "textfield",
-			maxLength: 12,
-			value: this.params.get("usingTime")
+			maxLength: 12
 		}
 		
 		var remark = {
@@ -300,8 +247,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			newLine: 1,
 			allowBlank: true,
 			xtype: "textareafield",
-			maxLength: 256,
-			value: this.params.get("remark")
+			maxLength: 256
 		}
 		
 		
@@ -331,7 +277,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			id: "GDUpdate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 380,
+		    height: 460,
 		    width: 830,
 		    layout: "fit",
 		    modal: true,
@@ -347,7 +293,12 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 				frame: false,
 				bodyStyle: Pub.Style.grayBody,
 				xtype: "form",
-				labelWidth: 100,				
+				labelWidth: 100,
+				listeners:{
+			    	afterrender: function(f){		    		
+			    		f.getForm().loadRecord(me.params)
+			    	}
+			    },
 				items: [
 					{
 						xtype: "xform",
@@ -372,7 +323,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 							collapsible: false
 						},
 						items:[
-							progress, finishDate, usingResource, usingTime, remark
+							progress, devFinishDate, sitWorkload, sitFinishDate, status,
+							finishDate, usingResource, usingTime, remark
 						]
 					}
 				],

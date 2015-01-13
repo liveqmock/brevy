@@ -570,6 +570,7 @@ Ext.define("Msg", {
 		},
 		
 		"App.biz.cads.myTasks.gd.crud.GDRead" : {
+			id: "编号",
 			name: "工单名称/号",
 			recvDate: "接收日期",
 			execType: "主/协",
@@ -577,7 +578,7 @@ Ext.define("Msg", {
 			briefName: "简称",
 			priority: "优先级",
 			requireFinishTime: "要求完成时间",
-			estimateJob: "预估工作量",
+			estimateJob: "开发工作量",
 			preCond: "前置条件",
 			implTeam: "对应团队",
 			pmName: "项目经理",
@@ -591,14 +592,21 @@ Ext.define("Msg", {
 			pip: "PIP",
 			smp: "SMP",
 			progress: "进度",
-			finishDate: "结束时间",
+			finishDate: "实际完成时间",
 			usingResource: "所用资源",
 			usingTime: "所用工时",
 			attachType: "附件",
 			remark: "备注",
 			keywordSearch: "关键字查询",
 			format: "Y-m-d",
-			edit: "进度更新"
+			edit: "进度更新",
+			devFinishDate: "开发完成时间",
+			sitWorkload: "SIT工作量",
+			sitFinishDate: "SIT完成时间",
+			status: "状态",
+			gdType: "工单类型",
+			prjType: "项目类型"
+			
 		},
 		
 		"App.biz.cads.myTasks.gd.crud.GDCreate" : {
@@ -609,7 +617,7 @@ Ext.define("Msg", {
 			briefName: "简称",
 			priority: "优先级",
 			requireFinishTime: "要求完成时间",
-			estimateJob: "预估工作量",
+			estimateJob: "开发工作量",
 			preCond: "前置条件",
 			implTeam: "对应团队",
 			pmName: "项目经理",
@@ -623,7 +631,7 @@ Ext.define("Msg", {
 			pip: "PIP",
 			smp: "SMP",
 			progress: "进度",
-			finishDate: "结束时间",
+			finishDate: "实际完成时间",
 			usingResource: "所用资源",
 			usingTime: "所用工时",
 			attachType: "附件",	
@@ -639,13 +647,20 @@ Ext.define("Msg", {
 			emptyImplTeam: "请选择对应团队(可多选)",
 			emptyPmName: "请选择项目经理(可多选)",
 			emptyPhase: "请选择进阶状态",
+			emptyStatus: "请选择状态",
 			emptyAssignToDeptsCond: "请选择工单需要分配到的部门(可多选)",
 			addFileBtnText: Ext.isIE ? '选择文件(双击)' : '选择文件',
 			uploadBtnText: '上传',
 			removeBtnText: '清空列表',
 			cancelBtnText: '中断上传',
 			addAttachments: "添加附件",
-			confirmFinish: "确定完成"
+			confirmFinish: "确定完成",
+			devFinishDate: "开发完成时间",
+			sitWorkload: "SIT工作量",
+			sitFinishDate: "SIT完成时间",
+			status: "状态",
+			gdType: "工单类型",
+			prjType: "项目类型"
 		},
 		
 		"App.biz.cads.myTasks.gd.crud.GDUpdate" : {
@@ -658,7 +673,7 @@ Ext.define("Msg", {
 			pip: "PIP",
 			smp: "SMP",
 			progress: "进度",
-			finishDate: "结束时间",
+			finishDate: "实际完成时间",
 			usingResource: "所用资源",
 			usingTime: "所用工时",
 			attachType: "附件",	
@@ -667,7 +682,12 @@ Ext.define("Msg", {
 			phases: "各阶段进阶",
 			resources: "进度与资源",
 			format: "Y年m月d日",
-			emptyPhase: "请选择进阶状态"
+			emptyPhase: "请选择进阶状态",
+			emptyStatus: "请选择状态",
+			devFinishDate: "开发完成时间",
+			sitWorkload: "SIT工作量",
+			sitFinishDate: "SIT完成时间",
+			status: "状态"
 		},
 		
 		"App.biz.cads.myTasks.gd.crud.GDAttachments" : {
@@ -748,6 +768,7 @@ Ext.define("Msg", {
 		},
 		
 		"App.biz.cads.myTasks.archive.gd.crud.ArchivedGDRead" : {
+			id: "编号",
 			name: "工单名称/号",
 			recvDate: "接收日期",
 			execType: "主/协",
@@ -755,7 +776,7 @@ Ext.define("Msg", {
 			briefName: "简称",
 			priority: "优先级",
 			requireFinishTime: "要求完成时间",
-			estimateJob: "预估工作量",
+			estimateJob: "开发工作量",
 			preCond: "前置条件",
 			implTeam: "对应团队",
 			pmName: "项目经理",
@@ -769,13 +790,19 @@ Ext.define("Msg", {
 			pip: "PIP",
 			smp: "SMP",
 			progress: "进度",
-			finishDate: "结束时间",
+			finishDate: "实际完成时间",
 			usingResource: "所用资源",
 			usingTime: "所用工时",
 			attachType: "附件",
 			remark: "备注",
 			keywordSearch: "关键字查询",
-			format: "Y-m-d"		
+			format: "Y-m-d",
+			devFinishDate: "开发完成时间",
+			sitWorkload: "SIT工作量",
+			sitFinishDate: "SIT完成时间",
+			status: "状态",
+			gdType: "工单类型",
+			prjType: "项目类型"
 		},
 		
 		"App.biz.cads.myTasks.archive.demand.crud.ArchivedDemandRead" : {

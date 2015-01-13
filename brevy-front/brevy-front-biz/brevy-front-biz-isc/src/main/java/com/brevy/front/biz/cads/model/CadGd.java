@@ -31,7 +31,7 @@ import com.brevy.core.shiro.util.ShiroUtils;
 @Table(name="CAD_GD")
 public class CadGd implements Serializable {
 
-	private static final long serialVersionUID = -1826311379240304385L;
+	private static final long serialVersionUID = 7602473673418079908L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="CAD_GD_SEQ")
@@ -132,6 +132,23 @@ public class CadGd implements Serializable {
 	private String usingTime;
 	
 	private String remark;
+	
+	@Column(name="DEV_FINISH_DATE")
+	private Timestamp devFinishDate;
+	
+	@Column(name="SIT_WORKLOAD")
+	private String sitWorkload;
+	
+	@Column(name="SIT_FINISH_DATE")
+	private Timestamp sitFinishDate;
+	
+	private String status;
+	
+	@Column(name="GD_TYPE")
+	private String gdType;
+	
+	@Column(name="PRJ_TYPE")
+	private String prjType;
 	
 	@Transient
 	private long[] assignToDept;
@@ -425,6 +442,55 @@ public class CadGd implements Serializable {
 		this.preCondIds = ArrayUtils.toString(preCondIds);
 	}
 	
+	
+	public Timestamp getDevFinishDate() {
+		return devFinishDate;
+	}
+
+	public void setDevFinishDate(Timestamp devFinishDate) {
+		this.devFinishDate = devFinishDate;
+	}
+
+	public String getSitWorkload() {
+		return sitWorkload;
+	}
+
+	public void setSitWorkload(String sitWorkload) {
+		this.sitWorkload = sitWorkload;
+	}
+
+	public Timestamp getSitFinishDate() {
+		return sitFinishDate;
+	}
+
+	public void setSitFinishDate(Timestamp sitFinishDate) {
+		this.sitFinishDate = sitFinishDate;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getGdType() {
+		return gdType;
+	}
+
+	public void setGdType(String gdType) {
+		this.gdType = gdType;
+	}
+
+	public String getPrjType() {
+		return prjType;
+	}
+
+	public void setPrjType(String prjType) {
+		this.prjType = prjType;
+	}
+
 	@PrePersist
 	public void onPersist(){
 		this.setCreator(ShiroUtils.getCurrentUser().getUsername());

@@ -8,3 +8,8 @@
 	background-image: linear-gradient(top, #ededed, #d3d3d3);
 	border-bottom: 1px solid #b6b1a8
 }
+
+.app-grid-td-search {
+	background:#FFF2A9;
+	border-right: 1px solid #b6b1a8
+}
