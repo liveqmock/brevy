@@ -812,18 +812,3 @@ Ext.override(Ext.data.Connection, {
 		this.callParent(arguments);
 	}
 });
-
-Ext.form.field.ComboBox.override({
-    setValue: function(v) {
-        if(!this.store.isLoaded && this.queryMode == 'remote') {
-        	this.callOverridden(arguments);
-            this.store.addListener('load', function() {
-                this.store.isLoaded = true;
-                this.setValue(v);
-            }, this);
-           this.store.load();         
-        } else {
-            this.callOverridden(arguments);
-        }
-    }
-});

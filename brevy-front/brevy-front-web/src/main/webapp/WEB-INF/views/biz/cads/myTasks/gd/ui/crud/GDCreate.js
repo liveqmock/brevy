@@ -8,6 +8,12 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 	formUrl: function(){
 		return this.getRequestRes("/biz/cads/myTasks/gd/saveOrUpdate.json");
 	},
+
+	beforeInit: function(){
+		this.callParent();
+		dictDS_20.load();
+		dictDS_2.load();
+	},
 	
 	init : function(){
 		
@@ -182,6 +188,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			editable: false,
 			emptyText: this.emptyImplTeam,
 			store: dictDS_2,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"],
@@ -249,7 +256,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: getDictDS_20(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -265,7 +273,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: getDictDS_20(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -281,7 +290,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: getDictDS_20(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -297,7 +307,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: getDictDS_20(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -314,7 +325,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: getDictDS_20(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -330,7 +342,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: getDictDS_20(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -346,7 +359,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: getDictDS_20(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -363,7 +377,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: getDictDS_20(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -471,6 +486,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			editable: false,
 			emptyText: this.emptyAssignToDeptsCond,
 			store: dictDS_2,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id"
 			

@@ -8,13 +8,14 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 	formUrl: function(){
 		return this.getRequestRes("/biz/cads/myTasks/gd/saveOrUpdate.json");
 	},
-
-
 	
-	getPhasesStore: function(){	
-		return getDictDS_20();
+	beforeInit: function(){
+		this.callParent();
+		dictDS_20.load();
+		dictDS_24.load();
 	},
-	
+
+
 	init : function(){	
 		var id = {
 			name: "id",
@@ -31,7 +32,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: this.getPhasesStore(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -47,7 +49,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: this.getPhasesStore(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -63,7 +66,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: this.getPhasesStore(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -79,7 +83,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: this.getPhasesStore(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -96,7 +101,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: this.getPhasesStore(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -112,7 +118,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: this.getPhasesStore(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -128,7 +135,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: this.getPhasesStore(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -145,7 +153,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyPhase,
-			store: this.getPhasesStore(),
+			store: dictDS_20,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
@@ -193,6 +202,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			editable: false,
 			emptyText: this.emptyStatus,
 			store: dictDS_24,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"]
