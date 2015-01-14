@@ -48,31 +48,24 @@ Ext.define("App.biz.cads.myTasks.archive.demand.crud.ArchivedDemandRead", {
 	createColumns : function(){
 		var me = this;
 		return [
-			{xtype: 'rownumberer'},
-		 	{text: this.prjName, dataIndex: "prjName", flex: 10, renderer: function(value, metadata) {  
-                metadata.tdAttr = 'data-qtip="' + value +'"';  
-                return value;  
-            }},  
-	    	{text: this.recvDate, dataIndex: "recvDate", flex: 4, renderer: function(v){return me.formatDate(v);}},
-	    	{text: this.priority, dataIndex: "priority", flex: 2.5, renderer: function(v){return me.dictMapping(v);}},
-	    	{text: this.requireFinishTime, dataIndex: "requireFinishTime", flex: 4.5, renderer: function(v){return me.formatDate(v);}},
-	    	{text: this.estimateDev, dataIndex: "estimateDev", flex: 3.8},
-	    	{text: this.estimateTest, dataIndex: "estimateTest", flex: 3.8},
-	    	{text: this.preCond, dataIndex: "preCond", flex: 4, renderer: function(value, metadata) {  
-                metadata.tdAttr = 'data-qtip="' + value +'"';  
-                return value;  
-            }},
-	    	{text: this.implTeam, dataIndex: "implTeam", flex: 4, renderer: function(value, metadata) {  
-                metadata.tdAttr = 'data-qtip="' + value +'"';  
-                return value;  
-            }},
-	    	{text: this.startDate, dataIndex: "startDate", flex: 4, renderer: function(v){return me.formatDate(v);}},
-	    	{text: this.status, dataIndex: "status", flex: 4, renderer: function(v){return me.dictMapping(v);}},
-	    	{text: this.remark, dataIndex: "remark", flex: 6, renderer: function(value, metadata) {  
-                metadata.tdAttr = 'data-qtip="' + value +'"';  
-                return value;  
-            }},
-	    	{text: this.attachType, dataIndex: "attachType", xtype:"actioncolumn", flex: 4, items:[
+			{text: this.id, dataIndex: "id", width:45, renderer: function(v){
+				return Ext.String.leftPad(v, 5, "0");
+				
+			}},
+		 	{text: this.prjName, dataIndex: "prjName", width: 220, renderer: Pub.Utils.cellTips},  
+	    	{text: this.recvDate, dataIndex: "recvDate", width: 80, renderer: function(v){return me.formatDate(v);}},
+	    	{text: this.priority, dataIndex: "priority", width: 60, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.requireFinishTime, dataIndex: "requireFinishTime", width:80, renderer: function(v){return me.formatDate(v);}},
+	    	{text: this.estimateDev, dataIndex: "estimateDev", width:120},
+	    	{text: this.estimateTest, dataIndex: "estimateTest", width:120},
+	    	{text: this.preCond, dataIndex: "preCond", width:130, renderer: Pub.Utils.cellTips},
+	    	{text: this.implTeam, dataIndex: "implTeam", width:130, renderer: Pub.Utils.cellTips},
+	    	{text: this.startDate, dataIndex: "startDate", width:80, renderer: function(v){return me.formatDate(v);}},
+	    	{text: this.devFinishDate, dataIndex: "devFinishDate", width:82, renderer: function(v){return me.formatDate(v);}},
+	    	{text: this.sitWorkload, dataIndex: "sitWorkload", width:120},
+	    	{text: this.sitFinishDate, dataIndex: "sitFinishDate", width:80, renderer: function(v){return me.formatDate(v);}},
+	    	{text: this.status, dataIndex: "status", width:70, renderer: function(v){return me.dictMapping(v);}},
+	    	{text: this.attachType, dataIndex: "attachType", xtype:"actioncolumn", width: 80,  menuText: this.attachType, items:[
 	    		{
 	    			getClass: function(value, meta){
 	    				if(!value)return value;
@@ -97,7 +90,8 @@ Ext.define("App.biz.cads.myTasks.archive.demand.crud.ArchivedDemandRead", {
 		    			}
 	    			}
 	    		}
-	    	]}
+	    	]},
+	    	{text: this.remark, dataIndex: "remark", flex: 1, minWidth:160, renderer: Pub.Utils.cellTips}
 		];
 	},
 	

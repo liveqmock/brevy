@@ -86,19 +86,19 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 				return Ext.String.leftPad(v, 5, "0");
 				
 			}},
-		 	{text: this.name, dataIndex: "name", width:200, renderer: function(v, m){return me.valueTip(v, m);}},  
+		 	{text: this.name, dataIndex: "name", width:200, renderer: Pub.Utils.cellTips},  
 	    	{text: this.recvDate, dataIndex: "recvDate", width:80, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.execType, dataIndex: "execType", width:40, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.type, dataIndex: "type", width:40, renderer: function(v){return me.dictMapping(v);}},
-	    	{text: this.briefName, dataIndex: "briefName", width:140, renderer: function(v, m){return me.valueTip(v, m);}},
+	    	{text: this.briefName, dataIndex: "briefName", width:140, renderer: Pub.Utils.cellTips},
 	    	{text: this.gdType, dataIndex: "gdType", width:70, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.prjType, dataIndex: "prjType", width:70, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.priority, dataIndex: "priority", width:45, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.requireFinishTime, dataIndex: "requireFinishTime", width: 80, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.estimateJob, dataIndex: "estimateJob", width: 65},
-	    	{text: this.preCond, dataIndex: "preCond", width:100, renderer: function(v, m){return me.valueTip(v, m);}},
-	    	{text: this.implTeam, dataIndex: "implTeam", width:100, renderer: function(v, m){return me.valueTip(v, m);}},
-	    	{text: this.pmName, dataIndex: "pmName", width: 70, renderer: function(v, m){return me.valueTip(v, m);}},
+	    	{text: this.preCond, dataIndex: "preCond", width:100, renderer: Pub.Utils.cellTips},
+	    	{text: this.implTeam, dataIndex: "implTeam", width:100, renderer: Pub.Utils.cellTips},
+	    	{text: this.pmName, dataIndex: "pmName", width: 70, renderer: Pub.Utils.cellTips},
 	    	{text: this.startDate, dataIndex: "startDate", width:70, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.ini, dataIndex: "ini", width: 32, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.rdp, dataIndex: "rdp", width: 32, renderer: function(v){return me.dictMapping(v);}},
@@ -114,8 +114,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 	    	{text: this.status, dataIndex: "status", width:70, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.progress, dataIndex: "progress", width: 45, renderer: function(v){if(!v)return v;return v + "%";}},
 	    	{text: this.finishDate, dataIndex: "finishDate", width:80, renderer: function(v){return me.formatDate(v);}},
-	    	{text: this.usingResource, dataIndex: "usingResource", width: 60, renderer: function(v, m){return me.valueTip(v, m);}},
-	    	{text: this.usingTime, dataIndex: "usingTime", width: 60, renderer: function(v, m){return me.valueTip(v, m);}},
+	    	{text: this.usingResource, dataIndex: "usingResource", width: 60, renderer: Pub.Utils.cellTips},
+	    	{text: this.usingTime, dataIndex: "usingTime", width: 60, renderer: Pub.Utils.cellTips},
 	    	{text: this.attachType, dataIndex: "attachType", xtype:"actioncolumn", menuText: this.attachType, width:85, items:[
 	    		{
 	    			getClass: function(value, meta){
@@ -142,16 +142,10 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 	    			}
 	    		}
 	    	]},
-	    	{text: this.remark, dataIndex: "remark", width: 160, renderer: function(v, m){return me.valueTip(v, m);}}
+	    	{text: this.remark, dataIndex: "remark", flex:1, minWidth:160, renderer: Pub.Utils.cellTips}
 		];
 	},
 	
-	//信息提示
-	valueTip: function(value, metadata){
-		if(!value)return "";
-		metadata.tdAttr = 'data-qtip="' + value +'"';  
-        return value;  
-	},
 	
 	//日期格式化
 	formatDate: function(value){

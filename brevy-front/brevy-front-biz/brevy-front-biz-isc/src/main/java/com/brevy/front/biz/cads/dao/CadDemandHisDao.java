@@ -21,6 +21,6 @@ public interface CadDemandHisDao extends CrudRepository<CadDemandHis, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from CadDemandHis a where lower(a.prjName) like lower(:kw) or lower(a.implTeam) like lower(:kw) order by a.recvDate")
+	@Query("select a from CadDemandHis a where lower(a.prjName) like lower(:kw) or lower(a.implTeam) like lower(:kw) order by a.id")
 	Page<CadDemandHis> searchByKeyword(@Param("kw")String keyword, Pageable pageable);
 }

@@ -21,6 +21,6 @@ public interface CadGdHisDao extends CrudRepository<CadGdHis, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from CadGdHis a where lower(a.name) like lower(:kw) or lower(a.briefName) like lower(:kw) or lower(a.implTeam) like lower(:kw) or lower(a.pmName) like lower(:kw) order by a.recvDate")
+	@Query("select a from CadGdHis a where lower(a.name) like lower(:kw) or lower(a.briefName) like lower(:kw) or lower(a.implTeam) like lower(:kw) or lower(a.pmName) like lower(:kw) order by a.id")
 	Page<CadGdHis> searchByKeyword(@Param("kw")String keyword, Pageable pageable);
 }

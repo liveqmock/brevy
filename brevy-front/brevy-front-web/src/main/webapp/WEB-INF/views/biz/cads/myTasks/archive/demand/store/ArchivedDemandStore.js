@@ -5,15 +5,18 @@ Ext.define("ArchivedDemandModel", {
     	{name: "id", mapping: "id"},
 	    {name: "prjName", mapping: "prjName"},  
 	    {name: "recvDate", mapping: "recvDate"},
-	    {name: "priority", mapping: "priority"},
-	    {name: "requireFinishTime", mapping: "requireFinishTime"},
+	    {name: "priority", mapping: "priority", type: "int"},
+	    {name: "requireFinishTime", mapping: "requireFinishTime", convert: Pub.Support.dateConvert},
 	    {name: "estimateDev", mapping: "estimateDev"},
 	    {name: "estimateTest", mapping: "estimateTest"},
 	    {name: "preCond", mapping: "preCond"},
 	    {name: "implTeam", mapping: "implTeam"},
-	    {name: "startDate", mapping: "startDate"},
+	    {name: "startDate", mapping: "startDate", convert: Pub.Support.dateConvert},
 	    {name: "attachType", mapping: "attachType"},
-	    {name: "status", mapping: "status"},
+	    {name: "status", mapping: "status", type: "int"},
+	    {name: "devFinishDate", mapping: "devFinishDate", convert: Pub.Support.dateConvert},
+	    {name: "sitWorkload", mapping: "sitWorkload"},
+	    {name: "sitFinishDate", mapping: "sitFinishDate", convert: Pub.Support.dateConvert},
 	    {name: "remark", mapping: "remark"}
     ]
 });

@@ -127,17 +127,19 @@ Ext.define("Pub.Utils", {
 				 dismissDelay: dismissDelay 
 			});
 		},
+		
 		/**
 		 * @description Grid单元格提示
-		 * @param v 值
-		 * @param p 单元格
+		 * @param value 值
+		 * @param metadata
 		 * @return
 		 * @static
 		 * @author caobin
 		 */
-		cellTips: function(v, p){
-			p.attr += 'ext:qtip="' + v + '"';
-			return v;
+		cellTips: function(value, metadata){
+			if(!value)return "";
+			metadata.tdAttr = 'data-qtip="' + value +'"';  
+	        return value;  
 		}
 	}	
 });

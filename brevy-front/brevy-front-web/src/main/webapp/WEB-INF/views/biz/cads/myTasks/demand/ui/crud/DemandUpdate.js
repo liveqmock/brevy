@@ -9,18 +9,16 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 		return this.getRequestRes("/biz/cads/myTasks/demand/saveOrUpdate.json");
 	},
 
-	
-	getPhasesStore: function(){	
-		Ext.apply(dictDSConfig, {autoLoad: true});
-		Ext.apply(dictDSConfig.proxy.extraParams, {"dictId": 21});
-		return Ext.create("Ext.data.Store", dictDSConfig);
+	beforeInit: function(){
+		this.callParent();
+		dictDS_21.load();
 	},
+	
 	
 	init : function(){	
 		var id = {
 			name: "id",
-			xtype: "hidden",
-			value: this.params.get("id")
+			xtype: "hidden"
 		}
 		
 		var estimateDev = {
@@ -29,8 +27,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 			flex: 1,
 			allowBlank: true,
 			xtype: "textfield",
-			maxLength: 12,
-			value: this.params.get("estimateDev")
+			maxLength: 12
 		}
 		
 		var estimateTest = {
@@ -39,46 +36,64 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 			flex: 1,
 			allowBlank: true,
 			xtype: "textfield",
-			maxLength: 12,
-			value: this.params.get("estimateTest")
+			maxLength: 12
+		}
+		
+		var devFinishDate = {
+			fieldLabel: this.devFinishDate,
+			name: "devFinishDate",
+			flex: 1,
+			allowBlank: true,
+			xtype: "datefield",
+			editable: false,
+			format: this.format
+		}
+		
+		var sitWorkload = {
+			fieldLabel: this.sitWorkload,
+			name: "sitWorkload",
+			flex: 1,
+			newLine: 1,
+			allowBlank: true,
+			xtype: "textfield",
+			maxLength: 12
+		}
+		
+		var sitFinishDate = {
+			fieldLabel: this.sitFinishDate,
+			name: "sitFinishDate",
+			flex: 1,
+			allowBlank: true,
+			xtype: "datefield",
+			editable: false,
+			format: this.format
 		}
 		
 		var startDate = {
 			fieldLabel: this.startDate,
 			name: "startDate",
 			flex: 1,
-			newLine: 1,
 			allowBlank: true,
 			xtype: "datefield",
 			editable: false,
-			format: this.format,
-			value: this.params.get("startDate") ? new Date(this.params.get("startDate")) : null
+			format: this.format
 		}
 
 		var status = {
 			fieldLabel: this.required(this.status),
 			name: "status",
 			flex: 1,
+			newLine: 1,
 			allowBlank: false,
 			xtype: "combo",
 			triggerAction: "all",
 			forceSelection: true,
 			editable: false,
 			emptyText: this.emptyStatus,
-			store: this.getPhasesStore(),
+			store: dictDS_21,
+			queryMode: "local",
 			displayField: "name",
-			valueField: "id",
-			listeners: {
-				boxready: {
-					fn: function(c){
-						c.getStore().on("load", function(store){
-							c.setValue(this.params.get("status")-0);
-						}, this);
-						c.fireEvent("select");
-					},
-					scope: this
-				}
-			}
+			valueField: "id"
 		}
 		
 		var remark = {
@@ -88,8 +103,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 			newLine: 1,
 			allowBlank: true,
 			xtype: "textareafield",
-			maxLength: 256,
-			value: this.params.get("remark")
+			maxLength: 256
 		}
 		
 		
@@ -142,8 +156,14 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 					collapsible: false
 				},
 				items:[
-					id, estimateDev, estimateTest, startDate, status, remark
+					id, estimateDev, estimateTest, devFinishDate, sitWorkload, 
+					sitFinishDate, startDate, status, remark
 				],
+				listeners:{
+			    	afterrender: function(f){		    		
+			    		f.getForm().loadRecord(me.params)
+			    	}
+			    },
 				buttonAlign: "center",
 				buttons: [updateBtn, resetBtn]				
 		    }

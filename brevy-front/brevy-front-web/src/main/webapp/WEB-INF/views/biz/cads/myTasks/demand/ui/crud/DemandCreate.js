@@ -9,6 +9,11 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 		return this.getRequestRes("/biz/cads/myTasks/demand/saveOrUpdate.json");
 	},
 	
+	beforeInit: function(){
+		this.callParent();
+		dictDS_2.load();
+	},
+	
 	init : function(){
 		
 		var prjName = {
@@ -77,10 +82,41 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			maxLength: 12
 		}
 		
+		var devFinishDate = {
+			fieldLabel: this.devFinishDate,
+			name: "devFinishDate",
+			flex: 1,
+			allowBlank: true,
+			xtype: "datefield",
+			editable: false,
+			format: this.format
+		}
+		
+		var sitWorkload = {
+			fieldLabel: this.sitWorkload,
+			name: "sitWorkload",
+			flex: 1,
+			newLine: 1,
+			allowBlank: true,
+			xtype: "textfield",
+			maxLength: 12
+		}
+		
+		var sitFinishDate = {
+			fieldLabel: this.sitFinishDate,
+			name: "sitFinishDate",
+			flex: 1,
+			allowBlank: true,
+			xtype: "datefield",
+			editable: false,
+			format: this.format
+		}
+		
 		var preCond = {
 			fieldLabel: this.preCond,
 			name: "preCondIds",
 			flex: 1,
+			newLine: 1,
 			allowBlank: true,
 			xtype: "combo",
 			multiSelect: true,
@@ -109,7 +145,6 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			fieldLabel: this.required(this.implTeam),
 			name: "implTeamIds",
 			flex: 1,
-			newLine: 1,
 			allowBlank: false,
 			xtype: "combo",
 			multiSelect: true,
@@ -118,6 +153,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			editable: false,
 			emptyText: this.emptyImplTeam,
 			store: dictDS_2,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id",
 			plugins: ["clearbutton"],
@@ -139,6 +175,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			fieldLabel: this.startDate,
 			name: "startDate",
 			flex: 1,
+			newLine: 1,
 			allowBlank: true,
 			xtype: "datefield",
 			editable: false,
@@ -149,7 +186,6 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			fieldLabel: this.required(this.status),
 			name: "status",
 			flex: 1,
-			newLine: 1,
 			allowBlank: false,
 			xtype: "combo",
 			triggerAction: "all",
@@ -176,6 +212,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			fieldLabel: this.required(this.assignToDepts),
 			name: "assignToDept",
 			flex: 1,
+			newLine:1,
 			allowBlank: false,
 			xtype: "combo",
 			multiSelect: true,
@@ -184,6 +221,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			editable: false,
 			emptyText: this.emptyAssignToDeptsCond,
 			store: dictDS_2,
+			queryMode: "local",
 			displayField: "name",
 			valueField: "id"
 			
@@ -227,7 +265,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			id: "DemandCreate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 390,
+		    height: 450,
 		    width: 830,
 		    layout: "fit",
 		    modal: true,
@@ -250,7 +288,8 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 				},
 				items:[
 					prjName, recvDate, priority, requireFinishTime,
-					estimateDev, estimateTest, preCond, preCondText, implTeam, implTeamText, 
+					estimateDev, estimateTest, devFinishDate, sitWorkload, sitFinishDate, 
+					preCond, preCondText, implTeam, implTeamText, 
 					startDate, status, assignToDepts, remark
 				],
 				buttonAlign: "center",

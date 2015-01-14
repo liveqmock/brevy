@@ -106,7 +106,7 @@ Ext.define("App.biz.cads.myTasks.archive.gd.crud.ArchivedGDRead", {
 	    			}
 	    		}
 	    	]},
-	    	{text: this.remark, dataIndex: "remark", width: 160, renderer: function(v, m){return me.valueTip(v, m);}}
+	    	{text: this.remark, dataIndex: "remark", flex:1, minWidth: 160, renderer: function(v, m){return me.valueTip(v, m);}}
 		];
 	},
 	

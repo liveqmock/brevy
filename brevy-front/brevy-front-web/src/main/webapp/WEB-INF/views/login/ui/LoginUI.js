@@ -116,6 +116,7 @@ Ext.define("App.login.LoginUI", {
 					emptyText: this.emptyAppname,
 					allowBlank : false,
 				    store: this.getAppStore(),
+				    queryMode: "local",
 				    displayField: "name",
 				    valueField: "id",
 				    blankText : this.blankAppname,
@@ -193,6 +194,7 @@ Ext.define("App.login.LoginUI", {
 		store.on("load", function(){
 			Ext.getCmp("login.appSelect").setValue(1000);
 		}, this);
+		store.load();
 		return store;
 	}
 	

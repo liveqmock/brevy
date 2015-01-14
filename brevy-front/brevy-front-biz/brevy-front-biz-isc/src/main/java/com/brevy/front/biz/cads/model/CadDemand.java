@@ -23,7 +23,7 @@ import java.sql.Timestamp;
 @Table(name="CAD_DEMAND")
 public class CadDemand implements Serializable {
 
-	private static final long serialVersionUID = -682316007317855203L;
+	private static final long serialVersionUID = -9115493982982500408L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="CAD_DEMAND_SEQ")
@@ -87,6 +87,15 @@ public class CadDemand implements Serializable {
 	private Timestamp updateTime;
 
 	private String updator;
+	
+	@Column(name="DEV_FINISH_DATE")
+	private Timestamp devFinishDate;
+	
+	@Column(name="SIT_WORKLOAD")
+	private String sitWorkload;
+	
+	@Column(name="SIT_FINISH_DATE")
+	private Timestamp sitFinishDate;
 	
 	@Transient
 	private long[] assignToDept;
@@ -250,6 +259,31 @@ public class CadDemand implements Serializable {
 		
 	}
 	
+	
+	public Timestamp getDevFinishDate() {
+		return devFinishDate;
+	}
+
+	public void setDevFinishDate(Timestamp devFinishDate) {
+		this.devFinishDate = devFinishDate;
+	}
+
+	public String getSitWorkload() {
+		return sitWorkload;
+	}
+
+	public void setSitWorkload(String sitWorkload) {
+		this.sitWorkload = sitWorkload;
+	}
+
+	public Timestamp getSitFinishDate() {
+		return sitFinishDate;
+	}
+
+	public void setSitFinishDate(Timestamp sitFinishDate) {
+		this.sitFinishDate = sitFinishDate;
+	}
+
 	public long[] getAssignToDept() {
 		return assignToDept;
 	}

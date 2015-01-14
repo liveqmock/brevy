@@ -22,7 +22,7 @@ public interface CadDemandDao extends CrudRepository<CadDemand, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from CadDemand a, CadRefDeptDemand b where a.id=b.id.demandId and b.id.deptId=:deptId and (lower(a.prjName) like lower(:kw) or lower(a.implTeam) like lower(:kw)) order by a.recvDate")
+	@Query("select a from CadDemand a, CadRefDeptDemand b where a.id=b.id.demandId and b.id.deptId=:deptId and (lower(a.prjName) like lower(:kw) or lower(a.implTeam) like lower(:kw)) order by a.id")
 	Page<CadDemand> searchByKeyword(@Param("deptId")long deptId, @Param("kw")String keyword, Pageable pageable);
 	
 	
@@ -33,6 +33,6 @@ public interface CadDemandDao extends CrudRepository<CadDemand, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from CadDemand a where lower(a.prjName) like lower(:kw) or lower(a.implTeam) like lower(:kw) order by a.recvDate")
+	@Query("select a from CadDemand a where lower(a.prjName) like lower(:kw) or lower(a.implTeam) like lower(:kw) order by a.id")
 	Page<CadDemand> searchByKeyword(@Param("kw")String keyword, Pageable pageable);
 }

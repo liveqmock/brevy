@@ -19,7 +19,7 @@ import java.sql.Timestamp;
 @Table(name="CAD_DEMAND_HIS")
 public class CadDemandHis implements Serializable {
 
-	private static final long serialVersionUID = -4507164571478589643L;
+	private static final long serialVersionUID = 8392712124279674278L;
 
 	@Id
 	private long id;
@@ -73,6 +73,15 @@ public class CadDemandHis implements Serializable {
 	private String updator;
 	
 	private String remark;
+	
+	@Column(name="DEV_FINISH_DATE")
+	private Timestamp devFinishDate;
+	
+	@Column(name="SIT_WORKLOAD")
+	private String sitWorkload;
+	
+	@Column(name="SIT_FINISH_DATE")
+	private Timestamp sitFinishDate;
 
 	public CadDemandHis() {
 	}
@@ -229,6 +238,32 @@ public class CadDemandHis implements Serializable {
 		this.remark = remark;
 	}
 	
+	
+	
+	public Timestamp getDevFinishDate() {
+		return devFinishDate;
+	}
+
+	public void setDevFinishDate(Timestamp devFinishDate) {
+		this.devFinishDate = devFinishDate;
+	}
+
+	public String getSitWorkload() {
+		return sitWorkload;
+	}
+
+	public void setSitWorkload(String sitWorkload) {
+		this.sitWorkload = sitWorkload;
+	}
+
+	public Timestamp getSitFinishDate() {
+		return sitFinishDate;
+	}
+
+	public void setSitFinishDate(Timestamp sitFinishDate) {
+		this.sitFinishDate = sitFinishDate;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
