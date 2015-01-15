@@ -29,7 +29,7 @@ import com.brevy.core.shiro.util.ShiroUtils;
 @Table(name="CAD_CATASK")
 public class CadCatask implements Serializable {
 
-	private static final long serialVersionUID = 7674994785484603246L;
+	private static final long serialVersionUID = 424165896516592716L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="CAD_CATASK_SEQ")
@@ -45,14 +45,12 @@ public class CadCatask implements Serializable {
 	)
 	private long id;
 
-	@Column(name="ATTACH_PATH")
-	private String attachPath;
-
 	private String category;
 
 	@Column(name="CREATE_TIME", updatable=false)
 	private Timestamp createTime;
-
+	
+	@Column(updatable=false)
 	private String creator;
 
 	@Column(name="FINISH_DATE")
@@ -103,14 +101,6 @@ public class CadCatask implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getAttachPath() {
-		return this.attachPath;
-	}
-
-	public void setAttachPath(String attachPath) {
-		this.attachPath = attachPath;
 	}
 
 	public String getCategory() {

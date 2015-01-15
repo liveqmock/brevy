@@ -257,7 +257,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			newLine: 1,
 			allowBlank: true,
 			xtype: "textareafield",
-			maxLength: 256
+			maxLength: 170
 		}
 		
 		
@@ -355,7 +355,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 		var me = this;
 		if (form.isValid()) {
 			form.submit({ 
-				waitTitle : this.UpdateGDTitle,
+				//waitTitle : this.UpdateGDTitle,
 				waitMsg : Msg.App.updating,
 				success : function(form, action) {
 					win.close();

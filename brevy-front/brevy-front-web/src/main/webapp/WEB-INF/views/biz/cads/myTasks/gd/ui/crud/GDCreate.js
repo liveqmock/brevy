@@ -23,7 +23,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			flex: 1,
 			allowBlank: false,
 			xtype: "textfield",
-			maxLength: 32
+			maxLength: 80
 		}
 		
 		var briefName = {
@@ -33,7 +33,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			newLine: 1,
 			allowBlank: false,
 			xtype: "textfield",
-			maxLength: 32
+			maxLength: 40
 		}
 		
 		var gdType = {
@@ -606,7 +606,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		var me = this;
 		if (form.isValid()) {
 			form.submit({ 
-				waitTitle : this.createGDTitle,
+				//waitTitle : this.createGDTitle,
 				waitMsg : Msg.App.saving,
 				success : function(form, action) {
 					if(win){
@@ -630,7 +630,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 	createUploadPanelWin : function(formBtn, rid){
 		return Ext.create("Ext.window.Window", {
 		    title: this.addAttachments,
-		    height: 420,
+		    height: 550,
 		    width: 760,
 		    resizable: false,
 		    iconCls: Ext.ux.Icons.page_attach,

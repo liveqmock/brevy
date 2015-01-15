@@ -96,6 +96,8 @@ Ext.define("Msg", {
 			
 			addAndAttach : "添加并上传附件",
 			
+			updateAndAttach : "更新并上传附件",
+			
 			edit : "编辑",
 			
 			del: "删除",
@@ -835,7 +837,84 @@ Ext.define("Msg", {
 			remark: "备注",
 			keywordSearch: "关键字查询",
 			format: "Y-m-d"
-		}
+		},
 		
+		"App.biz.cads.myTasks.catask.crud.CataskRead" : {
+			id: "序号",
+			operLv: "操作等级",
+			importance: "重要度",
+			category: "类别",
+			source: "来源",
+			title: "标题",
+			reqFinishDate: "要求完成时间",
+			jobContent: "工作内容",
+			progress: "进度",
+			finishDate: "完成时间",
+			finishStatus: "完成情况",
+			usingResource: "占用资源",
+			attachType: "成果文档",
+			result: "结果确认",
+			remark: "备注",
+			keywordSearch: "关键字查询",
+			format: "Y-m-d",
+			edit: "进度更新"
+		},
+		
+		"App.biz.cads.myTasks.catask.crud.CataskCreate" : {
+			operLv: "操作等级",
+			importance: "重要度",
+			category: "类别",
+			source: "来源",
+			title: "标题",
+			reqFinishDate: "要求完成时间",
+			jobContent: "工作内容",
+			progress: "进度",
+			finishDate: "完成时间",
+			finishStatus: "完成情况",
+			usingResource: "占用资源",
+			attachType: "成果文档",
+			result: "结果确认",
+			remark: "备注",
+			keywordSearch: "关键字查询",			
+			CataskBasicInfo: "技术中心综合管理任务基本信息",
+			format: "Y年m月d日",			
+			emptyImportance: "请选择重要度",
+			emptyCategory: "请选择类别",
+			emptyFinishStatus: "请选择完成情况",
+			emptyResult: "请选择确认结果",		
+			CataskResourceInfo: "进度与资源"
+		},
+		
+		"App.biz.cads.myTasks.catask.crud.CataskUpdate" : {
+			operLv: "操作等级",
+			importance: "重要度",
+			category: "类别",
+			source: "来源",
+			title: "标题",
+			reqFinishDate: "要求完成时间",
+			jobContent: "工作内容",
+			progress: "进度",
+			finishDate: "完成时间",
+			finishStatus: "完成情况",
+			usingResource: "占用资源",
+			attachType: "成果文档",
+			result: "结果确认",
+			remark: "备注",
+			keywordSearch: "关键字查询",			
+			CataskBasicInfo: "技术中心综合管理任务基本信息",
+			format: "Y年m月d日",			
+			emptyImportance: "请选择重要度",
+			emptyCategory: "请选择类别",
+			emptyFinishStatus: "请选择完成情况",
+			emptyResult: "请选择确认结果",		
+			CataskResourceInfo: "进度与资源",
+			addFileBtnText: Ext.isIE ? '选择文件(双击)' : '选择文件',
+			uploadBtnText: '上传',
+			removeBtnText: '清空列表',
+			cancelBtnText: '中断上传',
+			addAttachments: "添加附件",
+			confirmFinish: "确定完成",
+			updateAndAttach : "更新并上传成果文档"
+		}		
 	}
 });

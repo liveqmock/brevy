@@ -1012,6 +1012,7 @@ Ext.define("Ext.ux.Icons", {
 		fugue_edit_percent : "icon-fugue-edit_percent",		
 		fugue_document_pdf_text : "icon-fugue-document_pdf_text",
 		fugue_document_word_text : "icon-fugue-document_word_text",
+		fugue_document_excel_table : "icon-fugue-document_excel_table",
 		fugue_folder_zipper : "icon-fugue-folder_zipper",
 		fugue_drive_download : "icon-fugue-drive_download"
 	}

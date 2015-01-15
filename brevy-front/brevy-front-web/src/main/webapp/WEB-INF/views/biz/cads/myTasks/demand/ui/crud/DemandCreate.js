@@ -22,7 +22,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			flex: 1,
 			allowBlank: false,
 			xtype: "textfield",
-			maxLength: 32
+			maxLength: 80
 		}
 		
 		var recvDate = {
@@ -204,7 +204,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			newLine: 1,
 			allowBlank: true,
 			xtype: "textareafield",
-			maxLength: 256
+			maxLength: 170
 		}
 		
 		var assignToDepts = {
@@ -308,7 +308,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 		var me = this;
 		if (form.isValid()) {
 			form.submit({ 
-				waitTitle : this.createDemandTitle,
+				//waitTitle : this.createDemandTitle,
 				waitMsg : Msg.App.saving,
 				success : function(form, action) {
 					if(win){

@@ -1,13 +1,13 @@
 package com.brevy.front.biz.cads.service.impl;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import com.brevy.core.shiro.util.ShiroUtils;
 import com.brevy.front.biz.cads.dao.CadCataskAttachDao;
@@ -120,7 +120,7 @@ public class DefaultMyTasksService implements MyTasksService {
 		//获取工单对象
 		CadGd cadGd = cadGdDao.findOne(cadGdId);
 		if(cadGd != null){
-			cadGd.setAttachType(handleAttachType(cadGd.getAttachType(), attachType));			
+			cadGd.setAttachType(mergeAttachType(cadGd.getAttachType(), attachType));			
 			cadGdDao.save(cadGd);
 		}
 		//保存工单路径
@@ -130,23 +130,7 @@ public class DefaultMyTasksService implements MyTasksService {
 		cadGdAttachDao.save(cadGdAttach);
 	}
 	
-	/**
-	 * @description 处理附件类型
-	 * @param targetAttachType 目标附件类型
-	 * @param attachType 附件类型
-	 * @return
-	 * @author caobin
-	 */
-	private String handleAttachType(String targetAttachType, String attachType){
-		if(StringUtils.isEmpty(targetAttachType)){
-			return attachType;
-		}else{
-			if(!targetAttachType.contains(attachType.toLowerCase())){
-				targetAttachType = targetAttachType.concat(",").concat(attachType.toLowerCase());
-			} 
-			return targetAttachType;
-		}
-	}
+	
 
 	@Override
 	public Iterable<CadGdAttach> findAllGDAttachments(long gdId) {
@@ -218,7 +202,7 @@ public class DefaultMyTasksService implements MyTasksService {
 		//获取需求评估单对象
 		CadDemand cadDemand = cadDemandDao.findOne(cadDemandId);
 		if(cadDemand != null){
-			cadDemand.setAttachType(handleAttachType(cadDemand.getAttachType(), attachType));			
+			cadDemand.setAttachType(mergeAttachType(cadDemand.getAttachType(), attachType));			
 			cadDemandDao.save(cadDemand);
 		}
 		//保存需求评估单路径
@@ -277,7 +261,8 @@ public class DefaultMyTasksService implements MyTasksService {
 		if(cadCatask.getId() > 0){//update part of Catask
 			savedCadCatask = cadCataskDao.findOne(cadCatask.getId());
 			BeanUtils.copyProperties(cadCatask, savedCadCatask, new String[]{
-				"id", "title", "reqFinishDate", "importance", "source", "category"
+				"id", "title", "reqFinishDate", "importance", "source", 
+				"category", "attachType", "result"
 			});
 			cadCataskDao.save(savedCadCatask);
 		}else{
@@ -292,8 +277,8 @@ public class DefaultMyTasksService implements MyTasksService {
 			String attachPath) {
 		//获取综合任务管理对象
 		CadCatask cadCatask = cadCataskDao.findOne(cataskId);
-		if(cadCatask != null){
-			cadCatask.setAttachType(handleAttachType(cadCatask.getAttachType(), attachType));			
+		if(cadCatask != null){		
+			cadCatask.setAttachType(mergeAttachType(cadCatask.getAttachType(), attachType));				
 			cadCataskDao.save(cadCatask);
 		}
 		//保存综合任务管理附件路径
@@ -332,4 +317,28 @@ public class DefaultMyTasksService implements MyTasksService {
 			Pageable pageable) {
 		return cadCataskHisDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
 	}	
+
+	
+	
+	/**
+	 * @description 合并附件类型
+	 * @param originalAttachType 原始附件类型
+	 * @param targetAttachType 目标附件类型
+	 * @return
+	 * @author caobin
+	 */
+	private String mergeAttachType(String originalAttachType, String targetAttachType){
+		if(StringUtils.isEmpty(targetAttachType)){
+			return originalAttachType;
+		}else{
+			for(String type : targetAttachType.split("\\,")){
+				if(!StringUtils.contains(originalAttachType, type.toLowerCase())){
+					originalAttachType = StringUtils.isEmpty(originalAttachType) ? 
+							StringUtils.defaultString(originalAttachType).concat(type.toLowerCase()) : originalAttachType.concat(",").concat(type.toLowerCase());
+				}
+			}
+			return originalAttachType;
+		}	
+	}
+
 }

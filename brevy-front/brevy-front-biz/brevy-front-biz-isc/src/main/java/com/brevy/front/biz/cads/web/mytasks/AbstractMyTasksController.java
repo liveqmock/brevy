@@ -45,6 +45,8 @@ public abstract class AbstractMyTasksController extends BaseController {
 		fileType.put("pdf", "application/pdf");
 		fileType.put("zip", "application/zip");
 		fileType.put("rar", "application/x-rar-compressed");
+		fileType.put("xls", "application/vnd.ms-excel");
+		fileType.put("xlsx", "application/vnd.ms-excel");
 		
 	}
 	

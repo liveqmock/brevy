@@ -103,7 +103,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 			newLine: 1,
 			allowBlank: true,
 			xtype: "textareafield",
-			maxLength: 256
+			maxLength: 170
 		}
 		
 		
@@ -181,7 +181,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 		var me = this;
 		if (form.isValid()) {
 			form.submit({ 
-				waitTitle : this.UpdateDemandTitle,
+				//waitTitle : this.UpdateDemandTitle,
 				waitMsg : Msg.App.updating,
 				success : function(form, action) {
 					win.close();

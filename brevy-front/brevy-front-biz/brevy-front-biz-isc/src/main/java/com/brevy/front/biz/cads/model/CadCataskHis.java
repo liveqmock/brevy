@@ -22,19 +22,17 @@ import java.sql.Timestamp;
 @Table(name="CAD_CATASK_HIS")
 public class CadCataskHis implements Serializable {
 
-	private static final long serialVersionUID = -8839400683525145087L;
+	private static final long serialVersionUID = 6271321137348049504L;
 
 	@Id
 	private long id;
-
-	@Column(name="ATTACH_PATH")
-	private String attachPath;
 
 	private String category;
 
 	@Column(name="CREATE_TIME", updatable=false)
 	private Timestamp createTime;
 
+	@Column(updatable=false)
 	private String creator;
 
 	@Column(name="FINISH_DATE")
@@ -87,13 +85,6 @@ public class CadCataskHis implements Serializable {
 		this.id = id;
 	}
 
-	public String getAttachPath() {
-		return this.attachPath;
-	}
-
-	public void setAttachPath(String attachPath) {
-		this.attachPath = attachPath;
-	}
 
 	public String getCategory() {
 		return this.category;

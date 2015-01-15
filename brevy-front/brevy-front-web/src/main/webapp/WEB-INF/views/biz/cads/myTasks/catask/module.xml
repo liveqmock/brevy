@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <moduleName>App.biz.cads.myTasks.catask.CataskUI</moduleName>  
+    <files>
+        <css/>
+        <js>
+        	<file>store/CataskStore.js</file>
+        	<file>ui/crud/CataskRead.js</file>
+        	<file>ui/CataskUI.js</file>
+        </js>
+    </files>
+</module>
