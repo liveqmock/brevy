@@ -597,7 +597,7 @@ Ext.define("Pub.Ajax", {
 	statics : {
 
 		/**
-		 * @description 自定义所有Ajax事件的处理方式
+		 * @description 自定义全局Ajax事件的处理方式
 		 * @static
 		 */
 		initAllAjaxEvents : function(){

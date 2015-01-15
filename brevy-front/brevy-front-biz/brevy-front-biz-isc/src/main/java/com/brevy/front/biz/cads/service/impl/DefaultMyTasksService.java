@@ -214,7 +214,7 @@ public class DefaultMyTasksService implements MyTasksService {
 
 	@Transactional
 	@Override
-	public void addCadDemandAttach(long cadDemandId, String attachType, String attachPath) {
+	public void addDemandAttach(long cadDemandId, String attachType, String attachPath) {
 		//获取需求评估单对象
 		CadDemand cadDemand = cadDemandDao.findOne(cadDemandId);
 		if(cadDemand != null){

@@ -2,13 +2,17 @@ package com.brevy.front.biz.cads.model;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-
-import java.math.BigDecimal;
 
 
 /**
@@ -17,9 +21,9 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name="CAD_GD_ATTACH")
-public class CadGdAttach implements Serializable {
+public class CadGdAttach implements AbstractCadAttach, Serializable {
 
-	private static final long serialVersionUID = -6633592738939589003L;
+	private static final long serialVersionUID = -3896728563983664822L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="CAD_GD_ATTACH_SEQ")

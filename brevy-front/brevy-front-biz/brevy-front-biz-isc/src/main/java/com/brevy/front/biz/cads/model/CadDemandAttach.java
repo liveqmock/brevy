@@ -15,9 +15,9 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
  */
 @Entity
 @Table(name="CAD_DEMAND_ATTACH")
-public class CadDemandAttach implements Serializable {
+public class CadDemandAttach implements AbstractCadAttach, Serializable {
 
-	private static final long serialVersionUID = 7932023234463394984L;
+	private static final long serialVersionUID = 5134324272483579052L;
 
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="CAD_DEMAND_ATTACH_SEQ")
 	@TableGenerator(

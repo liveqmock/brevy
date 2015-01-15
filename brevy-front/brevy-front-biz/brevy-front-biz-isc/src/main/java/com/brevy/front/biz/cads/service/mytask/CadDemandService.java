@@ -45,7 +45,7 @@ public interface CadDemandService {
 	 * @param attachPath 附件路径
 	 * @author caobin
 	 */
-	void addCadDemandAttach(long demandId, String attachType, String attachPath);
+	void addDemandAttach(long demandId, String attachType, String attachPath);
 	
 	
 	/**
