@@ -267,45 +267,69 @@ public class DefaultMyTasksService implements MyTasksService {
 
 	@Override
 	public Page<CadCatask> findAllCatasks(String keyword, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		return cadCataskDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
 	}
 
+	@Transactional
 	@Override
 	public CadCatask saveOrUpdateCatask(CadCatask cadCatask) {
-		// TODO Auto-generated method stub
-		return null;
+		CadCatask savedCadCatask = null;
+		if(cadCatask.getId() > 0){//update part of Catask
+			savedCadCatask = cadCataskDao.findOne(cadCatask.getId());
+			BeanUtils.copyProperties(cadCatask, savedCadCatask, new String[]{
+				"id", "title", "reqFinishDate", "importance", "source", "category"
+			});
+			cadCataskDao.save(savedCadCatask);
+		}else{
+			savedCadCatask = cadCataskDao.save(cadCatask);
+		}	
+		return savedCadCatask;
 	}
 
+	@Transactional
 	@Override
 	public void addCataskAttach(long cataskId, String attachType,
 			String attachPath) {
-		// TODO Auto-generated method stub
-		
+		//获取综合任务管理对象
+		CadCatask cadCatask = cadCataskDao.findOne(cataskId);
+		if(cadCatask != null){
+			cadCatask.setAttachType(handleAttachType(cadCatask.getAttachType(), attachType));			
+			cadCataskDao.save(cadCatask);
+		}
+		//保存综合任务管理附件路径
+		CadCataskAttach cadCataskAttach = new CadCataskAttach();
+		cadCataskAttach.setCataskId(cataskId);
+		cadCataskAttach.setPath(attachPath);
+		cadCataskAttachDao.save(cadCataskAttach);
 	}
 
 	@Override
 	public Iterable<CadCataskAttach> findAllCataskAttachments(long cataskId) {
-		// TODO Auto-generated method stub
-		return null;
+		return cadCataskAttachDao.findByCataskId(cataskId);
 	}
 
 	@Override
 	public CadCataskAttach findCataskAttachment(long attachId) {
-		// TODO Auto-generated method stub
-		return null;
+		return cadCataskAttachDao.findOne(attachId);
 	}
 
+	@Transactional
 	@Override
 	public void cataskArchive(long cataskId) {
-		// TODO Auto-generated method stub
+		//将主表记录移至归档表
+		CadCatask cadCatask = cadCataskDao.findOne(cataskId);
+		CadCataskHis cadCataskHis = new CadCataskHis();
+		BeanUtils.copyProperties(cadCatask, cadCataskHis);
+		cadCataskHisDao.save(cadCataskHis);		
 		
+		//删除主表记录及其关联关系的记录
+		cadCataskDao.delete(cadCatask);
+		cadCataskAttachDao.deleteByCataskId(cataskId);
 	}
 
 	@Override
 	public Page<CadCataskHis> findAllArchivedCatasks(String keyword,
 			Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		return cadCataskHisDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
 	}	
 }
