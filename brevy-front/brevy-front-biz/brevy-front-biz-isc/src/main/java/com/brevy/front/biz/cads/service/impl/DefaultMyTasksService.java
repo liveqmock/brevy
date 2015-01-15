@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.brevy.core.shiro.util.ShiroUtils;
+import com.brevy.front.biz.cads.dao.CadCataskAttachDao;
+import com.brevy.front.biz.cads.dao.CadCataskDao;
+import com.brevy.front.biz.cads.dao.CadCataskHisDao;
 import com.brevy.front.biz.cads.dao.CadDemandAttachDao;
 import com.brevy.front.biz.cads.dao.CadDemandDao;
 import com.brevy.front.biz.cads.dao.CadDemandHisDao;
@@ -18,6 +21,9 @@ import com.brevy.front.biz.cads.dao.CadGdDao;
 import com.brevy.front.biz.cads.dao.CadGdHisDao;
 import com.brevy.front.biz.cads.dao.CadRefDeptDemandDao;
 import com.brevy.front.biz.cads.dao.CadRefDeptGdDao;
+import com.brevy.front.biz.cads.model.CadCatask;
+import com.brevy.front.biz.cads.model.CadCataskAttach;
+import com.brevy.front.biz.cads.model.CadCataskHis;
 import com.brevy.front.biz.cads.model.CadDemand;
 import com.brevy.front.biz.cads.model.CadDemandAttach;
 import com.brevy.front.biz.cads.model.CadDemandHis;
@@ -56,6 +62,15 @@ public class DefaultMyTasksService implements MyTasksService {
 	
 	@Autowired
 	private CadDemandHisDao cadDemandHisDao;
+	
+	@Autowired
+	private CadCataskDao cadCataskDao;
+	
+	@Autowired
+	private CadCataskAttachDao cadCataskAttachDao;
+	
+	@Autowired
+	private CadCataskHisDao cadCataskHisDao;
 
 	@Override
 	public Page<CadGd> findGDsRefDept(String keyword, Pageable pageable) {
@@ -248,5 +263,49 @@ public class DefaultMyTasksService implements MyTasksService {
 	public Page<CadDemandHis> findAllArchivedDemands(String keyword,
 			Pageable pageable) {
 		return cadDemandHisDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
+	}
+
+	@Override
+	public Page<CadCatask> findAllCatasks(String keyword, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CadCatask saveOrUpdateCatask(CadCatask cadCatask) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addCataskAttach(long cataskId, String attachType,
+			String attachPath) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Iterable<CadCataskAttach> findAllCataskAttachments(long cataskId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CadCataskAttach findCataskAttachment(long attachId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void cataskArchive(long cataskId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Page<CadCataskHis> findAllArchivedCatasks(String keyword,
+			Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 }
