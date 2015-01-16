@@ -281,7 +281,7 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskUpdate", {
 										Ext.getCmp("CataskUpdate.addWin").close();
 										Ext.getCmp("CataskReadMainGridID").getSelectionModel().deselectAll();
 										CataskDS.reload();
-										Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");
+										Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.updateSuccess, "br");
 										
 									}
 								});
@@ -290,7 +290,7 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskUpdate", {
 								Ext.getCmp("CataskUpdate.addWin").close();
 								Ext.getCmp("CataskReadMainGridID").getSelectionModel().deselectAll();
 								CataskDS.reload();
-								Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.saveSuccess, "br");
+								Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.updateSuccess, "br");
 							}
 						},
 						scope : this
