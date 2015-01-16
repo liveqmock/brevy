@@ -2,14 +2,14 @@
  * @module 附件明细读操作
  * @author caobin
  */
-Ext.define("App.biz.cads.myTasks.gd.crud.GDAttachments", {
+Ext.define("App.biz.cads.myTasks.catask.crud.CataskAttachments", {
 	extend : "App.Module",
 	
 	init : function(){
-		GDAttachmentDS.on("beforeload", function(store){		
-			store.getProxy().setExtraParam("gdId", this.params.get("id"));
+		CataskAttachmentDS.on("beforeload", function(store){		
+			store.getProxy().setExtraParam("cataskId", this.params.get("id"));
 		}, this);
-		GDAttachmentDS.load();
+		CataskAttachmentDS.load();
 		
 		return Ext.create("Ext.window.Window", {
 			title: Ext.String.format(this.moduleText, this.params.get("name"), this.params.get("code")),
@@ -19,9 +19,9 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDAttachments", {
     		layout: "fit",
     		modal: true,
     		items: { 
-    			id: "GDAttachReadMainGridID",
+    			id: "CataskAttachReadMainGridID",
     			xtype: "grid",
-    			store: GDAttachmentDS,
+    			store: CataskAttachmentDS,
 				tbar: this.createToolbar(),
 				viewConfig: {
 			        stripeRows: true,
@@ -39,8 +39,8 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDAttachments", {
 		return [
 			" ", 
 			{text: Msg.App.download, iconCls: Ext.ux.Icons.fugue_drive_download, handler:function(btn){
-				me.handleSelectedRecord("GDAttachReadMainGridID", function(p){
-					location.href = _ctxPath + "/biz/cads/myTasks/gd/fileDownload.html?attachId=" + p.sm[0].get("id");
+				me.handleSelectedRecord("CataskAttachReadMainGridID", function(p){
+					location.href = _ctxPath + "/biz/cads/myTasks/catask/fileDownload.html?attachId=" + p.sm[0].get("id");
 				});
 			}}
 		];

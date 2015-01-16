@@ -915,6 +915,32 @@ Ext.define("Msg", {
 			addAttachments: "添加附件",
 			confirmFinish: "确定完成",
 			updateAndAttach : "更新并上传成果文档"
-		}		
+		},
+		
+		"App.biz.cads.myTasks.catask.crud.CataskAttachments" : {	
+			path: "文件名"
+		},
+		
+		"App.biz.cads.myTasks.archive.catask.crud.ArchivedCataskRead" : {
+			id: "序号",
+			operLv: "操作等级",
+			importance: "重要度",
+			category: "类别",
+			source: "来源",
+			title: "标题",
+			reqFinishDate: "要求完成时间",
+			jobContent: "工作内容",
+			progress: "进度",
+			finishDate: "完成时间",
+			finishStatus: "完成情况",
+			usingResource: "占用资源",
+			attachType: "成果文档",
+			result: "结果确认",
+			remark: "备注",
+			keywordSearch: "关键字查询",
+			format: "Y-m-d",
+			edit: "进度更新",
+			emptyResult: "请选择"
+		}
 	}
 });

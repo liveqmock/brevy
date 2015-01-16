@@ -1,12 +1,12 @@
 /**
- * @module 工单归档操作
+ * @module 综合管理任务归档操作
  * @author caobin
  */
-Ext.define("App.biz.cads.myTasks.gd.crud.GDArchive", {
+Ext.define("App.biz.cads.myTasks.catask.crud.CataskArchive", {
 	extend : "App.Module",
 	
 	requestUrl: function(){
-		return this.getRequestRes("/biz/cads/myTasks/gd/archive.json");
+		return this.getRequestRes("/biz/cads/myTasks/catask/archive.json");
 	},
 	
 	init : function(){
@@ -20,15 +20,15 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDArchive", {
 			url: this.requestUrl(),
 			method: "POST",
 			jsonData: {
-		        gdId: submitParams
+		        cataskId: submitParams
 		    },
 			loadMask: true,
-			loadMaskEl: Ext.getCmp("GDReadMainGridID").getEl(),
+			loadMaskEl: Ext.getCmp("CataskReadMainGridID").getEl(),
 			loadMaskMsg: Msg.App.deleting,	
 			success: function(response){ 
 				Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.archivedSuccess, "br");
-				Ext.getCmp("GDReadMainGridID").getSelectionModel().deselectAll();
-				GDDS.reload();
+				Ext.getCmp("CataskReadMainGridID").getSelectionModel().deselectAll();
+				CataskDS.reload();
 			},
 			scope: this
 		});
