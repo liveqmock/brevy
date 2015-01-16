@@ -24,4 +24,5 @@ public interface CadCataskDao extends CrudRepository<CadCatask, Long> {
 	 */
 	@Query("select a from CadCatask a where lower(a.title) like lower(:kw) or lower(a.jobContent) like lower(:kw) order by a.id")
 	Page<CadCatask> searchByKeyword(@Param("kw")String keyword, Pageable pageable);
+	
 }

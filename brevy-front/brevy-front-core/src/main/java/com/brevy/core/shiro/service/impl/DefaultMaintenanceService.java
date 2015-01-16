@@ -638,7 +638,7 @@ public class DefaultMaintenanceService implements MaintenanceService {
 	
 	@Override
 	public List<CadDictDetail> findCadDictDetails(long dictId) {
-		return cadDictDetailDao.findByDictId(dictId);
+		return cadDictDetailDao.findByDictIdOrderByIdAsc(dictId);
 	}
 
 	@Transactional

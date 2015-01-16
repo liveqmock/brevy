@@ -341,4 +341,12 @@ public class DefaultMyTasksService implements MyTasksService {
 		}	
 	}
 
+	@Transactional
+	@Override
+	public void cataskConfirm(long cataskId, long dictDetailId) {
+		CadCatask cadCatask = cadCataskDao.findOne(cataskId);
+		//持久态
+		cadCatask.setResult(String.valueOf(dictDetailId));
+	}
+
 }

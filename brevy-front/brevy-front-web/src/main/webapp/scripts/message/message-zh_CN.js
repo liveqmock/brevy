@@ -857,7 +857,8 @@ Ext.define("Msg", {
 			remark: "备注",
 			keywordSearch: "关键字查询",
 			format: "Y-m-d",
-			edit: "进度更新"
+			edit: "进度更新",
+			emptyResult: "请选择"
 		},
 		
 		"App.biz.cads.myTasks.catask.crud.CataskCreate" : {
@@ -881,7 +882,6 @@ Ext.define("Msg", {
 			emptyImportance: "请选择重要度",
 			emptyCategory: "请选择类别",
 			emptyFinishStatus: "请选择完成情况",
-			emptyResult: "请选择确认结果",		
 			CataskResourceInfo: "进度与资源"
 		},
 		

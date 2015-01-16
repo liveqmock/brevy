@@ -72,6 +72,7 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskUpdate", {
 			newLine: 1,
 			allowBlank: true,
 			xtype: "combo",
+			queryMode: "local",
 			triggerAction: "all",
 			forceSelection: true,
 			editable: false,

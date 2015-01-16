@@ -45,5 +45,13 @@ public interface MyTasksService extends CadGdService, CadDemandService, CadCatas
 	 */
 	Page<CadCataskHis> findAllArchivedCatasks(String keyword, Pageable pageable);
 	
+	/**
+	 * @description 综合管理任务确认
+	 * @param cataskId 综合管理任务ID
+	 * @param dictDetailId 字典明细ID
+	 * @author caobin
+	 */
+	void cataskConfirm(long cataskId, long dictDetailId);
+	
 	
 }

@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.brevy.core.shiro.util.ShiroUtils;
+import com.brevy.core.support.exception.CoreException;
+import com.brevy.core.support.exception.MessageCode;
 import com.brevy.front.biz.cads.model.CadCatask;
 import com.brevy.front.biz.cads.model.CadCataskAttach;
+import com.brevy.front.biz.messages.Errors;
 
 /**
  * @description 综合管理任务Controller
@@ -115,5 +121,25 @@ public class CataskController extends AbstractMyTasksController {
 	public ModelAndView cataskArchive(@RequestBody Map<String, String> p){
 		myTasksService.cataskArchive(getLongValue(p, "cataskId"));
 		return this.successView();
+	}
+	
+	
+	/**
+	 * @description 综合管理任务确认
+	 * @param p
+	 * @return
+	 * @author caobin
+	 */
+	//@RequiresPermissions({"cadCatask:confirm:update"})
+	@RequestMapping("/confirm")
+	@ResponseBody
+	public ModelAndView cataskConfirm(@RequestBody Map<String, String> p){
+		if(SecurityUtils.getSubject().isPermitted("cadCatask:confirm")){
+			myTasksService.cataskConfirm(getLongValue(p, "id"), getLongValue(p, "dictDetailId"));
+			return this.successView();
+		}else{
+			return this.failureView(new CoreException(new MessageCode(Errors.ECADS00003)));
+		}
+		
 	}
 }

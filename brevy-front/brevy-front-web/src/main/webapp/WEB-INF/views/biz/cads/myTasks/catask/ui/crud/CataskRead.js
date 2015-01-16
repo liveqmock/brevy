@@ -5,6 +5,14 @@
 Ext.define("App.biz.cads.myTasks.catask.crud.CataskRead", {
 	extend : "App.Module",
 	
+	beforeInit : function(){
+		this.callParent();
+		this.cellEditing = new Ext.grid.plugin.CellEditing({
+            clicksToEdit: 1
+        });
+        dictDS_28.load();
+	},
+	
 	init : function(){
 		return Ext.create("Ext.grid.Panel", {
 			id: "CataskReadMainGridID",
@@ -16,6 +24,7 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskRead", {
 		        stripeRows: true,
 		        forceFit: true
 		    },
+		    plugins: [this.cellEditing],
 		    columns: this.createColumns(),
 		    selModel: this.createSelectionModel(),
 		    dockedItems: [{
@@ -24,7 +33,35 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskRead", {
 		        dock: "bottom",
 		        displayInfo: true,
 		        plugins : [Ext.create("Ext.ux.PagingToolbarResizer", {options : this.pageSizeOptions, width: 70})]
-		    }]
+		    }],
+		    listeners: {
+		    	edit: function(e, o){
+		    		if(o.originalValue == o.value)return;	    		
+		    		Ext.Ajax.request({
+						url: "../biz/cads/myTasks/catask/confirm.json",
+						method: "POST",
+						jsonData: {
+					        id: o.record.get("id"),
+					        dictDetailId: o.record.get("result")
+					    },
+						loadMask: true,
+						loadMaskEl: Ext.getCmp("CataskReadMainGridID").getEl(),
+						loadMaskMsg: Msg.App.updating,	
+						success: function(response){ 
+							var r = eval("(" + response.responseText + ")");
+							if(r.RSP_HEAD.TRAN_SUCCESS == "0"){
+								o.record.reject();
+								Pub.MsgBox.showMsgBox(Pub.MsgBox.ERROR, r.RSP_HEAD.ERROR_MESSAGE);
+							}else{
+								o.record.commit();
+								Pub.Notification.showNotification(Pub.Notification.INFO, Msg.Prompt.updateSuccess, "br");
+							}					
+						},
+						scope: this
+					});
+		    	}
+		    	
+		    }
 		});
 	},
 	
@@ -122,7 +159,22 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskRead", {
 	    			}
 	    		}
 	    	]},
-	    	{text: this.result, dataIndex: "result", width:85, renderer: function(v){return me.dictMapping(v);}},
+	    	{
+	    		text: this.result, dataIndex: "result", width:95, 
+	    		renderer: function(v){return me.dictMapping(v);},
+	    		editor: new Ext.form.field.ComboBox({
+                    typeAhead: true,
+                    triggerAction: "all",
+                    store: dictDS_28,
+                    forceSelection: true,
+					editable: false,
+					emptyText: me.emptyResult,
+					queryMode: "local",
+					displayField: "name",
+					valueField: "id",
+					plugins: ["clearbutton"]
+                })
+	    	},
 	    	{text: this.remark, dataIndex: "remark", flex:1, minWidth:160, renderer: Pub.Utils.cellTips}
 		];
 	},

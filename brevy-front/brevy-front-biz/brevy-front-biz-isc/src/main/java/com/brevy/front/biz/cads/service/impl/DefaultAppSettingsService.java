@@ -55,7 +55,7 @@ public class DefaultAppSettingsService implements AppSettingsService {
 		cadDictDao.delete(cadDictDao.findAll(ids));
 		//删除关联条目
 		for(Long dictId : ids){
-			cadDictDetailDao.delete(cadDictDetailDao.findByDictId(dictId));
+			cadDictDetailDao.delete(cadDictDetailDao.findByDictIdOrderByIdAsc(dictId));
 		}	
 	}
 

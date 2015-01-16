@@ -23,7 +23,7 @@ public interface CadDictDetailDao extends CrudRepository<CadDictDetail, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	List<CadDictDetail> findByDictId(long dictId);
+	List<CadDictDetail> findByDictIdOrderByIdAsc(long dictId);
 	
 	/**
 	 * @description 通过关键字分页查询数据字典明细
@@ -32,6 +32,6 @@ public interface CadDictDetailDao extends CrudRepository<CadDictDetail, Long> {
 	 * @return
 	 * @author caobin
 	 */
-	@Query("select a from CadDictDetail a where a.dictId=:dictId and (lower(a.name) like lower(:kw) or lower(a.code) like lower(:kw) or lower(a.desc) like lower(:kw))")
+	@Query("select a from CadDictDetail a where a.dictId=:dictId and (lower(a.name) like lower(:kw) or lower(a.code) like lower(:kw) or lower(a.desc) like lower(:kw)) order by a.id")
 	Page<CadDictDetail> searchByKeyword(@Param("kw")String keyword, @Param("dictId")Long dictId, Pageable pageable);
 }
