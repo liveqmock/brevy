@@ -882,7 +882,8 @@ Ext.define("Msg", {
 			emptyImportance: "请选择重要度",
 			emptyCategory: "请选择类别",
 			emptyFinishStatus: "请选择完成情况",
-			CataskResourceInfo: "进度与资源"
+			CataskResourceInfo: "进度与资源",
+			userId: "分配到人员"
 		},
 		
 		"App.biz.cads.myTasks.catask.crud.CataskUpdate" : {

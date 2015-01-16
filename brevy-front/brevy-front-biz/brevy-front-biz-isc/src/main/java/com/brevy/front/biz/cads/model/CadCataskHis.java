@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 @Table(name="CAD_CATASK_HIS")
 public class CadCataskHis implements Serializable {
 
-	private static final long serialVersionUID = 6271321137348049504L;
+	private static final long serialVersionUID = 2492005461019692344L;
 
 	@Id
 	private long id;
@@ -73,6 +73,9 @@ public class CadCataskHis implements Serializable {
 	
 	@Column(name="ATTACH_TYPE")
 	private String attachType;
+	
+	@Column(name="USER_ID")
+	private long userId;
 
 	public CadCataskHis() {
 	}
@@ -230,6 +233,16 @@ public class CadCataskHis implements Serializable {
 
 	public void setAttachType(String attachType) {
 		this.attachType = attachType;
+	}
+	
+	
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	@PrePersist

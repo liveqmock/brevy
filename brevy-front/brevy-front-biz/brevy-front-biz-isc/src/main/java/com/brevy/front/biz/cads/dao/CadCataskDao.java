@@ -14,7 +14,7 @@ import com.brevy.front.biz.cads.model.CadCatask;
  * @date 2015年1月15日
  */
 public interface CadCataskDao extends CrudRepository<CadCatask, Long> {
-
+	
 	/**
 	 * @description 通过关键字分页查询综合管理任务
 	 * @param keyword
@@ -24,5 +24,16 @@ public interface CadCataskDao extends CrudRepository<CadCatask, Long> {
 	 */
 	@Query("select a from CadCatask a where lower(a.title) like lower(:kw) or lower(a.jobContent) like lower(:kw) order by a.id")
 	Page<CadCatask> searchByKeyword(@Param("kw")String keyword, Pageable pageable);
+
+	/**
+	 * @description 通过关键字分页查询综合管理任务
+	 * @param keyword
+	 * @param pageable
+	 * @param userId
+	 * @return
+	 * @author caobin
+	 */
+	@Query("select a from CadCatask a where a.userId=:userId and (lower(a.title) like lower(:kw) or lower(a.jobContent) like lower(:kw)) order by a.id")
+	Page<CadCatask> searchByKeyword(@Param("kw")String keyword, Pageable pageable, @Param("userId")long userId);
 	
 }

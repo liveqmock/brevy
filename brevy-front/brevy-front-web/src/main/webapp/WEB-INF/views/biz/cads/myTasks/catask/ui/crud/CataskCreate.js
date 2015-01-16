@@ -98,6 +98,23 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskCreate", {
 			maxLength: 170
 		}
 		
+		var userId = {
+			fieldLabel: this.required(this.userId),
+			name: "userId",
+			flex: 1,
+			newLine: 1,
+			allowBlank: false,
+			xtype: "combo",
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			emptyText: this.emptyPmName,
+			store: userDS,
+			displayField: "chName",
+			valueField: "id",
+			plugins: ["clearbutton"]
+		}
+		
 		var progress = {
 			fieldLabel: this.progress,
 			fieldStyle: Pub.Style.fieldIcon(this.fieldFugueIconRES + "edit-percent.png", "right"),
@@ -183,7 +200,7 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskCreate", {
 			id: "CataskCreate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 440,
+		    height: 460,
 		    width: 830,
 		    layout: "fit",
 		    modal: true,
@@ -210,7 +227,7 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskCreate", {
 							collapsible: false
 						},
 						items:[
-							title, operLv, importance, category, source, reqFinishDate,	jobContent							
+							title, operLv, importance, category, source, reqFinishDate,	jobContent, userId							
 						]
 					},
 					{

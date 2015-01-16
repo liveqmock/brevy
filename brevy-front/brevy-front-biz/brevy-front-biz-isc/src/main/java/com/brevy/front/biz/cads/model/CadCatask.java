@@ -29,7 +29,7 @@ import com.brevy.core.shiro.util.ShiroUtils;
 @Table(name="CAD_CATASK")
 public class CadCatask implements Serializable {
 
-	private static final long serialVersionUID = 424165896516592716L;
+	private static final long serialVersionUID = 6492753652688343372L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="CAD_CATASK_SEQ")
@@ -91,6 +91,9 @@ public class CadCatask implements Serializable {
 	
 	@Column(name="ATTACH_TYPE")
 	private String attachType;
+	
+	@Column(name="USER_ID")
+	private long userId;
 
 	public CadCatask() {
 	}
@@ -259,6 +262,16 @@ public class CadCatask implements Serializable {
 
 	public void setAttachType(String attachType) {
 		this.attachType = attachType;
+	}
+	
+	
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	/* (non-Javadoc)

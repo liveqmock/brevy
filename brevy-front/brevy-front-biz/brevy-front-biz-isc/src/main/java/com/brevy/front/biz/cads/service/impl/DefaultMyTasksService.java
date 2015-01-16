@@ -2,6 +2,7 @@ package com.brevy.front.biz.cads.service.impl;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -251,7 +252,11 @@ public class DefaultMyTasksService implements MyTasksService {
 
 	@Override
 	public Page<CadCatask> findAllCatasks(String keyword, Pageable pageable) {
-		return cadCataskDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
+		if(SecurityUtils.getSubject().isPermitted("cadCatask:confirm")){
+			return cadCataskDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
+		}else{			
+			return cadCataskDao.searchByKeyword("%".concat(keyword).concat("%"), pageable, ShiroUtils.getCurrentUser().getUserId());
+		}		
 	}
 
 	@Transactional
@@ -262,7 +267,7 @@ public class DefaultMyTasksService implements MyTasksService {
 			savedCadCatask = cadCataskDao.findOne(cadCatask.getId());
 			BeanUtils.copyProperties(cadCatask, savedCadCatask, new String[]{
 				"id", "title", "reqFinishDate", "importance", "source", 
-				"category", "attachType", "result"
+				"category", "attachType", "result", "userId"
 			});
 			cadCataskDao.save(savedCadCatask);
 		}else{
