@@ -14,6 +14,7 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskRead", {
 	},
 	
 	init : function(){
+		var me = this;
 		return Ext.create("Ext.grid.Panel", {
 			id: "CataskReadMainGridID",
 		    title: this.moduleText,
@@ -59,8 +60,14 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskRead", {
 						},
 						scope: this
 					});
-		    	}
+		    	},
 		    	
+		    	itemdblclick : function(grid, record, item, index){
+		    		var btn = Ext.getCmp("CataskRead.updateBtn");
+					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/myTasks/catask/ui/crud/CataskUpdate.js"), function(){
+						me.createInstance("App.biz.cads.myTasks.catask.crud.CataskUpdate", me.edit, btn.iconCls, record).show(btn);
+					});
+		    	}		    	
 		    }
 		});
 	},
@@ -76,7 +83,7 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskRead", {
 				});
 			}},
 			"-",
-			{text: me.edit, iconCls: Ext.ux.Icons.page_edit, handler:function(btn){
+			{ id:"CataskRead.updateBtn", text: me.edit, iconCls: Ext.ux.Icons.page_edit, handler:function(btn){
 				me.handleSelectedRecord("CataskReadMainGridID", function(p){
 					Pub.ResLoader.jsPack(me.getExtRes("biz/cads/myTasks/catask/ui/crud/CataskUpdate.js"), function(){
 						me.createInstance("App.biz.cads.myTasks.catask.crud.CataskUpdate", me.edit, btn.iconCls, p.sm[0]).show(btn);
