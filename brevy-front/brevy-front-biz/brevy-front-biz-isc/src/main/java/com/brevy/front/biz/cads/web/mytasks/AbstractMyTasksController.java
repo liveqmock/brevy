@@ -41,12 +41,12 @@ public abstract class AbstractMyTasksController extends BaseController {
 	
 	static {
 		fileType.put("doc", "application/msword");
-		fileType.put("docx", "application/msword");
+		fileType.put("docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 		fileType.put("pdf", "application/pdf");
 		fileType.put("zip", "application/zip");
 		fileType.put("rar", "application/x-rar-compressed");
 		fileType.put("xls", "application/vnd.ms-excel");
-		fileType.put("xlsx", "application/vnd.ms-excel");
+		fileType.put("xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 		
 	}
 	

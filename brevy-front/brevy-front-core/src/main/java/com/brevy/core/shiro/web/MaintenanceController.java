@@ -843,14 +843,12 @@ public class MaintenanceController extends BaseController {
 	
 	/**
 	 * @description 获取用户列表
-	 * @param p
 	 * @return
 	 * @author caobin
 	 */
 	@RequestMapping("/user/getAllUsers")
 	@ResponseBody
-	public List<ApUserSingle> getAllUsers(@RequestBody Map<String, String> p){
-		log.debug(">>>> parameters from request are : {}", new Object[]{p});
+	public List<ApUserSingle> getAllUsers(){
 		return maintenanceService.findApUsers();
 	}
 		

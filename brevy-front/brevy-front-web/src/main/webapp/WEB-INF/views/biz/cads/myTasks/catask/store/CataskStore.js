@@ -109,7 +109,14 @@ var userDS = Ext.create("Ext.data.Store", {
 	}
 });
 
-
+var userMgrDS = null;
+Ext.Ajax.request({
+    url: _ctxPath + "/maintenance/user/getAllUsers.json",
+    async: false,
+    success: function(response){
+    	userMgrDS = eval("(" + response.responseText + ")")
+    }
+});
 
 var dictDetailMgrDS = null;
 Ext.Ajax.request({
