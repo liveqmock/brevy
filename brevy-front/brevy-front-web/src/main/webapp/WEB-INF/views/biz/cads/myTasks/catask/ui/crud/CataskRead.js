@@ -11,6 +11,7 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskRead", {
             clicksToEdit: 1
         });
         dictDS_28.load();
+        userDS.load();
 	},
 	
 	init : function(){
@@ -125,7 +126,11 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskRead", {
 	//创建列
 	createColumns : function(){
 		var me = this;
-		return [			
+		return [		
+			{text: this.userId, dataIndex: "userId", width:65, renderer: function(value){
+				if(!value)return "";
+			    return userDS.getById(value).get("chName")			 	
+			}},
 		 	{text: this.operLv, dataIndex: "operLv", width:65},  
 	    	{text: this.importance, dataIndex: "importance", width:60, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.category, dataIndex: "category", width:65, renderer: function(v){return me.dictMapping(v);}},

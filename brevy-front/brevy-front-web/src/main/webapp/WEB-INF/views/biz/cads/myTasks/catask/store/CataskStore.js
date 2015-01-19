@@ -38,7 +38,8 @@ Ext.define("CataskModel", {
 	    {name: "usingResource", mapping: "usingResource"},
 	    {name: "attachType", mapping: "attachType"},
 	    {name: "result", mapping: "result", type: "int"},
-	    {name: "remark", mapping: "remark"}
+	    {name: "remark", mapping: "remark"},
+	    {name: "userId", mapping: "userId"}
     ]
 });
 
@@ -107,8 +108,6 @@ var userDS = Ext.create("Ext.data.Store", {
 	    }
 	}
 });
-
-
 
 
 
