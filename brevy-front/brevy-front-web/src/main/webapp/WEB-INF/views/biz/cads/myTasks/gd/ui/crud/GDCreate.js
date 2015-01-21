@@ -37,11 +37,11 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		}
 		
 		var gdType = {
-			fieldLabel: this.gdType,
+			fieldLabel: this.required(this.gdType),
 			name: "gdType",
 			flex: 1,
 			newLine: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "combo",
 			triggerAction: "all",
 			forceSelection: true,
@@ -54,10 +54,10 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		}
 		
 		var prjType = {
-			fieldLabel: this.prjType,
+			fieldLabel: this.required(this.prjType),
 			name: "prjType",
 			flex: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "combo",
 			triggerAction: "all",
 			forceSelection: true,
@@ -80,11 +80,11 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		}
 		
 		var execType = {
-			fieldLabel: this.execType,
+			fieldLabel: this.required(this.execType),
 			name: "execType",
 			flex: 1,
 			newLine: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "combo",
 			triggerAction: "all",
 			forceSelection: true,
@@ -128,31 +128,31 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		}
 		
 		var requireFinishTime = {
-			fieldLabel: this.requireFinishTime,
+			fieldLabel: this.required(this.requireFinishTime),
 			name: "requireFinishTime",
 			flex: 1,
 			newLine: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "datefield",
 			editable: false,
 			format: this.format
 		}
 		
 		var estimateJob = {
-			fieldLabel: this.estimateJob,
+			fieldLabel: this.required(this.estimateJob),
 			name: "estimateJob",
 			flex: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "textfield",
 			maxLength: 12
 		}
 		
 		var preCond = {
-			fieldLabel: this.preCond,
+			fieldLabel: this.required(this.preCond),
 			name: "preCondIds",
 			flex: 1,
 			newLine: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "combo",
 			multiSelect: true,
 			triggerAction: "all",
@@ -208,11 +208,11 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		
 		
 		var pmName = {
-			fieldLabel: this.pmName,
+			fieldLabel: this.required(this.pmName),
 			name: "pmNameIds",
 			flex: 1,
 			newLine: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "combo",
 			multiSelect: true,
 			triggerAction: "all",
@@ -237,10 +237,10 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 		}
 		
 		var startDate = {
-			fieldLabel: this.startDate,
+			fieldLabel: this.required(this.startDate),
 			name: "startDate",
 			flex: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "datefield",
 			editable: false,
 			format: this.format

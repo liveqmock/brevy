@@ -53,11 +53,11 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 		}
 		
 		var requireFinishTime = {
-			fieldLabel: this.requireFinishTime,
+			fieldLabel: this.required(this.requireFinishTime),
 			name: "requireFinishTime",
 			flex: 1,
 			newLine: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "datefield",
 			editable: false,
 			format: this.format
@@ -113,11 +113,11 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 		}
 		
 		var preCond = {
-			fieldLabel: this.preCond,
+			fieldLabel: this.required(this.preCond),
 			name: "preCondIds",
 			flex: 1,
 			newLine: 1,
-			allowBlank: true,
+			allowBlank: false,
 			xtype: "combo",
 			multiSelect: true,
 			triggerAction: "all",
