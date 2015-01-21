@@ -2,6 +2,7 @@
 Ext.define("CataskModel", {
 	extend: "Ext.data.Model",
     fields: [
+    	{name: "userId", mapping: "userId"},
     	{name: "id", mapping: "id"},
 	    {name: "operLv", mapping: "operLv"},  
 	    {name: "importance", mapping: "importance", type: "int"},
@@ -87,7 +88,14 @@ var userDS = Ext.create("Ext.data.Store", {
 });
 
 
-
+var userMgrDS = null;
+Ext.Ajax.request({
+    url: _ctxPath + "/maintenance/user/getAllUsers.json",
+    async: false,
+    success: function(response){
+    	userMgrDS = eval("(" + response.responseText + ")")
+    }
+});
 
 
 var dictDetailMgrDS = null;

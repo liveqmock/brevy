@@ -942,7 +942,8 @@ Ext.define("Msg", {
 			keywordSearch: "关键字查询",
 			format: "Y-m-d",
 			edit: "进度更新",
-			emptyResult: "请选择"
+			emptyResult: "请选择",
+			userId: "执行人"
 		}
 	}
 });
