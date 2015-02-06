@@ -31,7 +31,7 @@ import com.brevy.core.shiro.util.ShiroUtils;
 @Table(name="CAD_GD")
 public class CadGd implements Serializable {
 
-	private static final long serialVersionUID = 7602473673418079908L;
+	private static final long serialVersionUID = 3858817600762944483L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE, generator="CAD_GD_SEQ")
@@ -149,6 +149,8 @@ public class CadGd implements Serializable {
 	
 	@Column(name="PRJ_TYPE")
 	private String prjType;
+	
+	private String monitor;
 	
 	@Transient
 	private long[] assignToDept;
@@ -489,6 +491,16 @@ public class CadGd implements Serializable {
 
 	public void setPrjType(String prjType) {
 		this.prjType = prjType;
+	}
+	
+	
+
+	public String getMonitor() {
+		return monitor;
+	}
+
+	public void setMonitor(String monitor) {
+		this.monitor = monitor;
 	}
 
 	@PrePersist

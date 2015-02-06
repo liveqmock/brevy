@@ -13,6 +13,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 		this.callParent();
 		dictDS_20.load();
 		dictDS_24.load();
+		dictDS_29.load();
 	},
 
 
@@ -250,6 +251,23 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 			maxLength: 12
 		}
 		
+		var monitor = {
+			fieldLabel: this.required(this.monitor),
+			name: "monitor",
+			flex: 1,
+			newLine: 1,
+			allowBlank: true,
+			xtype: "combo",
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			store: dictDS_29,
+			queryMode: "local",
+			displayField: "name",
+			valueField: "id"
+			
+		}
+		
 		var remark = {
 			fieldLabel: this.remark,
 			name: "remark",
@@ -334,7 +352,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDUpdate", {
 						},
 						items:[
 							progress, devFinishDate, sitWorkload, sitFinishDate, status,
-							finishDate, usingResource, usingTime, remark
+							finishDate, usingResource, usingTime, monitor, remark
 						]
 					}
 				],

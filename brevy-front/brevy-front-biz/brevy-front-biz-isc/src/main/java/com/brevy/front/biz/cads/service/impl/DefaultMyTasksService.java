@@ -74,13 +74,13 @@ public class DefaultMyTasksService implements MyTasksService {
 	private CadCataskHisDao cadCataskHisDao;
 
 	@Override
-	public Page<CadGd> findGDsRefDept(String keyword, Pageable pageable) {
-		return cadGdDao.searchByKeyword(ShiroUtils.getCurrentUser().getDeptId(),"%".concat(keyword).concat("%"), pageable);
-	}
-	
-	@Override
-	public Page<CadGd> findAllGDs(String keyword, Pageable pageable) {
-		return cadGdDao.searchByKeyword("%".concat(keyword).concat("%"), pageable);
+	public Page<CadGd> findGDsRefDept(String keyword, String monitor, Pageable pageable) {
+		if(StringUtils.isEmpty(monitor)){
+			return cadGdDao.searchByKeyword(ShiroUtils.getCurrentUser().getDeptId(), "%".concat(keyword).concat("%"), pageable);
+		}else{
+			return cadGdDao.searchByKeyword(ShiroUtils.getCurrentUser().getDeptId(), "%".concat(keyword).concat("%"), monitor, pageable);
+		}
+		
 	}
 
 

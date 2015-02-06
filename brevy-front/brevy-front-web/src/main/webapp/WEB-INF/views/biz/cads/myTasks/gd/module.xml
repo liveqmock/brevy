@@ -2,7 +2,9 @@
 <module>
     <moduleName>App.biz.cads.myTasks.gd.GDUI</moduleName>  
     <files>
-        <css/>
+        <css>
+        	<file>ui/style.css</file>
+        </css>
         <js>
         	<file>store/GDStore.js</file>
         	<file>ui/crud/GDRead.js</file>

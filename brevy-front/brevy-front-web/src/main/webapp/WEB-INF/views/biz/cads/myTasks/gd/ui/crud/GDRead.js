@@ -4,6 +4,11 @@
  */
 Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 	extend : "App.Module",
+
+	beforeInit: function(){
+		this.callParent();
+		dictDS_29.load();
+	},
 	
 	init : function(){
 		return Ext.create("Ext.grid.Panel", {
@@ -12,9 +17,20 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 			iconCls: this.moduleIcon,
 			store: GDDS,
 			tbar: this.createToolbar(),
+			//features: [filtersCfg],
 			viewConfig: {
 		        stripeRows: true,
-		        forceFit: true
+		        forceFit: true,
+		        getRowClass: function(record, rowIndex, rowParams, store){//根据"要求完成时间"字段变色
+			       	var currentDate = Ext.Date.format(new Date(), "Ymd")
+					var requiredFinishDate = Ext.Date.format(new Date(record.get("requireFinishTime")), "Ymd")
+			  		var deltaDate = requiredFinishDate - currentDate;
+			  		if(deltaDate > 0 && deltaDate <= 3){
+			  			return "cads-monitor-row-green";
+			  		}else if(deltaDate == 0){
+			  			return "cads-monitor-row-red";
+			  		}  
+			    }
 		    },
 		    columns: this.createColumns(),
 		    selModel: this.createSelectionModel(),
@@ -66,10 +82,34 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 					});
 				}, null, null, true);
 			}},
+			"-"," ",
+			{
+				fieldLabel: this.monitor,
+				labelWidth: Ext.isChrome ? 60 : 50,
+				width: 200,
+				name: "monitor",
+				allowBlank: true,
+				xtype: "combo",
+				triggerAction: "all",
+				forceSelection: true,
+				editable: false,
+				store: dictDS_29,
+				queryMode: "local",
+				displayField: "name",
+				valueField: "id",
+				plugins: ["clearbutton"],
+				listeners: {
+					change: function(c, n, o){								
+						GDDS.getProxy().setExtraParam("monitor", c.getValue() || "");
+				       	GDDS.reload();
+					}
+				}
+			},
 			"->",
 			{
 				fieldLabel: this.keywordSearch,
 				labelWidth: Ext.isChrome ? 70 : 60,
+				paramName: "query",
 				xtype: "searchfield",
 				width: 260,
 				store: GDDS
@@ -108,6 +148,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 	    	{text: this.uat, dataIndex: "uat", width: 32, renderer: function(v){return me.dictMapping(v);}, hidden:true},
 	    	{text: this.pip, dataIndex: "pip", width: 32, renderer: function(v){return me.dictMapping(v);}, hidden:true},
 	    	{text: this.smp, dataIndex: "smp", width: 32, renderer: function(v){return me.dictMapping(v);}, hidden:true},
+	    	{text: this.monitor, dataIndex: "monitor", width: 80, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.devFinishDate, dataIndex: "devFinishDate", width:80, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.sitWorkload, dataIndex: "sitWorkload", width:70},
 	    	{text: this.sitFinishDate, dataIndex: "sitFinishDate", width:72, renderer: function(v){return me.formatDate(v);}},
@@ -152,6 +193,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 		if(!value)return value;
 	   	return Ext.Date.format(new Date(value), this.format)
 	},
+
 	
 	//数据字典映射
 	dictMapping: function(value){

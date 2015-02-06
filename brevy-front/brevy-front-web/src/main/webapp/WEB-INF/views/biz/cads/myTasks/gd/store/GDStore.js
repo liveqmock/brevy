@@ -56,7 +56,8 @@ Ext.define("GDModel", {
 	    {name: "sitFinishDate", mapping: "sitFinishDate", convert: Pub.Support.dateConvert},
 	    {name: "status", mapping: "status", type: "int"},
 	    {name: "gdType", mapping: "gdType", type: "int"},
-	    {name: "prjType", mapping: "prjType", type: "int"}
+	    {name: "prjType", mapping: "prjType", type: "int"},
+	    {name: "monitor", mapping: "monitor", type: "int"}
     ]
 });
 
@@ -126,6 +127,9 @@ var dictDS_23 = Ext.create("Ext.data.Store", dictDSConfig);
 
 dictDSConfig.proxy.extraParams = {"dictId": 24};
 var dictDS_24 = Ext.create("Ext.data.Store", dictDSConfig);
+
+dictDSConfig.proxy.extraParams = {"dictId": 29};
+var dictDS_29 = Ext.create("Ext.data.Store", dictDSConfig);
 
 
 Ext.define("userModel", {

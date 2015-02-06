@@ -12,6 +12,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 	beforeInit: function(){
 		this.callParent();
 		dictDS_20.load();
+		dictDS_29.load();
 		dictDS_2.load();
 	},
 	
@@ -473,6 +474,24 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			maxLength: 12
 		}
 		
+		var monitor = {
+			fieldLabel: this.required(this.monitor),
+			name: "monitor",
+			flex: 1,
+			newLine: 1,
+			allowBlank: true,
+			xtype: "combo",
+			triggerAction: "all",
+			forceSelection: true,
+			editable: false,
+			store: dictDS_29,
+			queryMode: "local",
+			displayField: "name",
+			valueField: "id",
+			value: 101
+			
+		}
+		
 		var assignToDepts = {
 			id: "GDCreate.assignToDepts",
 			fieldLabel: this.required(this.assignToDepts),
@@ -529,7 +548,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 			id: "GDCreate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 550,
+		    height: 580,
 		    width: 830,
 		    layout: "fit",
 		    modal: true,
@@ -585,7 +604,7 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDCreate", {
 						},
 						items:[
 							progress, devFinishDate, sitWorkload, sitFinishDate, status, 
-							finishDate, usingResource, usingTime, assignToDepts
+							finishDate, usingResource, usingTime, monitor, assignToDepts
 						]
 					}
 				],

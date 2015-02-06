@@ -72,26 +72,14 @@ public class GdController extends AbstractMyTasksController{
 		log.debug(">>>> parameters from request are : {}", new Object[]{p});
 		//获取查询参数
 		String keyword = getString(p, "query", "");
+		//获取监控情况参数
+		String monitor = getString(p, "monitor", "");
 		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
-		return myTasksService.findGDsRefDept(keyword, pageable);			
+		return myTasksService.findGDsRefDept(keyword, monitor, pageable);			
 	}
 	
 	
-	/**
-	 * @description 获取技术中心工单列表(Admin)
-	 * @param p
-	 * @return
-	 * @author caobin
-	 */
-	@RequestMapping("/getAllGDList")
-	@ResponseBody
-	public Page<CadGd> getAllGDList(@RequestBody Map<String, String> p){
-		log.debug(">>>> parameters from request are : {}", new Object[]{p});
-		//获取查询参数
-		String keyword = getString(p, "query", "");
-		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
-		return myTasksService.findAllGDs(keyword, pageable);			
-	}
+
 
 	/**
 	 * @description 保存（更新）工单
