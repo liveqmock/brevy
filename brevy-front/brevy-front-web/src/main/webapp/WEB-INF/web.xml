@@ -15,7 +15,7 @@
 	<!-- 切换环境配置 -->
 	<context-param>
 		<param-name>spring.profiles.default</param-name>
-		<param-value>dev</param-value>
+		<param-value>prd</param-value>
 	</context-param>
 	
 	<!-- 刷新Introspector防止内存泄露(针对非Spring托管的Bean) -->

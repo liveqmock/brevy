@@ -72,7 +72,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			maxLength: 12
 		}
 		
-		var estimateTest = {
+		/*var estimateTest = {
 			fieldLabel: this.estimateTest,
 			name: "estimateTest",
 			flex: 1,
@@ -80,12 +80,13 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 			allowBlank: true,
 			xtype: "textfield",
 			maxLength: 12
-		}
+		}*/
 		
 		var devFinishDate = {
 			fieldLabel: this.devFinishDate,
 			name: "devFinishDate",
 			flex: 1,
+			newLine: 1,
 			allowBlank: true,
 			xtype: "datefield",
 			editable: false,
@@ -288,7 +289,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandCreate", {
 				},
 				items:[
 					prjName, recvDate, priority, requireFinishTime,
-					estimateDev, estimateTest, devFinishDate, sitWorkload, sitFinishDate, 
+					estimateDev, /*estimateTest,*/ devFinishDate, sitWorkload, sitFinishDate, 
 					preCond, preCondText, implTeam, implTeamText, 
 					startDate, status, assignToDepts, remark
 				],

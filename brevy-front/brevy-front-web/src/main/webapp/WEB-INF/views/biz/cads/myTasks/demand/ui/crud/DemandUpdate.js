@@ -30,19 +30,20 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 			maxLength: 12
 		}
 		
-		var estimateTest = {
+		/*var estimateTest = {
 			fieldLabel: this.estimateTest,
 			name: "estimateTest",
 			flex: 1,
 			allowBlank: true,
 			xtype: "textfield",
 			maxLength: 12
-		}
+		}*/
 		
 		var devFinishDate = {
 			fieldLabel: this.devFinishDate,
 			name: "devFinishDate",
 			flex: 1,
+			newLine: 1,
 			allowBlank: true,
 			xtype: "datefield",
 			editable: false,
@@ -53,7 +54,6 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 			fieldLabel: this.sitWorkload,
 			name: "sitWorkload",
 			flex: 1,
-			newLine: 1,
 			allowBlank: true,
 			xtype: "textfield",
 			maxLength: 12
@@ -63,6 +63,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 			fieldLabel: this.sitFinishDate,
 			name: "sitFinishDate",
 			flex: 1,
+			newLine: 1,
 			allowBlank: true,
 			xtype: "datefield",
 			editable: false,
@@ -134,7 +135,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 			id: "DemandUpdate.addWin",
 		    title: this.moduleText,
 		    iconCls: this.moduleIcon,
-		    height: 300,
+		    height: 350,
 		    width: 830,
 		    layout: "fit",
 		    modal: true,
@@ -156,7 +157,7 @@ Ext.define("App.biz.cads.myTasks.demand.crud.DemandUpdate", {
 					collapsible: false
 				},
 				items:[
-					id, estimateDev, estimateTest, devFinishDate, sitWorkload, 
+					id, estimateDev, /*estimateTest,*/ devFinishDate, sitWorkload, 
 					sitFinishDate, startDate, status, remark
 				],
 				listeners:{

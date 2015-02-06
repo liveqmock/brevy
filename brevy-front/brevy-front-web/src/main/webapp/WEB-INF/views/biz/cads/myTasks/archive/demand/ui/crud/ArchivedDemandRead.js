@@ -57,7 +57,7 @@ Ext.define("App.biz.cads.myTasks.archive.demand.crud.ArchivedDemandRead", {
 	    	{text: this.priority, dataIndex: "priority", width: 60, renderer: function(v){return me.dictMapping(v);}},
 	    	{text: this.requireFinishTime, dataIndex: "requireFinishTime", width:80, renderer: function(v){return me.formatDate(v);}},
 	    	{text: this.estimateDev, dataIndex: "estimateDev", width:120},
-	    	{text: this.estimateTest, dataIndex: "estimateTest", width:120},
+	    	/*{text: this.estimateTest, dataIndex: "estimateTest", width:120},*/
 	    	{text: this.preCond, dataIndex: "preCond", width:130, renderer: Pub.Utils.cellTips},
 	    	{text: this.implTeam, dataIndex: "implTeam", width:130, renderer: Pub.Utils.cellTips},
 	    	{text: this.startDate, dataIndex: "startDate", width:80, renderer: function(v){return me.formatDate(v);}},
