@@ -17,7 +17,6 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 			iconCls: this.moduleIcon,
 			store: GDDS,
 			tbar: this.createToolbar(),
-			//features: [filtersCfg],
 			viewConfig: {
 		        stripeRows: true,
 		        forceFit: true,
@@ -25,10 +24,11 @@ Ext.define("App.biz.cads.myTasks.gd.crud.GDRead", {
 			       	var currentDate = Ext.Date.format(new Date(), "Ymd")
 					var requiredFinishDate = Ext.Date.format(new Date(record.get("requireFinishTime")), "Ymd")
 			  		var deltaDate = requiredFinishDate - currentDate;
-			  		if(deltaDate > 0 && deltaDate <= 3){
-			  			return "cads-monitor-row-green";
-			  		}else if(deltaDate == 0){
-			  			return "cads-monitor-row-red";
+			  		var m = record.get("monitor");
+			  		if(deltaDate >= 0 && deltaDate <= 3 && record.get("status") != 80){
+			  			return "cads-monitor-row-warn";
+			  		}else if(deltaDate < 0 && record.get("status") != 80){
+			  			return "cads-monitor-row-delay";
 			  		}  
 			    }
 		    },

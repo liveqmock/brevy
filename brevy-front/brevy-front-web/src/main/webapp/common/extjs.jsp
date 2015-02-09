@@ -27,7 +27,7 @@
 	<!-- locale message -->
 	<src>/scripts/message/message-zh_CN.js</src>
 	<!-- extJs Pub -->
-	<src>/scripts/extjs/public-all-dev.js</src>
+	<src>/scripts/extjs/public-all.js</src>
 	<!-- extJs ux -->
 	<src>/scripts/extjs/ux/IFrame.js</src> 
 	<src>/scripts/extjs/ux/Icons.js</src>

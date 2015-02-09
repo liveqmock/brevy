@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,23 @@ import com.brevy.front.biz.cads.model.CadGdAttach;
 @Controller
 @RequestMapping("/biz/cads/myTasks/gd")
 public class GdController extends AbstractMyTasksController{
+	
+	private final static String DATE_PATTERN = "yyyyMMdd";
+	
+	/**
+	 * 延期值
+	 */
+	private final static String MONITOR_DELAY = "103";
+	
+	/**
+	 * 预警值
+	 */
+	private final static String MONITOR_WARN = "102";
+	
+	/**
+	 * 监控判断状态（sit完成情况值）
+	 */
+	private final static String SIT_MON_STATUS = "80";
 
 	/**
 	 * @description 工单附件上传
@@ -75,7 +93,28 @@ public class GdController extends AbstractMyTasksController{
 		//获取监控情况参数
 		String monitor = getString(p, "monitor", "");
 		Pageable pageable = new PageRequest(getIntValue(p, PAGE) - 1, getIntValue(p, PAGE_SIZE));
-		return myTasksService.findGDsRefDept(keyword, monitor, pageable);			
+		Page<CadGd> cadGds = myTasksService.findGDsRefDept(keyword, monitor, pageable);	
+		
+		
+		
+		if(cadGds != null){
+			int now = Integer.parseInt(DateTime.now().toString(DATE_PATTERN));
+			for(CadGd cadGd : cadGds.getContent()){
+				if(cadGd.getRequireFinishTime() != null){
+					int fdt = Integer.parseInt(new DateTime(cadGd.getRequireFinishTime()).toString(DATE_PATTERN));
+					if(fdt - now < 0 && !SIT_MON_STATUS.equals(cadGd.getStatus()) && !MONITOR_DELAY.equals(cadGd.getMonitor())){
+						myTasksService.updateMonitor(cadGd, MONITOR_DELAY);
+						cadGd.setMonitor(MONITOR_DELAY);
+					}else if(fdt - now >= 0 && fdt - now <= 3 && !SIT_MON_STATUS.equals(cadGd.getStatus()) && !MONITOR_WARN.equals(cadGd.getMonitor())){
+						myTasksService.updateMonitor(cadGd, MONITOR_WARN);
+						cadGd.setMonitor(MONITOR_WARN);
+					}
+				}				
+			}
+		}
+		
+		
+		return cadGds;
 	}
 	
 	

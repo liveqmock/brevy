@@ -1,8 +1,10 @@
 @CHARSET "UTF-8";
-.cads-monitor-row-red {
-    color: #f20726 !important;
+.cads-monitor-row-delay {
+	color: #f20726;
+   /* color: #f20726 !important; */
 }
 
-.cads-monitor-row-green {
-    color: #0faf3f !important;
+.cads-monitor-row-warn {
+	color: #0046ff;
+   /*  color: #0faf3f !important; */
 }

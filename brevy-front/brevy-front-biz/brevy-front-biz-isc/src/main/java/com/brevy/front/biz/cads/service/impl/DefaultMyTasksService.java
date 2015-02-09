@@ -82,6 +82,15 @@ public class DefaultMyTasksService implements MyTasksService {
 		}
 		
 	}
+	
+	@Transactional
+	@Override
+	public void updateMonitor(CadGd cadGd, String monitor) {
+		CadGd savedCadGd = cadGdDao.findOne(cadGd.getId());
+		if(savedCadGd != null){
+			savedCadGd.setMonitor(monitor);
+		}
+	}
 
 
 	@Transactional

@@ -25,6 +25,14 @@ public interface CadGdService {
 
 	
 	/**
+	 * @description 更新监控状态
+	 * @param cadGd
+	 * @param monitor
+	 * @author caobin
+	 */
+	void updateMonitor(CadGd cadGd, String monitor);
+	
+	/**
 	 * @description 保存（更新）工单
 	 * @param cadGd
 	 * @author caobin
