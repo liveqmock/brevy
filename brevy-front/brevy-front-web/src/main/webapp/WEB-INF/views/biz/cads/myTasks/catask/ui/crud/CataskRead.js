@@ -178,7 +178,7 @@ Ext.define("App.biz.cads.myTasks.catask.crud.CataskRead", {
 	    		text: this.result, dataIndex: "result", width:95, 
 	    		renderer: function(v){return me.dictMapping(v);},
 	    		editor: new Ext.form.field.ComboBox({
-                    typeAhead: true,
+                    typeAhead: false,
                     triggerAction: "all",
                     store: dictDS_28,
                     forceSelection: true,
