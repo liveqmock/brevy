@@ -10,7 +10,7 @@ Ext.define("Ext.ux.form.CaptchaField", {
 		this.callParent(arguments);
 
 	    this.bodyEl.down("input").applyStyles({
-	    	float : "left",
+	    	"float" : "left",
 	    	maxWidth : "55%"
 	    });
 	    
@@ -37,7 +37,7 @@ Ext.define("Ext.ux.form.CaptchaField", {
         	width : "16px",
 			height :"16px",
         	verticalAlign : "middle",
-        	float : "left"
+        	"float" : "left"
         });
        
     	Ext.Ajax.request({
@@ -53,7 +53,7 @@ Ext.define("Ext.ux.form.CaptchaField", {
 			    	marginLeft : "0px",
 			    	width : "42%",
 			    	height :"22px",
-			    	float : "right"
+			    	"float" : "right"
 			    });
 			    me.imageEl.on("click", me.loadImage, me);           	  
     		}

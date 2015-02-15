@@ -37,7 +37,7 @@ Ext.define("Ext.ux.form.PasswordField", {
     //显示虚拟键盘
     _showVirtualKeyboard : function(){
      	this.bodyEl.down("input").applyStyles({
-	    	float : "left",
+	    	"float" : "left",
 	    	maxWidth : "90%"
 	    });	
 	    
@@ -48,7 +48,7 @@ Ext.define("Ext.ux.form.PasswordField", {
         	verticalAlign : "middle",
         	cursor : "pointer",
         	marginTop : "2px",
-        	float : "right"
+        	"float" : "right"
         });
         
 		if(Ext.form.Field.prototype.msgTarget == "under"){
