@@ -20,7 +20,7 @@
 			<artifactId>brevy-front-biz-isc</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<!-- servlet & jsp -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -36,38 +36,39 @@
 	<build>
 		<!-- <outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory> -->
 		<finalName>cads</finalName>
-		
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-                	<useCache>true</useCache>
-	            </configuration>
-	            <executions>
-	                <execution>
-	                    <id>prepare-war</id>
-	                    <phase>prepare-package</phase>
-	                    <goals>
-	                        <goal>exploded</goal>
-	                    </goals>
-	                </execution>
-	            </executions>
+					<useCache>true</useCache>
+					<warSourceExcludes>**/*.js,**/*.css</warSourceExcludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>prepare-war</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
-			
-			<plugin>  
-		        <groupId>org.mortbay.jetty</groupId>  
-		        <artifactId>jetty-maven-plugin</artifactId>  
-		        <version>8.1.9.v20130131</version>  
-		        <configuration>  
-		           <scanIntervalSeconds>0</scanIntervalSeconds><!-- 禁用 -->
-		           <webAppConfig>  
-		            	<contextPath>/brevy-front-web</contextPath>
-		                <defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>  
-		           </webAppConfig>  
-		        </configuration>  
-    		</plugin>  
-    		
-    		<plugin>
+
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.9.v20130131</version>
+				<configuration>
+					<scanIntervalSeconds>0</scanIntervalSeconds><!-- 禁用 -->
+					<webAppConfig>
+						<contextPath>/brevy-front-web</contextPath>
+						<defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>
+					</webAppConfig>
+				</configuration>
+			</plugin>
+
+			<plugin>
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>replacer</artifactId>
 				<version>1.5.2</version>
@@ -76,7 +77,7 @@
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>replace</goal>
-						</goals> 
+						</goals>
 					</execution>
 				</executions>
 				<configuration>
@@ -96,53 +97,56 @@
 						</replacement>
 					</replacements>
 				</configuration>
-			</plugin>  
-    		
-			
-			<!-- <plugin>
-				<artifactId>maven-clean-plugin</artifactId>
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-			</plugin> -->
-
-			<!-- <plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-			</plugin> -->
-
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-			</plugin> -->
-
-			<!-- <plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-			</plugin> -->
-			
-			
-			
-			<!-- <plugin>
-				<groupId>com.brevy.maven.plugins</groupId>
-				<artifactId>maven-brevy-plugin</artifactId>
-				<version>1.0.0</version>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>1.3.3</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>compress</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					goal为remove的操作配置
-					<goalRemove>
-						<resources>
-							<resource>
-								<baseDirectory>${basedir}/src/main/webapp/WEB-INF/lib/</baseDirectory>
-								<filePatterns>
-									<filePattern>*.jar</filePattern>
-								</filePatterns>
-							</resource>
-						</resources>
-					</goalRemove>
+					<encoding>UTF-8</encoding>
+					<!-- 忽略 js 错误警告 -->
+					<jswarn>false</jswarn>
+					<workDir>${project.build.directory}/${project.build.finalName}</workDir>
+					<excludes>
+						<exclude>**/*.min.js</exclude>
+						<exclude>**/*-min.js</exclude>
+					</excludes>
+					<nosuffix>true</nosuffix>
+					<linebreakpos>-1</linebreakpos>
 				</configuration>
-			</plugin> -->
+			</plugin>
+
+
+
+			<!-- <plugin> <artifactId>maven-clean-plugin</artifactId> </plugin> <plugin> 
+				<groupId>org.apache.maven.plugins</groupId> <artifactId>maven-dependency-plugin</artifactId> 
+				</plugin> -->
+
+			<!-- <plugin> <artifactId>maven-antrun-plugin</artifactId> </plugin> -->
+
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId> 
+				</plugin> -->
+
+			<!-- <plugin> <artifactId>maven-clean-plugin</artifactId> </plugin> -->
+
+
+
+			<!-- <plugin> <groupId>com.brevy.maven.plugins</groupId> <artifactId>maven-brevy-plugin</artifactId> 
+				<version>1.0.0</version> <configuration> goal为remove的操作配置 <goalRemove> <resources> 
+				<resource> <baseDirectory>${basedir}/src/main/webapp/WEB-INF/lib/</baseDirectory> 
+				<filePatterns> <filePattern>*.jar</filePattern> </filePatterns> </resource> 
+				</resources> </goalRemove> </configuration> </plugin> -->
 		</plugins>
 	</build>
-	
+
 	<!-- lib下的Jar更新操作：mvn brevy:remove dependency:copy-dependencies -->
 </project>

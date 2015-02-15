@@ -7,12 +7,12 @@
 	<packaging>pom</packaging>
 	<name>Brevy Front :: POM</name>
 	<description>Brevy前端框架</description>
-	<modules>
+<!-- 	<modules>
 		<module>brevy-front-core</module>
 		<module>brevy-front-config</module>
 		<module>brevy-front-web</module>		
 		<module>brevy-front-biz</module>
-	</modules>
+	</modules> -->
 
 	<properties>
 		<!-- maven version -->
