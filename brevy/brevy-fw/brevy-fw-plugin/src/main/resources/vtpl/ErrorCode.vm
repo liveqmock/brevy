@@ -11,7 +11,7 @@ public class ${className} {
 	/**
 	 * $errors.get($errorKey)
 	 */
-	public final static String ${prefix}$errorKey = "$errorKey";
+	public static final String ${prefix}$errorKey = "$errorKey";
 	
 #end	
 }

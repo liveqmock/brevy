@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>com.brevy</groupId>
 	<artifactId>brevy-fw-plugin</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<packaging>maven-plugin</packaging>
 	<name>BREVY::FRAMEWORK::PLUGIN [JAR]</name>
 	<description>插件模块</description>
@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>com.brevy</groupId>
 			<artifactId>brevy-fw-common</artifactId>
-			<version>${project.version}</version>
+			<version>0.0.1</version>
 		</dependency>
 	</dependencies>
 </project>

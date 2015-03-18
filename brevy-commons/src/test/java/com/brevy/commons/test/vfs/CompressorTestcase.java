@@ -112,4 +112,11 @@ public class CompressorTestcase {
 		compressor.compress(new File("c:/tar/日期更新.txt"), new File("c:/gzip/日期更新.txt.gz"));
 		compressor.close();
 	}
+	
+	@Test
+	public void gzFile2(){
+		Compressor compressor = VfsFactory.createGzCompressor();
+		compressor.compress(new File("F:/temp/code/HintFilterX509KeyManager.java"));
+		compressor.close();
+	}
 }

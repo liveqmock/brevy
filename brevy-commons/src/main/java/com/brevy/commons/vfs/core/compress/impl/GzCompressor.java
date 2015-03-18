@@ -35,7 +35,7 @@ public class GzCompressor extends AbstractVfs implements Compressor{
 	 */
 	private final static String GZ_URI_PATTERN = "gz:file://{0}";
 	
-	private final static String GZ_PATTERN = "(?:\\.[Gg][Zz])$";
+	//private final static String GZ_PATTERN = "(?:\\.[Gg][Zz])$";
 	
 	/**
 	 * compressed虚拟文件对象
@@ -102,7 +102,7 @@ public class GzCompressor extends AbstractVfs implements Compressor{
 	@Override
 	public void compress(File sourceFileOrDir, File targetFile) {
 		try {
-			targetFile = new File(targetFile.getAbsolutePath().replaceAll(GZ_PATTERN, ""));
+			targetFile = new File(targetFile.getAbsolutePath().endsWith(".gz") ? targetFile.getAbsolutePath() : targetFile.getAbsolutePath().concat(".gz"));
 			FileUtils.copyFile(sourceFileOrDir, targetFile);		
 			gzip(targetFile, true);
 			log.trace("gzip the file: {}", new Object[]{targetFile.getAbsolutePath()});
@@ -124,7 +124,14 @@ public class GzCompressor extends AbstractVfs implements Compressor{
 	 * @throws Throwable 
 	 */
 	private void gzip(File sourceFile, boolean deleteSourceFile) throws Throwable {
-		File targetFile = new File(sourceFile.getAbsolutePath().concat(".gz"));
+		File targetFile = null;
+		if(!sourceFile.getAbsolutePath().endsWith(".gz")){
+			targetFile = new File(sourceFile.getAbsolutePath().concat(".gz"));
+		}else{
+			targetFile = new File(sourceFile.getAbsolutePath());
+		}
+		sourceFile = new File(sourceFile.getAbsolutePath().replaceAll("\\.gz$", ""));
+		
 		InputStream is = new FileInputStream(sourceFile);
 		GZIPOutputStream gzipos = new GZIPOutputStream(new BufferedOutputStream(new FileOutputStream(targetFile)));
 		try{
